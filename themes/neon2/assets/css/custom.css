@@ -1,0 +1,121 @@
+/**
+ *
+ * Apply Here your Custom CSS
+ *
+*/
+
+body {
+	
+}
+.double-input > input:first-child{
+    float: left;
+    width: 50%;
+}
+.double-input > input:last-child{
+    float: right;
+    width: 50%;
+}
+.page-container .main-content{
+    padding: 10px 30px !important;
+}
+hr{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.login-page .login-header{
+    padding: 50px !important;
+}
+.login-page .login-form{
+    padding-top: 20px !important;
+}
+/*
+.DataTables_sort_wrapper{
+    background: #98d6f1;
+}
+div.dataTables_paginate a.first::before,
+div.dataTables_paginate a.previous::before,
+div.dataTables_paginate a.next::after,
+div.dataTables_paginate a.last::after{
+    content: '' !important;
+}
+.ui-state-default{
+    font-weight: bold;
+}
+.ui-state-default a:hover{
+    color: #0000C0;
+}
+.ui-button:active{
+    background: #98d6f1 !important;
+}
+.ui-state-disabled{
+    font-weight: normal;
+}*/
+/*bootstrap paginate*/
+div.paging_bootstrap ul{
+    list-style-type: none;
+}
+div.paging_bootstrap ul li{
+    float: left;
+    padding: 4px;
+    
+}
+div.paging_bootstrap ul li a{
+    padding:4px;
+    text-decoration: none;
+}
+div.paging_bootstrap ul li.first a:before{
+    content: '' !important;
+}
+div.paging_bootstrap ul li.active{
+    font-weight: bold;
+    background-color: black;
+    color: white;
+}
+div.paging_bootstrap ul li.active a{
+    color: white;
+    cursor: default;
+    pointer-events: none;
+}
+div.paging_bootstrap ul li.disabled a{
+    cursor: default;
+}
+div.paging_bootstrap ul li.last a:after,div.paging_bootstrap li.next > a:after{
+    content: '';
+}
+div.paging_bootstrap li.first > a,div.paging_bootstrap li.next > a{
+    padding: 0px;
+}
+#DataTables_Table_0_wrapper div.span3{
+    width: 25%;
+    float: left;
+}
+div.paging_bootstrap{
+    margin:0px !important;
+}
+.pull-right{
+    margin-right: 4px;
+}
+.span3 .dataTables_info{
+    padding-top:0px !important;
+}
+#DataTables_Table_0_wrapper .span3{
+    margin-left:5px;
+}
+.select2-container .select2-choice span {
+    margin-right: 0px !important;
+}
+@media (max-width: 480px) {
+    #DataTables_Table_0_wrapper div.span3{
+    width: 50%;
+    float: left;
+}
+div.paging_bootstrap ul li{
+    float: left;
+    padding: 2px;
+    
+}
+div.paging_bootstrap ul li a{
+    padding:2px;
+    text-decoration: none;
+}
+}

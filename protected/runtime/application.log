@@ -1,0 +1,16 @@
+2017/08/01 11:35:44 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "tesDR". in /Applications/MAMP/htdocs/new/protected/yii-1.1.8/framework/web/CController.php:477
+Stack trace:
+#0 /Applications/MAMP/htdocs/new/protected/yii-1.1.8/framework/web/CController.php(262): CController->missingAction('tesDR')
+#1 /Applications/MAMP/htdocs/new/protected/yii-1.1.8/framework/web/CWebApplication.php(277): CController->run('tesDR')
+#2 /Applications/MAMP/htdocs/new/protected/yii-1.1.8/framework/web/CWebApplication.php(136): CWebApplication->runController('deliveryreceipt...')
+#3 /Applications/MAMP/htdocs/new/protected/yii-1.1.8/framework/base/CApplication.php(158): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/new/index.php(13): CApplication->run()
+#5 {main} REQUEST_URI=/new/deliveryreceipt/tesDR
+2017/08/01 13:06:53 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "tesDR". in /Applications/MAMP/htdocs/new/protected/yii-1.1.8/framework/web/CController.php:477
+Stack trace:
+#0 /Applications/MAMP/htdocs/new/protected/yii-1.1.8/framework/web/CController.php(262): CController->missingAction('tesDR')
+#1 /Applications/MAMP/htdocs/new/protected/yii-1.1.8/framework/web/CWebApplication.php(277): CController->run('tesDR')
+#2 /Applications/MAMP/htdocs/new/protected/yii-1.1.8/framework/web/CWebApplication.php(136): CWebApplication->runController('deliveryreceipt...')
+#3 /Applications/MAMP/htdocs/new/protected/yii-1.1.8/framework/base/CApplication.php(158): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/new/index.php(13): CApplication->run()
+#5 {main} REQUEST_URI=/new/deliveryreceipt/tesDR

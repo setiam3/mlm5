@@ -1,5 +1,5 @@
 <?php
-ini_set('max_execution_time', 30000); 
+ini_set('max_execution_time', 3000); 
 
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/protected/yii-1.1.8/framework/yii.php';

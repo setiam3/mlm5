@@ -518,11 +518,11 @@ class EDataTables extends CGridView
 					'text' => true,
 					'htmlClass' => 'refreshButton',
 					'icon' => $this->bootstrap ? 'icon-refresh' : 'ui-icon-refresh',
-					'callback' => null //default will be used, if possible
+					'callback' => null//default will be used, if possible
 				),
 				'configure' => array(
 					'label' => Yii::t('EDataTables.edt',"Configure"),
-					'text' => false,
+					'text' => true,
 					'htmlClass' => 'configureButton',
 					'icon' => $this->bootstrap ? 'icon-cog' : 'ui-icon-cog',
 					'callback' => null //default will be used, if possible

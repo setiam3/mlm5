@@ -33,16 +33,16 @@ function bukandistributor(){
       }
     }
 }
-// inject();
-// foreach (Member::model()->findAll() as $row) {
-//     for ($i = 0; $i < 10; $i++) {
-//       inject($row->kode_member,$row->kode_member,$i);
-//     }
-//     bukandistributor();
-//      bukandistributor();
-//      bukandistributor();
-//  }
-
+//inject();
+foreach (Member::model()->findAll() as $row) {
+    for ($i = 0; $i < 10; $i++) {
+      //inject($row->kode_member,$row->kode_member,$i);
+    }
+    
+ }
+//bukandistributor();
+  //  bukandistributor();
+    //bukandistributor();
 ?>
 
 <div id="jstree_demo_div"></div>

@@ -80,7 +80,7 @@ public function actioncomboSponsor($kode_member=null){
 	 */
 	public function actionCreate($upline=NULL)
 	{
-		$model=new Member;
+		$model=new Member('search');
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -104,13 +104,10 @@ public function actioncomboSponsor($kode_member=null){
 				$messageType = 'warning';
 	            $message = "<strong>Warning!</strong> Sudah Mencapai maximal membership";
 	            Yii::app()->user->setFlash($messageType, $message);
-				//echo 'Sudah Mencapai maximal membership';
 			}
 		}
 
-		$this->render('create',array(
-			'model'=>$model,'upline'=>$upline
-		));
+		$this->render('create',array('model'=>$model,'upline'=>$upline));
 	}
 
 	/**
@@ -156,18 +153,68 @@ public function actioncomboSponsor($kode_member=null){
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
+	public $columns=array(
+				array(
+        		'type'=>'html',
+        		'name'=>'kode_member',
+        		'value'=>'CHtml::link($data->kode_member,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),array(
+        		'type'=>'html',
+        		'name'=>'nama',
+        		'value'=>'CHtml::link($data->nama,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),array(
+        		'type'=>'html',
+        		'name'=>'alamat',
+        		'value'=>'CHtml::link($data->alamat,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),array(
+        		'type'=>'html',
+        		'name'=>'email',
+        		'value'=>'CHtml::link($data->email,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),array(
+        		'type'=>'html',
+        		'name'=>'level',
+        		'value'=>'CHtml::link($data->level,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),
+		/*'userid',
+		'password',
+		'nama',
+		'alamat',
+		'kota',
+		'hp',
+		'bank',
+		'nomor_rekening',
+		'ktp',
+		'email',
+		'kode_upline',
+		'tanggal_daftar',
+		'level',
+		'poin',
+		'sponsor',
+		*/
+);
 
 	/**
 	 * Lists all models.
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Member');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		$model=new Member('search');
+		$model->unsetAttributes();
 
-		
+		$widget=$this->createWidget('ext.EDataTables.EDataTables', array(
+		 'id'            => 'member-grid',
+		 'dataProvider'  => $model->search($this->columns),
+		 'ajaxUrl'       => $this->createUrl($this->getAction()->getId()),
+		 'columns'       => $this->columns,
+         'bootstrap'=>true,
+		));
+		if (!Yii::app()->getRequest()->getIsAjaxRequest()) {
+		  $this->render('index', array('widget' => $widget,));
+		  return;
+		} else {
+		  echo json_encode($widget->getFormattedData(intval($_REQUEST['sEcho'])));
+		  Yii::app()->end();
+		}
 	}
 
 	/**
@@ -176,13 +223,43 @@ public function actioncomboSponsor($kode_member=null){
 	public function actionAdmin()
 	{
 		$model=new Member('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Member']))
-			$model->attributes=$_GET['Member'];
-
-		$this->render('admin',array(
-			'model'=>$model,
+		$model->unsetAttributes();
+		$ar1=array('class'=> 'EButtonColumn',
+                'template'=>'{update}{delete}',
+			    'buttons'=>array(
+			    	'update'=>array(
+			    		'url'=>'Yii::app()->createUrl("member/update/$data->id")',
+			    		),
+			        'delete' => array(
+			        	'url'=>'Yii::app()->createUrl("member/delete/$data->id")',
+			            'visible'=>'Yii::app()->user->getIsSuperuser()==1',           
+			        ),
+			    ));
+        array_push($this->columns,$ar1);
+		$widget=$this->createWidget('ext.EDataTables.EDataTables', array(
+		 'id'            => 'member-grid',
+		 'dataProvider'  => $model->search($this->columns),
+		 'ajaxUrl'       => $this->createUrl($this->getAction()->getId()),
+		 'columns'       => $this->columns,
+         'bootstrap'	=>true,
+         'buttons'=>array('copy','excel','pdf'),
 		));
+		if (!Yii::app()->getRequest()->getIsAjaxRequest()) {
+		  $this->render('admin', array('widget' => $widget,));
+		  return;
+		} else {
+		  echo json_encode($widget->getFormattedData(intval($_REQUEST['sEcho'])));
+		  Yii::app()->end();
+		}
+
+		// $model=new Member('search');
+		// $model->unsetAttributes();  // clear any default values
+		// if(isset($_GET['Member']))
+		// 	$model->attributes=$_GET['Member'];
+
+		// $this->render('admin',array(
+		// 	'model'=>$model,
+		// ));
 	}
 
 	/**

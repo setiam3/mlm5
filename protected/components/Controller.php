@@ -439,17 +439,14 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
         return $row;
     }
     public static function parentCount($id){
-        $q="select count(id) from parent_child where parent='".$id."'";
+        $q="call parentCount('".$id."')";
         return Yii::app()->db->createCommand($q)->queryScalar();
     }
     public static function comboUpline(){
-    $ar=array();
-    $member=Member::model()->findAll();
-        foreach ($member as $k =>$value) {
-            $cp=Controller::parentCount($value->kode_member);
-            if($cp<Yii::app()->params['maxMember']){
-                $ar[$value['kode_member']]=$value->kode_member.' - '.$value->nama.' - '.$value->alamat;
-            }
+        $ar=array();
+        $member=Member::model()->findAll(array('condition'=>'level!="distributor"'));
+        foreach ($member as $value) {
+            $ar[$value['kode_member']]=$value->kode_member.' - '.$value->nama.' - '.$value->alamat;
         }
         if(empty($member)){
             $ar['#']='#';
@@ -461,20 +458,21 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
         $ar1=array(); $ar2=array(); $ar3=array();
         Yii::app()->db->createCommand('SET FOREIGN_KEY_CHECKS=0;')->execute();
         $sql="select * from parent_child order by id asc";
-        //ob_start();
         $cmd=Yii::app()->db->createCommand($sql)->queryAll();
         foreach ($cmd as $k =>$value) {
             $ar1[$k]=$value;
-            $cp=Controller::parentCount($value['id']);
-           if($cp<Yii::app()->params['maxMember']){
+            
+           if($value['level']!=='distributor'){
             //add id where parents = valueid;
+            $cp=Controller::parentCount($value['id']);
             for ($i = 0; $i < Yii::app()->params['maxMember']-$cp; $i++) {
                 $ar2[]=array('id'=>$value['id'].'Add'.$i,'parent'=>$value['id'],'text'=>'Add');
             }
             $ar3=array_merge_recursive($ar1, $ar2);
+            //$ar3=Cmap::mergeArray($ar1, $ar2);
            }
         }
-    echo json_encode($ar3); 
+    echo CJSON::encode($ar3); 
     }
 
     public static function is_maxMember($kodemember){

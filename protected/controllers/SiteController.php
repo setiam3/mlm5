@@ -54,6 +54,7 @@ class SiteController extends Controller
 	}
 
 	public function actiongetTree(){
+		
 		$this->tree();
 	}
 	public function actionSI(){

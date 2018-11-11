@@ -9,19 +9,6 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-
-<!-- <div class="row">
-	<div class="form-group">
-		<div class="col-sm-2">
-			<?php echo $form->labelEx($model,'kode_member'); ?>
-		</div>
-        <div class="col-sm-6">
-				<?php echo $form->textField($model,'kode_member',array('value'=>$this->autoformat(),'readonly'=>true,'disabled'=>true,'class'=>'form-control','size'=>45,'maxlength'=>45)); ?>
-			<?php echo $form->error($model,'kode_member'); ?>
-		</div>
-	</div>
-</div> -->
-
 <div class="row">
 	<div class="form-group">
 		<div class="col-sm-2">

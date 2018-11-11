@@ -36,26 +36,38 @@
 						</li>
 					</ul>
 				</li>
-				
 				<li class="has-sub">
 					<a href="#">
 						<i class="entypo-window"></i>
-						<span class="title">Positions</span>
+						<span class="title">My JO</span>
+					</a>
+					<ul>
+						<li>
+                                <a href="<?php echo Yii::app()->createUrl('order/index')?>">
+								<span class="title">JOB ORDER</span>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="has-sub">
+					<a href="#">
+						<i class="entypo-window"></i>
+						<span class="title">Posisi Kontainer</span>
 					</a>
 					<ul>
 						<li>
                                 <a href="<?php echo Yii::app()->createUrl('detail/index')?>">
-								<span class="title">Positions</span>
+								<span class="title">Posisi</span>
 							</a>
 						</li>
 						<li>
                                 <a href="<?php echo Yii::app()->createUrl('detail/create')?>">
-								<span class="title">Tambah Position</span>
+								<span class="title">Tambah Posisi</span>
 							</a>
 						</li>
 						<li>
                                 <a href="<?php echo Yii::app()->createUrl('detail/admin')?>">
-								<span class="title">Edit Position</span>
+								<span class="title">Edit Posisi</span>
 							</a>
 						</li>
 					</ul>
@@ -63,25 +75,25 @@
 				<li class="has-sub">
 					<a href="#">
 						<i class="entypo-doc-text"></i>
-						<span class="title">Container JO</span>
+						<span class="title">Info Kontainer</span>
 					</a>
 					<ul>
 						<li>
 							<a href="<?php echo Yii::app()->createUrl('kontainerjo/index')?>">
 							<i class="entypo-doc-text"></i>
-								<span class="title">Container JO</span>
+								<span class="title">Info Kontainer</span>
 							</a>
 						</li>
 						<li>
 							<a href="<?php echo Yii::app()->createUrl('kontainerjo/create')?>">
 							<i class="entypo-pencil"></i>
-								<span class="title">Tambah Container JO</span>
+								<span class="title">Tambah Info Kontainer</span>
 							</a>
 						</li>
 						<li>
 							<a href="<?php echo Yii::app()->createUrl('kontainerjo/admin')?>">
 							<i class="entypo-pencil"></i>
-								<span class="title">Edit Container JO</span>
+								<span class="title">Edit Info Kontainer</span>
 							</a>
 						</li>
 					</ul>
@@ -89,3 +101,8 @@
 			</ul>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$().ready(function(){
+			$('#accordion-test').remove();
+		})
+	</script>

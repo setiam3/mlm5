@@ -40,26 +40,45 @@
 				<li class="has-sub">
 					<a href="#">
 						<i class="entypo-window"></i>
-						<span class="title">Positions</span>
+						<span class="title">Posisi Kontainer</span>
 					</a>
 					<ul>
 						<li>
                                 <a href="<?php echo Yii::app()->createUrl('detail/index')?>">
-								<span class="title">Positions</span>
+								<span class="title">Posisi Kontainer</span>
 							</a>
 						</li>
 						<li>
                                 <a href="<?php echo Yii::app()->createUrl('detail/create')?>">
-								<span class="title">Tambah Position</span>
+								<span class="title">Tambah Posisi</span>
 							</a>
 						</li>
 						<li>
                                 <a href="<?php echo Yii::app()->createUrl('detail/admin')?>">
-								<span class="title">Edit Position</span>
+								<span class="title">Edit Posisi</span>
 							</a>
 						</li>
 					</ul>
-				</li>				
+				</li>	
+				<li class="has-sub">
+					<a href="#">
+						<i class="entypo-window"></i>
+						<span class="title">BL </span>
+					</a>
+					<ul>
+						<li>
+                                <a href="<?php echo Yii::app()->createUrl('bl/index')?>">
+								<span class="title">BL</span>
+							</a>
+						</li>
+						
+					</ul>
+				</li>			
 			</ul>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$().ready(function(){
+			$('#accordion-test').remove();
+		})
+	</script>

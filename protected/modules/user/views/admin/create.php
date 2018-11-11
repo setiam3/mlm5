@@ -6,4 +6,7 @@ $this->breadcrumbs=array(
 ?>
 <!--<h1><?php //echo UserModule::t("Create User"); ?></h1>-->
 <br>
-<?php echo $this->renderPartial('_form', array('model'=>$model,'profile'=>$profile));?>
+<?php echo $this->renderPartial('user.views.admin._form', array(
+	'model'=>$model,
+'profile'=>$profile
+));?>

@@ -66,6 +66,7 @@ class AdminController extends Controller
 	{
 		$model=new User;
 		$profile=new Profile;
+		
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
@@ -79,6 +80,26 @@ class AdminController extends Controller
 				if($model->save()) {
 					$profile->user_id=$model->id;
 					$profile->save();
+					//insert to m_customer
+					if($model->level=='customer'){
+						$customer=new Customer;
+						$customer->nama=$profile->firstname;
+						$customer->userid=$model->id;
+						$customer->save();
+					}
+					//insert auth
+					$sql="select child from authitemchild where parent='".$model->level."'";
+					$res=Yii::app()->db->createCommand($sql)->queryAll();
+					array_push($res, array('child'=>$model->level));
+					foreach ($res as $value) {
+						$authitem=new Authassignment;
+						$authitem->itemname=$value['child'];
+						$authitem->userid=$model->id;
+						$authitem->bizrule=NULL;
+						$authitem->data='N;';
+						$authitem->save();
+					}
+
 				}
 				$this->redirect(array('view','id'=>$model->id));
 			} else $profile->validate();
@@ -111,6 +132,35 @@ class AdminController extends Controller
 				}
 				$model->save();
 				$profile->save();
+				//insert to m_customer
+					if($model->level=='customer'){
+						if(count(Customer::model()->findAllByAttributes(array('userid'=>$model->id)))>0){}else{
+							$customer=new Customer;
+							$customer->nama=$profile->firstname;
+							$customer->userid=$model->id;
+							$customer->save();
+						}
+					}
+				//deleteAll auth first
+					foreach (Authassignment::model()->findAllByAttributes(array('userid'=>$model->id)) as $value) {
+						$item=$value->itemname;
+						$id=$value->userid;
+						$sql="delete from authassignment where itemname='$item' and userid=$id";
+						Yii::app()->db->createCommand($sql)->execute();
+					}
+				//insert auth
+					$sql="select child from authitemchild where parent='".$model->level."'";
+					$res=Yii::app()->db->createCommand($sql)->queryAll();
+					array_push($res, array('child'=>$model->level));
+					foreach ($res as $value) {
+						$authitem=new Authassignment;
+						$authitem->itemname=$value['child'];
+						$authitem->userid=$model->id;
+						$authitem->bizrule=NULL;
+						$authitem->data='N;';
+						$authitem->save();
+					}
+
 				$this->redirect(array('view','id'=>$model->id));
 			} else $profile->validate();
 		}
@@ -133,8 +183,15 @@ class AdminController extends Controller
 			// we only allow deletion via POST request
 			$model = $this->loadModel();
 			$profile = Profile::model()->findByPk($model->id);
+			foreach (Authassignment::model()->findAllByAttributes(array('userid'=>$model->id)) as $value) {
+				$item=$value->itemname;
+				$id=$value->userid;
+				$sql="delete from authassignment where itemname='$item' and userid=$id";
+				Yii::app()->db->createCommand($sql)->execute();
+			}
 			$profile->delete();
 			$model->delete();
+			
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_POST['ajax']))
 				$this->redirect(array('/user/admin'));

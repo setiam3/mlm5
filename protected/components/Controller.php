@@ -3,8 +3,10 @@
  * Controller is the customized base controller class.
  * All controller classes for this application should extend from this base class.
  */
-class Controller extends RController
+class Controller extends CController
 {
+   
+
 	/**
 	 * @var string the default layout for the controller view. Defaults to '//layouts/column1',
 	 * meaning using a single column layout. See 'protected/views/layouts/column1.php'.
@@ -14,7 +16,7 @@ class Controller extends RController
 	 * @var array context menu items. This property will be assigned to {@link CMenu::items}.
 	 */
 	public $menu=array();
-    public $arrayImages=array('jpg','bmp','png','jpeg');
+    public $arrayImages=array('jpg','bmp','png','jpeg','pdf');
     public static function imagesPath(){
         return Yii::getPathOfAlias('webroot').DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR;   
     }
@@ -23,30 +25,7 @@ class Controller extends RController
         $split=explode('-', $tanggal);
         return $split[2].'-'.$split[1].'-'.$split[0];}
     }
-    public static function getKomoditi($nojo){
-        	$k=array();
-            foreach(Kontainerjo::model()->findAllByAttributes(array('no_jo'=>$nojo)) as $kk){
-                    $k[]=$kk->komoditi;
-                }
-                if(!empty($k) && isset($k))
-                return implode(',',array_unique($k));
-        }
-    public static function getPelayaran($kapal){
-    if(!empty($kapal)){
-        $pelayarans=Kapal::model()->findByAttributes(array("nama_kapal"=>$kapal));
-        if($pelayarans->pelayaran){
-            $pelayaran=$pelayarans->pelayaran;
-        }else{
-            $pelayaran='';
-        }
-        return $pelayaran;
-    }
-}
-        /**
-	 * @var array the breadcrumbs of the current page. The value of this property will
-	 * be assigned to {@link CBreadcrumbs::links}. Please refer to {@link CBreadcrumbs::links}
-	 * for more details on how to specify this property.
-	 */
+    
 	public $breadcrumbs=array();
     public function isActive($d){
             if(isset($this->module)){
@@ -101,8 +80,7 @@ class Controller extends RController
         }
     public static function genListView($model,$attributes,$id=null){//model, attrbutes, id
         $tbname=Controller::generateRandomString();
-            $i=0;
-            $n= 0;
+            $i=0; $n= 0;
         echo '<table class="table table-bordered table-responsive table-hover" id="'.$tbname.'">';
             //looping th labels
         foreach($attributes as $attribute){
@@ -139,18 +117,16 @@ class Controller extends RController
 			$i++;
             echo '<tr><td class="col-sm-1" style="font-weight:bold;text-align:right;">'.$tr['{label}'].'</td><td class="col-sm-6">'.$value.'</td></tr>';
 		}
-            //===end table
             echo '</table>';
         }
     public static function generateRandomString($length = 10){//member gentables
-    $charaters = "01234567890abcdefghijklmnopqrstuvwxyz";
-    $randomString = '';
-    for($i = 0; $i<$length;$i++){
-    $randomString .= $charaters[rand(0,strlen($charaters) - 1)];
+        $charaters = "01234567890abcdefghijklmnopqrstuvwxyz";
+        $randomString = '';
+        for($i = 0; $i<$length;$i++){
+        $randomString .= $charaters[rand(0,strlen($charaters) - 1)];
+        }
+        return $randomString;
     }
-    return $randomString;
-    }
-
         /*
          * format: idtable, coloms, modelnya, filter null, typetable null
          */
@@ -159,21 +135,25 @@ class Controller extends RController
         $atr=array();
         $kondisi=array();
         if(isset($filter) && !is_null($filter)){
-    foreach ($filter as $key => $value) {
-        if($key==='attributes'){
-        foreach ($value as $k=>$data) {
-            $atr[$k]=$data;
-        }
-        }
-        if($key==='condition'){
-            foreach ($value as $k=>$data) {
-            $kondisi[$k]=$data;
-            }
-        }
-    }        
-    $modelx=$model::model()->cache(1000)->findAllByAttributes($atr,$kondisi);
+            foreach ($filter as $key => $value) {
+                if($key==='attributes'){
+                    foreach ($value as $k=>$data) {
+                        $atr[$k]=$data;
+                    }
+                }
+                if($key==='condition'){
+                    foreach ($value as $k=>$data) {
+                    $kondisi[$k]=$data;
+                    }
+                }
+            }      
+            
+            $modelx=$model::model()->cache(10000)->findAllByAttributes($atr,$kondisi);
+            
         }else{
-            $modelx=$model::model()->cache(1000)->findAll(array('order'=>'id DESC'));
+           
+            $modelx=$model::model()->cache(10000)->findAll(array('order'=>'id DESC'));
+            
         }
         if(count($modelx)>0){
         //the module . controller
@@ -191,12 +171,11 @@ class Controller extends RController
             echo '<script>'
             . 'jQuery( function( $ ) {
                 jQuery.noConflict();
-                        var $'.$tbname.' = jQuery("#'.$tbname.'" );
-                        $'.$tbname.'.DataTable( {
-                                "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                                "bStateSave": true,
-                            
-                            "dom": "Bfrtip",
+                    var $'.$tbname.' = jQuery("#'.$tbname.'" );
+                    $'.$tbname.'.DataTable( {
+                        "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                        "bStateSave": true,
+                        "dom": "Bfrtip",
 			"buttons": [
 				"copyHtml5",
 				"excelHtml5",
@@ -205,7 +184,7 @@ class Controller extends RController
 			]
                         });
                         $'.$tbname.'.closest( ".dataTables_wrapper" ).find( "select" ).select2( {
-                                minimumResultsForSearch: -1
+                            minimumResultsForSearch: -1
                         });
                 });</script>';
         }
@@ -217,8 +196,8 @@ class Controller extends RController
         foreach ($colom as $cc) {
             foreach($model::model()->attributeLabels() as $key=>$label){
                 if($key===$cc){
-                echo '<th>'.$label.'</th>';
-            }
+                    echo '<th>'.$label.'</th>';
+                }
             }
         }
         echo $this->action->id==='admin'?'<th>aksi</th>':'';
@@ -241,6 +220,7 @@ class Controller extends RController
                     . '</td>':'';
             echo '</tr>';
         }
+        
         //footer
         echo '<tfoot><tr><th>#</th>';
         foreach ($colom as $cc) {
@@ -253,13 +233,14 @@ class Controller extends RController
         echo $this->action->id==='admin'?'<th>aksi</th>':'';
         echo '</tr></tfoot></table>';
         //=== end table
+
         if(in_array('datatable', $opt)){
             echo '<link rel="stylesheet" href="'.Yii::app()->theme->baseUrl.'/assets/js/datatables/datatables.css'.'">';
             echo '<link rel="stylesheet" href="'.Yii::app()->theme->baseUrl.'/assets/js/select2/select2-bootstrap.css'.'">';
             echo '<link rel="stylesheet" href="'.Yii::app()->theme->baseUrl.'/assets/js/select2/select2.css'.'">';
             Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/assets/js/datatables/datatables.js',CClientScript::POS_END);
             Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/assets/js/select2/select2.min.js',CClientScript::POS_END);
-        }
+            }
         }
     }
     public static function getControllers(){
@@ -269,17 +250,13 @@ class Controller extends RController
           return $class;
     }
     public static function getrole(){
-        //$user = Yii::app()->getUser();
-        //if( $user->isGuest===true )
-        //    $user->loginRequired();
-
         $role=Rights::getAssignedRoles(Yii::app()->user->id);
         foreach ($role as $value) {
             $roles=$value->name;
         }
         return $roles;
     }
-    public function GetTelp($q){
+    /*public function GetTelp($q){
         $criteria=new CDbCriteria(array('select'=>'telp','condition'=>'nama=:namae','params'=>array(':namae'=>"$q")));
         $cust=Customer::model()->findByAttributes(array('nama'=>$q))->telp;
         echo $cust;
@@ -335,11 +312,255 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
                 }
             }
         } 
-	}
+	}*/
 	public static function toDate($date){// revers format waktu di controller detail posisi
         if(!empty($date) && !is_null($date)){
             $split=explode(' ', $date);
             return $split[1].' '.Controller::tanggal_indo($split[0]);
         }
+    }
+    public static function date_sql_now(){
+        return gmdate("Y-m-d H:i:s", time()+60*60*7);
+    }
+    
+    public static function autoformat(){
+        $getlastjo=Yii::app()->db->createCommand('select kode_member from m_member order by id desc limit 1')->queryScalar();//BY0000001
+        $format='BY';
+        if(!empty($getlastjo)){
+            $t=trim($getlastjo,$format);
+            $lastno=intval($t)+1;
+        }else{
+            $lastno=1;
+        }
+            if(strlen($lastno)==1){
+                $lastno='000000'.$lastno;
+            }elseif(strlen($lastno)==2){
+                $lastno='00000'.$lastno;
+            }elseif(strlen($lastno)==3){
+                $lastno='0000'.$lastno;
+            }elseif(strlen($lastno)==4){
+                $lastno='000'.$lastno;
+            }elseif(strlen($lastno)==5){
+                $lastno='00'.$lastno;
+            }elseif(strlen($lastno)==6){
+                $lastno='0'.$lastno;
+            }elseif(strlen($lastno)==7){
+                $lastno=$lastno;
+            }
+        
+        return $format.$lastno;
+    }
+    public static function userid(){
+        return Yii::app()->user->id;
+    }
+    public static function username(){
+        return Yii::app()->user->name;
+    }
+    public static function hitungbonusgetmember($kodeupline=NULL,$kodemember){
+        $upline=Member::model()->countByAttributes(array('kode_member'=>$kodeupline));
+        if($upline>0){
+            $q1=SettingBonus::model()->findAllByAttributes(array('jenis_bonus'=>'getmember'));
+            $jmldownline=Member::model()->countByAttributes(array('kode_upline'=>$kodeupline));
+            //$jmldownline=5;
+            foreach ($q1 as $value) {
+                if($jmldownline>0 && is_numeric($value->param)){
+                    if($jmldownline%$value->param==0){
+                        $model=new Bonus;
+                        $model->kode_member=$kodeupline;
+                        $model->bonus=$value->bonus;
+                        $model->keterangan=$value->keterangan;
+                        $model->dari_member=$kodemember;
+                        $model->idbonus=$value->id;
+                        $model->save();
+                    }
+                }
+                //tambahkan bonus poin
+                if(!is_numeric($value->param) && $value->param=='poin'){
+                    $model=new Bonus;
+                    $model->kode_member=$kodeupline;
+                    $model->poin=$value->bonus;
+                    $model->keterangan=$value->keterangan;
+                    $model->dari_member=$kodemember;
+                    $model->idbonus=$value->id;
+                    $model->save();
+                }
+            }
+        }
+    }
+
+    public function deepValues(array $array, array &$values) {
+        foreach($array as $level) {
+            if (is_array($level)) {
+                $this->deepValues($level, $values);
+            } else {
+                $values[$level] = $level;
+            }
+        }
+        //return $value;
+    }
+    public function comboSponsor($kode_member){
+        $values=array();
+        foreach(Controller::getUpline($kode_member) as $level) {
+            if (is_array($level)) {
+                Controller::deepValues($level, $values);
+            } else {
+                $values[$level] = $level;
+            }
+        }
+        if(in_array('#', $values)){
+            array_pop($values);
+        }
+        return $values;
+    }
+    
+    public function getUpline($cnd){
+        $row = array();
+        foreach(Member::model()->findAllByAttributes(array('kode_member'=>$cnd)) as $haha){
+            if($haha->kode_upline!=='#' or $haha->level!=='distributor'){
+                $row[] = $cnd;
+                $row['upline'] = $haha->kode_upline;
+                if(count($this->getUpline2($haha->kode_upline))>0){
+                    $row[] = $this->getUpline2($haha->kode_upline);
+                }
+            }
+        }
+        return $row;
+    }
+    public function getUpline2($cnd){
+        $row = array();
+        foreach(Member::model()->findAllByAttributes(array('kode_member'=>$cnd)) as $haha){
+             if($haha->kode_upline!=='#'){
+                $row['upline'] = $haha->kode_upline;
+                if(count($this->getUpline2($haha->kode_upline))>0 && $haha->kode_upline!=='#'){
+                   $row[] = $this->getUpline2($haha->kode_upline);
+                }
+            }
+        }
+        return $row;
+    }
+    public static function parentCount($id){
+        $q="select count(id) from parent_child where parent='".$id."'";
+        return Yii::app()->db->createCommand($q)->queryScalar();
+    }
+    public static function comboUpline(){
+    $ar=array();
+    $member=Member::model()->findAll();
+        foreach ($member as $k =>$value) {
+            $cp=Controller::parentCount($value->kode_member);
+            if($cp<Yii::app()->params['maxMember']){
+                $ar[$value['kode_member']]=$value->kode_member.' - '.$value->nama.' - '.$value->alamat;
+            }
+        }
+        if(empty($member)){
+            $ar['#']='#';
+        }
+    return $ar;
+    }
+
+    public static function tree(){
+        $ar1=array(); $ar2=array(); $ar3=array();
+        Yii::app()->db->createCommand('SET FOREIGN_KEY_CHECKS=0;')->execute();
+        $sql="select * from parent_child order by id asc";
+        //ob_start();
+        $cmd=Yii::app()->db->createCommand($sql)->queryAll();
+        foreach ($cmd as $k =>$value) {
+            $ar1[$k]=$value;
+            $cp=Controller::parentCount($value['id']);
+           if($cp<Yii::app()->params['maxMember']){
+            //add id where parents = valueid;
+            for ($i = 0; $i < Yii::app()->params['maxMember']-$cp; $i++) {
+                $ar2[]=array('id'=>$value['id'].'Add'.$i,'parent'=>$value['id'],'text'=>'Add');
+            }
+            $ar3=array_merge_recursive($ar1, $ar2);
+           }
+        }
+    echo json_encode($ar3); 
+    }
+
+    public static function is_maxMember($kodemember){
+        //cek jml downline by kode_upline
+        if($kodemember!='#'){
+            $model=Member::model()->countByAttributes(array('kode_upline'=>$kodemember));
+            if($model<Yii::app()->params['maxMember'] && $model>=0){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return true;
+        }
+    }
+    public static function get_sponsor($kodemember){
+        $mem=Member::model()->findByAttributes(array('kode_member'=>$kodemember));
+        return $mem->sponsor;
+    }
+    public static function get_level($kodemember){
+        if($kodemember!=='#'){
+            $mem=Member::model()->findByAttributes(array('kode_member'=>$kodemember));
+        return $mem->level;
+        }
+    }
+    public static function get_upline($kodemember){
+        $mem=Member::model()->findByAttributes(array('kode_member'=>$kodemember));
+        return $mem->kode_upline;
+    }
+    public static function bonussponsor($kodesponsor,$kodemember){
+        $q1=SettingBonus::model()->findAllByAttributes(array('jenis_bonus'=>'sponsor'));
+        $jmlsponsor=Member::model()->countByAttributes(array('sponsor'=>$kodesponsor));
+        foreach ($q1 as $value) {
+            $upline_level=Controller::get_level(Controller::get_upline($kodemember));
+            if($jmlsponsor>0 && is_numeric($value->param)){
+                if($jmlsponsor%$value->param==0){
+                    //echo 'bonus 50k';
+                    $model=new Bonus;
+                    $model->kode_member=$kodesponsor;
+                    $model->bonus=$value->bonus;
+                    $model->keterangan=$value->keterangan;
+                    $model->dari_member=$kodemember;
+                    $model->idbonus=$value->id;
+                    $model->save();
+                }
+            }elseif(!is_numeric($value->param) && !empty($upline_level) && $upline_level==$value->param){
+                $mb=Bonus::model()->findAllByAttributes(array('dari_member'=>Controller::get_upline($kodemember)));
+                $inarray=array();
+                foreach($mb as $bonus){
+                    $inarray[]=$bonus->idbonus;//simpan dalam array
+                }
+                if(is_array($inarray)){
+                    if(!in_array($value->id, $inarray)){//19 id bonus sponsorship
+                        //echo 'insert bonus 10k <br>';
+                        $model=new Bonus;
+                        $model->kode_member=Controller::get_sponsor(Controller::get_upline($kodemember));
+                        $model->bonus=$value->bonus;
+                        $model->keterangan=$value->keterangan;
+                        $model->dari_member=Controller::get_upline($kodemember);
+                        $model->idbonus=$value->id;
+                        $model->save();
+                    }
+                }
+            }
+        }
+    }
+    public static function upgradelevel($kodeupline){
+        $upline=Member::model()->countByAttributes(array('kode_member'=>$kodeupline));
+        if($upline>0){
+            $jmldownline=Member::model()->countByAttributes(array('kode_upline'=>$kodeupline));
+            //$jmldownline=6;
+            if($jmldownline==1){
+                $jmldownline=0;
+            }
+            $sql='select max(member) AS max from setting_level limit 1';
+            $cmd=Yii::app()->db->createCommand($sql);
+            $max=$cmd->queryRow();
+            $q2=SettingLevel::model()->findByAttributes(array('member'=>$jmldownline));
+            if(!empty($q2) && count($q2)<=$max['max']){//max di setting level
+                $member=Member::model()->findByAttributes(array('kode_member'=>$kodeupline));
+                $member->level=$q2->level;
+                $member->save();
+            }
+        }
+    }
+    public static function company(){
+        return SettingPerusahaan::model()->findByPk(1)->nama_perusahaan;
     }
 }

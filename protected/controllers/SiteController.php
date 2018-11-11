@@ -2,12 +2,12 @@
 
 class SiteController extends Controller
 {
-   public function filters()
-	{
-		return array(
-			'rights',
-		);
-	}
+ //   public function filters()
+	// {
+	// 	return array(
+	// 		'rights',
+	// 	);
+	// }
     /**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -32,15 +32,39 @@ class SiteController extends Controller
 			),
 		);
 	}
+	public function useri(){
+		if(Yii::app()->user->getIsSuperuser()==1){
+		}else{
+			switch ($this->getrole()) {
+				case 'agen':
+					return ' and t_order.agen='.$this->userid();
+					break;
+				case 'operasional':
+					return ' and t_order.operasional_staff='.$this->userid();
+					break;
+				case 'customer':
+					return ' and t_order.customer='.$this->userid();
+					break;
+				default:
+					// code...
+					break;
+			}
+			
+		}
+	}
 
-	/**
-	 * This is the default 'index' action that is invoked
-	 * when an action is not explicitly requested by users.
-	 */
+	public function actiongetTree(){
+		$this->tree();
+	}
+	public function actionSI(){
+		$this->render('form_si');
+	}
+	
 	public function actionIndex()
+
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
+		//print_r(Controller::comboSponsor('8982387'));
+		//echo CVarDumper::dumpAsString(Controller::comboSponsor('8982387'),10,true);
 		$this->render('index');
 	}
 
@@ -83,6 +107,7 @@ class SiteController extends Controller
 		}
 		$this->render('contact',array('model'=>$model));
 	}
+
 
 	/**
 	 * Displays the login page

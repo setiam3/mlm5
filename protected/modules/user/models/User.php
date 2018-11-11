@@ -56,6 +56,7 @@ class User extends CActiveRecord
 			array('superuser', 'in', 'range'=>array(0,1)),
 			array('username, email, createtime, lastvisit, superuser, status', 'required'),
 			array('createtime, lastvisit, superuser, status', 'numerical', 'integerOnly'=>true),
+			array('level', 'safe'),
 		):((Yii::app()->user->id==$this->id)?array(
 			array('username, email', 'required'),
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
@@ -63,6 +64,7 @@ class User extends CActiveRecord
 			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
 			array('username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
 			array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
+			array('level', 'safe'),
 		):array()));
 	}
 
@@ -95,6 +97,7 @@ class User extends CActiveRecord
 			'lastvisit' => UserModule::t("Last visit"),
 			'superuser' => UserModule::t("Superuser"),
 			'status' => UserModule::t("Status"),
+			'level' => UserModule::t("Level"),
 		);
 	}
 	
@@ -114,7 +117,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, email, activkey, createtime, lastvisit, superuser, status',
+            	'select' => 'id, username, password, email, activkey, createtime, lastvisit, superuser, status,level',
             ),
         );
     }
@@ -122,8 +125,23 @@ class User extends CActiveRecord
 	public function defaultScope()
     {
         return array(
-            'select' => 'id, username, email, createtime, lastvisit, superuser, status',
+            'select' => 'id, username, email, createtime, lastvisit, superuser, status,level',
         );
+    }
+    public static function itemLevel() {
+    	$val=array();
+    	$level=Yii::app()->db->createCommand('SELECT parent FROM authitemchild group by parent')->queryAll();
+    	//print_r($level);
+    	//array_push($level, array('9'=>'Admin'));
+    	foreach ($level as $i=>$value) {
+    		$val[$value['parent']]=$value['parent'];
+    		
+    	}
+    	array_push($val, array('Admin'=>'Admin'));
+    	unset($val[3]);
+    	
+    	//print_r($val);
+    	return $val;
     }
 	
 	public static function itemAlias($type,$code=NULL) {

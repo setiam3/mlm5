@@ -3,9 +3,6 @@
 class RegistrationController extends Controller
 {
 	public $defaultAction = 'registration';
-	
-
-
 	/**
 	 * Declares class-based actions.
 	 */
@@ -22,6 +19,7 @@ class RegistrationController extends Controller
 	 * Registration user
 	 */
 	public function actionRegistration() {
+		$this->layout='//layouts/register';
             $model = new RegistrationForm;
             $profile=new Profile;
             $profile->regMode = true;
@@ -39,8 +37,10 @@ class RegistrationController extends Controller
 		    	if(isset($_POST['RegistrationForm'])) {
 					$model->attributes=$_POST['RegistrationForm'];
 					$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
+					$model->username=$_POST['RegistrationForm']['email'];
 					if($model->validate()&&$profile->validate())
 					{
+						//print_r($model);die;
 						$soucePassword = $model->password;
 						$model->activkey=UserModule::encrypting(microtime().$model->password);
 						$model->password=UserModule::encrypting($model->password);

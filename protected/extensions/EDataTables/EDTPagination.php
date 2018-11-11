@@ -18,7 +18,7 @@ class EDTPagination extends CPagination
 	/**
 	 * The default page size.
 	 */
-	const DEFAULT_PAGE_SIZE=50;
+	const DEFAULT_PAGE_SIZE=25;
 	/**
 	 * @var string name of the GET variable storing the current page index. Defaults to 'page'.
 	 */

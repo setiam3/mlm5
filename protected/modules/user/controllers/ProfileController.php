@@ -11,7 +11,7 @@ class ProfileController extends Controller
 	public function filters()
 	{
 		return CMap::mergeArray(parent::filters(),array(
-			'rights', // perform access control for CRUD operations
+			//'rights', // perform access control for CRUD operations
 		));
 	}
 	/**

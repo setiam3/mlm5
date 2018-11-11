@@ -1,18 +1,18 @@
 <?php $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Registration");
-$this->breadcrumbs=array(
-	UserModule::t("Registration"),
-);
+//$this->breadcrumbs=array(UserModule::t("Registration"),);
 ?>
-
+<div class="main-content" style="padding: 0 30% 10% 30%;">
 <h1><?php echo UserModule::t("Registration"); ?></h1>
 
 <?php if(Yii::app()->user->hasFlash('registration')): ?>
 <div class="success">
-<?php echo Yii::app()->user->getFlash('registration'); ?>
+<?php echo Yii::app()->user->getFlash('registration'); 
+echo Yii::app()->createUrl('site/index','back');
+?>
+
 </div>
 <?php else: ?>
 
-<div class="form">
 <?php $form=$this->beginWidget('UActiveForm', array(
 	'id'=>'registration-form',
 	'enableAjaxValidation'=>true,
@@ -23,41 +23,39 @@ $this->breadcrumbs=array(
 	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 	
 	<?php echo $form->errorSummary(array($model,$profile)); ?>
-	
 	<div class="row">
-	<?php echo $form->labelEx($model,'username'); ?>
-	<?php echo $form->textField($model,'username'); ?>
-	<?php echo $form->error($model,'username'); ?>
+	<div class="form-group">
+	<?php echo $form->labelEx($model,'email',array('class'=>'col-md-4')); ?>
+	<div class="col-md-5 ">
+	<?php echo $form->textField($model,'email',array('class'=>'form-control')); ?>
 	</div>
-	
+	</div>
+	</div>
 	<div class="row">
-	<?php echo $form->labelEx($model,'password'); ?>
-	<?php echo $form->passwordField($model,'password'); ?>
-	<?php echo $form->error($model,'password'); ?>
-	<p class="hint">
-	<?php echo UserModule::t("Minimal password length 4 symbols."); ?>
-	</p>
+	<div class="form-group">
+	<?php echo $form->labelEx($model,'password',array('class'=>'col-md-4')); ?>
+	<div class="col-md-5 ">
+	<?php echo $form->passwordField($model,'password',array('class'=>'form-control')); ?>
 	</div>
-	
+	</div>
+	</div>
 	<div class="row">
-	<?php echo $form->labelEx($model,'verifyPassword'); ?>
-	<?php echo $form->passwordField($model,'verifyPassword'); ?>
-	<?php echo $form->error($model,'verifyPassword'); ?>
+	<div class="form-group">
+	<?php echo $form->labelEx($model,'verifyPassword',array('class'=>'col-md-4')); ?>
+	<div class="col-md-5 ">
+	<?php echo $form->passwordField($model,'verifyPassword',array('class'=>'form-control')); ?>
 	</div>
-	
-	<div class="row">
-	<?php echo $form->labelEx($model,'email'); ?>
-	<?php echo $form->textField($model,'email'); ?>
-	<?php echo $form->error($model,'email'); ?>
 	</div>
-	
+	</div>
 <?php 
 		$profileFields=$profile->getFields();
 		if ($profileFields) {
 			foreach($profileFields as $field) {
 			?>
-	<div class="row">
-		<?php echo $form->labelEx($profile,$field->varname); ?>
+			<div class="row">
+	<div class="form-group">
+		<?php echo $form->labelEx($profile,$field->varname,array('class'=>'col-md-4')); ?>
+		<div class="col-md-5 ">
 		<?php 
 		if ($field->widgetEdit($profile)) {
 			echo $field->widgetEdit($profile);
@@ -66,32 +64,33 @@ $this->breadcrumbs=array(
 		} elseif ($field->field_type=="TEXT") {
 			echo$form->textArea($profile,$field->varname,array('rows'=>6, 'cols'=>50));
 		} else {
-			echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255)));
+			echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255),'class'=>'form-control'));
 		}
 		 ?>
-		<?php echo $form->error($profile,$field->varname); ?>
+		
+	</div>	
+	</div>	
 	</div>	
 			<?php
 			}
 		}
 ?>
 	<?php if (UserModule::doCaptcha('registration')): ?>
-	<div class="row">
-		<?php echo $form->labelEx($model,'verifyCode'); ?>
-		
+		<div class="row">
+	<div class="form-group">
+		<?php echo $form->labelEx($model,'verifyCode',array('class'=>'col-md-4')); ?>
+		<div class="col-md-5">
 		<?php $this->widget('CCaptcha'); ?>
-		<?php echo $form->textField($model,'verifyCode'); ?>
-		<?php echo $form->error($model,'verifyCode'); ?>
-		
-		<p class="hint"><?php echo UserModule::t("Please enter the letters as they are shown in the image above."); ?>
-		<br/><?php echo UserModule::t("Letters are not case-sensitive."); ?></p>
+		<?php echo $form->textField($model,'verifyCode',array('class'=>'form-control')); ?>
+	</div>
+	</div>
 	</div>
 	<?php endif; ?>
 	
-	<div class="row submit">
-		<?php echo CHtml::submitButton(UserModule::t("Register")); ?>
+	<div class="row submit" style="width: 12%;margin: 0 auto;">
+		<?php echo CHtml::submitButton(UserModule::t("Register"),array('class'=>'btn btn-blue')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
-</div><!-- form -->
 <?php endif; ?>
+</div>

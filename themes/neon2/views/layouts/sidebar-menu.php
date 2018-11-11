@@ -45,7 +45,7 @@
 					</ul>
 				</li>
 				<li class="has-sub">
-					<a href="user">
+					<a href="#">
 						<i class="entypo-users"></i>
 						<span class="title">User Management</span>
 					</a>
@@ -72,22 +72,28 @@
 				</li>
 				
 				<li class="has-sub">
-					<a href="<?php echo Yii::app()->createUrl('order/index')?>">
+					<a href="<?php echo Yii::app()->createUrl('member/index')?>">
 						<i class="entypo-newspaper"></i>
-						<span class="title">Job Order</span>
-						<span class="badge badge-secondary"><?php echo count(Order::model()->cache(1000)->findAll(array('condition'=>'MONTH(tanggal_jo)='.date('m'))))?></span>
+						<span class="title">Member</span>
+						<span class="badge badge-secondary"></span>
 					</a>
 					<ul>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('order/index')?>">
+							<a href="<?php echo Yii::app()->createUrl('member/index')?>">
 							<i class="entypo-newspaper"></i>
-								<span class="title">JOB Order</span>
+								<span class="title">Member</span>
 							</a>
 						</li>
 						<li>
-                                <a href="<?php echo Yii::app()->createUrl('order/admin')?>">
+                                <a href="<?php echo Yii::app()->createUrl('member/admin')?>">
                                 <i class="entypo-pencil"></i>
-								<span class="title">Edit JO</span>
+								<span class="title">Edit Member</span>
+							</a>
+						</li>
+						<li>
+                                <a href="<?php echo Yii::app()->createUrl('member/create')?>">
+                                <i class="entypo-pencil"></i>
+								<span class="title">Add Member</span>
 							</a>
 						</li>
 					</ul>
@@ -95,19 +101,25 @@
 				<li class="has-sub">
 					<a href="#">
 						<i class="entypo-progress-3"></i>
-						<span class="title">Info Kontainer</span>
+						<span class="title">Barang</span>
 					</a>
 					<ul>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('kontainerjo/index')?>">
+							<a href="<?php echo Yii::app()->createUrl('barang/index')?>">
 							<i class="entypo-progress-3"></i>
-								<span class="title">Info Kontainer</span>
+								<span class="title">Barang</span>
 							</a>
 						</li>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('kontainerjo/admin')?>">
+							<a href="<?php echo Yii::app()->createUrl('barang/admin')?>">
 							<i class="entypo-pencil"></i>
-								<span class="title">Edit Kontainer</span>
+								<span class="title">Edit Barang</span>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo Yii::app()->createUrl('barang/create')?>">
+							<i class="entypo-pencil"></i>
+								<span class="title">Add Barang</span>
 							</a>
 						</li>
 					</ul>
@@ -115,19 +127,25 @@
 				<li class="has-sub">
 					<a href="#">
 						<i class="entypo-location"></i>
-						<span class="title">Posisi Kontainer</span>
+						<span class="title">Kategori</span>
 					</a>
 					<ul>
 						<li>
-                                <a href="<?php echo Yii::app()->createUrl('detail/index')?>">
+                                <a href="<?php echo Yii::app()->createUrl('kategori/index')?>">
                                 <i class="entypo-location"></i>
-								<span class="title">Posisi Kontainer</span>
+								<span class="title">Kategori</span>
 							</a>
 						</li>
 						<li>
-                                <a href="<?php echo Yii::app()->createUrl('detail/admin')?>">
+                                <a href="<?php echo Yii::app()->createUrl('kategori/admin')?>">
                                 <i class="entypo-pencil"></i>
-								<span class="title">Edit Posisi</span>
+								<span class="title">Edit Kategori</span>
+							</a>
+						</li>
+						<li>
+                                <a href="<?php echo Yii::app()->createUrl('kategori/create')?>">
+                                <i class="entypo-pencil"></i>
+								<span class="title">Add Kategori</span>
 							</a>
 						</li>
 					</ul>
@@ -135,53 +153,13 @@
 				<li class="has-sub">
 					<a href="#">
 						<i class="entypo-doc-text"></i>
-						<span class="title">Bill Of Lading (B/L)</span>
+						<span class="title">Penjualan</span>
 					</a>
 					<ul>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('bl/index')?>">
+							<a href="<?php echo Yii::app()->createUrl('penjualan/index')?>">
 							<i class="entypo-doc-text"></i>
-								<span class="title">B/L</span>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('bl/admin')?>">
-							<i class="entypo-pencil"></i>
-								<span class="title">Edit B/L</span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="has-sub">
-					<a href="#">
-						<i class="entypo-docs"></i>
-						<span class="title">Delivery Receipt (D/R)</span>
-					</a>
-					<ul>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('deliveryreceipt/index')?>">
-							<i class="entypo-docs"></i>
-								<span class="title">list D/R</span>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('deliveryreceipt/admin')?>">
-							<i class="entypo-pencil"></i>
-								<span class="title">Edit D/R</span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li class="has-sub">
-					<a href="#">
-						<i class="entypo-folder"></i>
-						<span class="title">Laporan</span>
-					</a>
-					<ul>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('laporan/index')?>">
-							<i class="entypo-folder"></i>
-								<span class="title">Laporan</span>
+								<span class="title">Penjualan</span>
 							</a>
 						</li>
 						
@@ -189,38 +167,47 @@
 				</li>
 				<li class="has-sub">
 					<a href="#">
-						<i class="entypo-user"></i>
-						<span class="title">Member</span>
+						<i class="entypo-docs"></i>
+						<span class="title">Pemesanan</span>
 					</a>
 					<ul>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('member/index')?>">
-								<span class="title">Member</span>
+							<a href="<?php echo Yii::app()->createUrl('pemesanan/index')?>">
+							<i class="entypo-docs"></i>
+								<span class="title">Pemesanan</span>
 							</a>
 						</li>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('member/view')?>">
-								<span class="title">Profile</span>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('member/update')?>">
-								<span class="title">Edit Data</span>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('member/admin')?>">
-								<span class="title">Manage Member</span>
-							</a>
-						</li>
+						
 					</ul>
 				</li>
+				<li class="has-sub">
+					<a href="#">
+						<i class="entypo-docs"></i>
+						<span class="title">Bonus</span>
+					</a>
+					<ul>
+						<li>
+							<a href="<?php echo Yii::app()->createUrl('bonus/index')?>">
+							<i class="entypo-docs"></i>
+								<span class="title">Bonus</span>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo Yii::app()->createUrl('bonus/admin')?>">
+							<i class="entypo-docs"></i>
+								<span class="title">Manage Bonus</span>
+							</a>
+						</li>
+						
+					</ul>
+				</li>
+				
 				<li class="has-sub">
 					<a href="#">
 						<i class="entypo-cog"></i>
 						<span class="title">Setting</span>
 						<!--<span class="badge badge-info badge-roundless">New Items</span>-->
-					</a>
+					</a>	
 					<ul>
 						<li class="has-sub">
 							<a href="#">
@@ -249,28 +236,24 @@
 								</li>
 							</ul>
 						</li>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('posisi/admin')?>">
-							<i class="entypo-address"></i>
-								<span class="title">Posisi</span>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('tos/admin')?>">
-							<i class="entypo-pencil"></i>
-								<span class="title">TOS</span>
-							</a>
-						</li>
-						<li>
-							<a href="<?= Yii::app()->createUrl('kapal/admin')?>">
-
-								<i class="entypo-direction"></i>
-								<span class="title">Ships</span>
-								
-							</a>
-						</li>
 						
+						<li><a href="<?php echo Yii::app()->createUrl('settingPerusahaan/admin') ?>">
+						<i class="entypo-cog"></i>
+						<span class="title">Setting Perusahaan</span>
+						</a>
+						</li>
+						<li><a href="<?php echo Yii::app()->createUrl('settingBonus/admin') ?>">
+						<i class="entypo-cog"></i>
+						<span class="title">Setting Bonus/POIN</span>
+						</a>
+						</li>
+						<li><a href="<?php echo Yii::app()->createUrl('settingLevel/admin') ?>">
+						<i class="entypo-cog"></i>
+						<span class="title">Setting Level</span>
+						</a>
+						</li>
 					</ul>
+					
 				</li>
 				
 			</ul>

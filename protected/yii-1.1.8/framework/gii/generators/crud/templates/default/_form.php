@@ -21,11 +21,18 @@ foreach($this->tableSchema->columns as $column)
 	if($column->autoIncrement)
 		continue;
 ?>
-	<div class="row">
-		<?php echo "<?php echo ".$this->generateActiveLabel($this->modelClass,$column)."; ?>\n"; ?>
-		<?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
-		<?php echo "<?php echo \$form->error(\$model,'{$column->name}'); ?>\n"; ?>
+
+<div class="row">
+	<div class="form-group">
+		<div class="col-sm-2">
+			<?php echo "<?php echo ".$this->generateActiveLabel($this->modelClass,$column)."; ?>\n"; ?>
+		</div>
+        <div class="col-sm-6">
+				<?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n";?>
+			<?php echo "<?php echo \$form->error(\$model,'{$column->name}'); ?>\n"; ?>
+		</div>
 	</div>
+</div>
 
 <?php
 }

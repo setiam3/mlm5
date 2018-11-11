@@ -1,58 +1,79 @@
-<?php
-/* @var $this SiteController */
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 
-$this->pageTitle=Yii::app()->name;
+<?php 
+//inject database
+function inject($kodeupline=null,$sponsor=null,$i=0){
+    $model=new Member;
+    $model->kode_member=Controller::autoformat();
+    $model->userid=$model->kode_member;
+    $model->password=$model->userid;
+    $model->nama=$model->userid;
+    $model->alamat='alamat-'.$i;
+    $model->kota='kota-'.$i;
+    $model->hp='031-0'.$i;
+    $model->bank='BCA-'.$i;
+    $model->nomor_rekening='000000-'.$i;
+    $model->ktp='3525'.$i;
+    $model->email=$model->userid.'@bestharmony.co.id';
+    if(is_null($kodeupline)){
+      $model->kode_upline='#';
+    }else{
+      $model->kode_upline=$kodeupline;
+    }
+
+    if(!is_null($sponsor)){
+      $model->sponsor=$sponsor;
+    }
+   //$model->save();
+}
+function bukandistributor(){
+  foreach (Member::model()->findAll('level !="distributor"') as $ro) {
+        for ($i = 0; $i < 10; $i++) {
+        inject($ro->kode_member,$ro->kode_member,$i);
+      }
+    }
+}
+// inject();
+// foreach (Member::model()->findAll() as $row) {
+//     for ($i = 0; $i < 10; $i++) {
+//       inject($row->kode_member,$row->kode_member,$i);
+//     }
+//     bukandistributor();
+//      bukandistributor();
+//      bukandistributor();
+//  }
+
 ?>
-<div class="row">
-			<div class="col-sm-3 col-xs-6">
-		
-				<div class="tile-stats tile-red">
-					<div class="icon"><i class="entypo-users"></i></div>
-					<div class="num" data-start="0" data-end="83" data-postfix="" data-duration="1500" data-delay="0">0</div>
-		
-					<h3>Registered users</h3>
-					<p>so far in our blog, and our website.</p>
-				</div>
-		
-			</div>
-		
-			<div class="col-sm-3 col-xs-6">
-		
-				<div class="tile-stats tile-green">
-					<div class="icon"><i class="entypo-chart-bar"></i></div>
-					<div class="num" data-start="0" data-end="135" data-postfix="" data-duration="1500" data-delay="600">0</div>
-		
-					<h3>Daily Visitors</h3>
-					<p>this is the average value.</p>
-				</div>
-		
-			</div>
-			
-			<div class="clear visible-xs"></div>
-		
-			<div class="col-sm-3 col-xs-6">
-		
-				<div class="tile-stats tile-aqua">
-					<div class="icon"><i class="entypo-mail"></i></div>
-					<div class="num" data-start="0" data-end="23" data-postfix="" data-duration="1500" data-delay="1200">0</div>
-		
-					<h3>New Messages</h3>
-					<p>messages per day.</p>
-				</div>
-		
-			</div>
-		
-			<div class="col-sm-3 col-xs-6">
-		
-				<div class="tile-stats tile-blue">
-					<div class="icon"><i class="entypo-rss"></i></div>
-					<div class="num" data-start="0" data-end="52" data-postfix="" data-duration="1500" data-delay="1800">0</div>
-		
-					<h3>Subscribers</h3>
-					<p>on our site right now.</p>
-				</div>
-		
-			</div>
-		</div>
-		
-		<br />
+
+<div id="jstree_demo_div"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script type="text/javascript">
+var url='<?php echo $this->createUrl('member/create');?>';
+	//$(function () { $('#jstree_demo_div').jstree(); });
+$('#jstree_demo_div').jstree({
+    'core' : {
+      'data' : {
+        "url" : '<?php echo $this->createUrl('site/getTree');?>',
+        "dataType" : "json" // needed only if you do not supply JSON headers
+      }
+    }
+  });
+
+$('#jstree_demo_div')
+  // listen for event
+  .on('changed.jstree', function (e, data) {
+    var i, j, r = [];
+    for(i = 0, j = data.selected.length; i < j; i++) {
+    	if(data.instance.get_node(data.selected[i]).text==='Add'){
+    		r.push(data.instance.get_node(data.selected[i]).parent);
+    	}
+    }
+    if(r){
+    	if(r.length){
+    		window.open( url+'/?upline='+ r.join(', '));
+    	}
+    }
+  })
+  // create the instance
+  .jstree();
+</script>

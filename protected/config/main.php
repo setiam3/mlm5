@@ -5,7 +5,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Tracking PT. TOSI',
+	//'name'=>'',
     'theme'=>'neon2',
     // 'basePath' => 'new',
 	// preloading 'log' component
@@ -21,37 +21,38 @@ return array(
     'application.modules.rights.*',
     'application.modules.rights.components.*',
 	),
-  'defaultController'=>'user/login',
+  'defaultController'=>'site',
 	'modules'=>array(
+    'api',
 		'user'=>array(
       'tableUsers' => 'users',
       'tableProfiles' => 'profiles',
       'tableProfileFields' => 'profiles_fields',
-           # encrypting method (php hash function)
-      'hash' => 'md5',
-      # send activation email
+      // # encrypting method (php hash function)
+       'hash' => 'md5',
+      // # send activation email
       'sendActivationMail' => true,
-      # allow access for non-activated users
-      'loginNotActiv' => false,
-      # activate user on registration (only sendActivationMail = false)
-      'activeAfterRegister' => false,
-      # automatically login from registration
-      'autoLogin' => true,
-      # registration path
-      'registrationUrl' => array('/user/registration'),
-      # recovery password path
-      'recoveryUrl' => array('/user/recovery'),
-      # login form path
-      'loginUrl' => array('/user/login'),
-      # page after login
-      'returnUrl' => array('/user/profile'),
-      # page after logout
-      'returnLogoutUrl' => array('/user/login'),
+      // # allow access for non-activated users
+       'loginNotActiv' => false,
+      // # activate user on registration (only sendActivationMail = false)
+       'activeAfterRegister' => false,
+      // # automatically login from registration
+       'autoLogin' => true,
+      // # registration path
+       'registrationUrl' => array('/user/registration'),
+      // # recovery password path
+       'recoveryUrl' => array('/user/recovery'),
+      // # login form path
+       'loginUrl' => array('/user/login'),
+      // # page after login
+       'returnUrl' => array('/user/profile'),
+      // # page after logout
+       'returnLogoutUrl' => array('/user/login'),
         ),
     'rights'=>array(
-       'superuserName'=>'Admin', // Name of the role with super user privileges. 
-       'authenticatedName'=>'Authenticated',  // Name of the authenticated user role. 
-       'userIdColumn'=>'id', // Name of the user id column in the database. 
+        'superuserName'=>'Admin', // Name of the role with super user privileges. 
+        'authenticatedName'=>'Authenticated',  // Name of the authenticated user role. 
+        'userIdColumn'=>'id', // Name of the user id column in the database. 
        'userNameColumn'=>'username',  // Name of the user name column in the database. 
        'enableBizRule'=>true,  // Whether to enable authorization item business rules. 
        'enableBizRuleData'=>true,   // Whether to enable data for business rules. 
@@ -94,10 +95,11 @@ return array(
     'authManager'=>array(
         'class'=>'RDbAuthManager',
         'connectionID'=>'db',
-        'itemTable'=>'authitem',
-        'itemChildTable'=>'authitemchild',
-        'assignmentTable'=>'authassignment',
-        'rightsTable'=>'rights',
+        'defaultRoles'=>array('Authenticated', 'Guest'),
+        // 'itemTable'=>'authitem',
+        // 'itemChildTable'=>'authitemchild',
+        // 'assignmentTable'=>'authassignment',
+        // 'rightsTable'=>'rights',
     ),
 		// uncomment the following to enable URLs in path-format
     'urlManager'=>array(
@@ -133,5 +135,6 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'info@zetia.web.id',
+    'maxMember'=>10,
 	),
 );

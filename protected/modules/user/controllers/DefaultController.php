@@ -17,7 +17,7 @@ class DefaultController extends Controller
 			),
 		));
 
-		//$this->render('/user/index',array('dataProvider'=>$dataProvider,));
+		$this->render('/user/index',array('dataProvider'=>$dataProvider,));
 	}
 
 }

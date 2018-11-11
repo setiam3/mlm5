@@ -1,15 +1,30 @@
 <?php
-/* @var $this MemberController */
-
 $this->breadcrumbs=array(
-	'Member',
+	'Members',
 );
+
 ?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
-<?php //$colom=array('no_jo',);
-//$this->genTables($colom, 'Order', array('attributes'=>array('customer'=>Yii::app()->user->name),'condition'=>array('order'=>'id Desc')), 'datatable table-hover');
-//$datae= Order::model()->findAllByAttributes(array('customer'=>Yii::app()->user->name));
-//print_r($datae);
-//echo Yii::app()->user->getState('level');
-$widget->run();
+
+<h1>Members</h1>
+<?php $colom=array(
+				'kode_member',
+		'userid',
+		'password',
+		'nama',
+		'alamat',
+		/*
+		'kota',
+		'hp',
+		'bank',
+		'nomor_rekening',
+		'ktp',
+		'email',
+		'kode_upline',
+		'tanggal_daftar',
+		'level',
+		'poin',
+		'sponsor',
+		*/
+);
+$this->genTables($colom, 'Member',null,'datatable table-bordered');
 ?>

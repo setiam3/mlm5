@@ -1,27 +1,43 @@
 <?php
 
 /**
- * This is the model class for table "customer".
+ * This is the model class for table "m_member".
  *
- * The followings are the available columns in table 'customer':
+ * The followings are the available columns in table 'm_member':
  * @property integer $id
- * @property string $username
+ * @property string $kode_member
+ * @property string $userid
  * @property string $password
+ * @property string $nama
+ * @property string $alamat
+ * @property string $kota
+ * @property string $hp
+ * @property string $bank
+ * @property string $nomor_rekening
+ * @property string $ktp
  * @property string $email
- * @property integer $status
+ * @property string $kode_upline
+ * @property string $tanggal_daftar
  * @property string $level
- * @property string $firstname
- * @property string $lastname
- * @property string $birthday
+ * @property integer $poin
  */
 class Member extends CActiveRecord
 {
+	/**
+	 * Returns the static model of the specified AR class.
+	 * @return Member the static model class
+	 */
+	public static function model($className=__CLASS__)
+	{
+		return parent::model($className);
+	}
+
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'customer';
+		return 'm_member';
 	}
 
 	/**
@@ -32,16 +48,13 @@ class Member extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
-			array('id, status', 'numerical', 'integerOnly'=>true),
-			array('username', 'length', 'max'=>20),
-			array('password, email', 'length', 'max'=>128),
-			array('level', 'length', 'max'=>200),
-			array('firstname, lastname', 'length', 'max'=>50),
-			array('birthday', 'safe'),
+			array('kode_member, userid, password, nama, alamat, kota, hp, bank, nomor_rekening, ktp, email, kode_upline, ', 'required'),
+			array('poin', 'numerical', 'integerOnly'=>true),
+			array('kode_member, userid, password, nama, alamat, kota, bank, nomor_rekening, ktp, email, kode_upline, level,sponsor', 'length', 'max'=>45),
+			array('hp', 'length', 'max'=>15),
 			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, username, password, email, status, level, firstname, lastname, birthday', 'safe', 'on'=>'search'),
+			// Please remove those attributes that should not be searched.
+			array('id, kode_member, userid, password, nama, alamat, kota, hp, bank, nomor_rekening, ktp, email, kode_upline, tanggal_daftar, level, poin,sponsor', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,58 +76,74 @@ class Member extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'username' => 'Username',
+			'kode_member' => 'Kode Member',
+			'userid' => 'Userid',
 			'password' => 'Password',
+			'nama' => 'Nama',
+			'alamat' => 'Alamat',
+			'kota' => 'Kota',
+			'hp' => 'Hp',
+			'bank' => 'Bank',
+			'nomor_rekening' => 'Nomor Rekening',
+			'ktp' => 'Ktp',
 			'email' => 'Email',
-			'status' => 'Status',
+			'kode_upline' => 'Kode Upline',
+			'tanggal_daftar' => 'Tanggal Daftar',
 			'level' => 'Level',
-			'firstname' => 'Firstname',
-			'lastname' => 'Lastname',
-			'birthday' => 'Birthday',
+			'poin' => 'Poin',
+			'sponsor' => 'Sponsor',
 		);
 	}
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
+	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search()
+	public function search(array $columns)
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+		// Warning: Please modify the following code to remove attributes that
+		// should not be searched.
 
 		$criteria=new CDbCriteria;
+		if (isset($_GET['sSearch'])) {
+			$criteria->compare('kode_member',$_GET['sSearch'],true,'OR');
+			$criteria->compare('nama',$_GET['sSearch'],true,'OR');
+            $criteria->compare('alamat',$_GET['sSearch'],true,'OR');
+			$criteria->compare('ktp',$_GET['sSearch'],true,'OR');
+			$criteria->compare('email',$_GET['sSearch'],true,'OR');
+			$criteria->compare('level',$_GET['sSearch'],true,'OR');
+		}
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
+		$criteria->compare('kode_member',$this->kode_member,true);
+		$criteria->compare('userid',$this->userid,true);
 		$criteria->compare('password',$this->password,true);
+		$criteria->compare('nama',$this->nama,true);
+		$criteria->compare('alamat',$this->alamat,true);
+		$criteria->compare('kota',$this->kota,true);
+		$criteria->compare('hp',$this->hp,true);
+		$criteria->compare('bank',$this->bank,true);
+		$criteria->compare('nomor_rekening',$this->nomor_rekening,true);
+		$criteria->compare('ktp',$this->ktp,true);
 		$criteria->compare('email',$this->email,true);
-		$criteria->compare('status',$this->status);
+		$criteria->compare('kode_upline',$this->kode_upline,true);
+		$criteria->compare('tanggal_daftar',$this->tanggal_daftar,true);
 		$criteria->compare('level',$this->level,true);
-		$criteria->compare('firstname',$this->firstname,true);
-		$criteria->compare('lastname',$this->lastname,true);
-		$criteria->compare('birthday',$this->birthday,true);
+		$criteria->compare('poin',$this->poin);
+		$criteria->compare('sponsor',$this->sponsor);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>new EDTSort(__CLASS__, $columns,array('id'=>'desc')),
+			'pagination'=>new EDTPagination,
 		));
 	}
-
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Member the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
+	public function afterSave(){
+		parent::afterSave();
+		if($this->isNewRecord){
+			Controller::hitungbonusgetmember($this->kode_upline,$this->kode_member);
+			Controller::upgradelevel($this->kode_upline);
+			Controller::bonussponsor($this->sponsor,$this->kode_member);
+		}
 	}
 }

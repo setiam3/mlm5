@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 $colom=array(
 		'username',
 		'email',
-		//'status',
+		'level',
     );
 $this->genTables($colom, 'User',null,'datatable table-bordered');//format idtabel,colom,models
 ?>

@@ -7,7 +7,7 @@ return array(
 	//'connectionString' => 'mysql:host=localhost;dbname=wawabass_new1',
 	//'username' => 'wawabass_new1',
 	//'password' => 'lasido678',
-	'connectionString' => 'mysql:host=localhost;dbname=wawabass_new1',
+	'connectionString' => 'mysql:host=localhost;dbname=mlm5',
 	'emulatePrepare' => true,
 	'username' => 'root',
 	'password' => 'root',

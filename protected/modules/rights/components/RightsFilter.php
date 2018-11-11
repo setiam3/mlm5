@@ -46,8 +46,9 @@ class RightsFilter extends CFilter
 				$authItem .= '.'.ucfirst($action->id);
 
 				// Check if the user has access to the controller action
-				if( $user->checkAccess($authItem)!==true )
-					$allow = false;
+				if($user->checkAccess($authItem)!==true)
+					
+				$allow = false;
 			}
 		}
 
@@ -55,6 +56,7 @@ class RightsFilter extends CFilter
 		if( $allow===false )
 		{
 			$controller->accessDenied();
+			//$controller->redirect(array('site/login'));
 		 	return false;
 		}
 

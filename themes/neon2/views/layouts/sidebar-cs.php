@@ -43,35 +43,12 @@
 						</li>
 					</ul>
 				</li>
-				<li class="has-sub">
-					<a href="user">
-						<i class="entypo-layout"></i>
-						<span class="title">User Management</span>
-					</a>
-					<ul>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('user/admin/create')?>">
-								<span class="title">Tambah User</span>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('user/admin/admin')?>">
-								<span class="title">Edit User</span>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo Yii::app()->createUrl('rights')?>">
-								<span class="title">User Access</span>
-							</a>
-						</li>
-					</ul>
-				</li>
 				
 				<li class="has-sub">
 					<a href="<?php echo Yii::app()->createUrl('order/index')?>">
 						<i class="entypo-newspaper"></i>
 						<span class="title">Job Order</span>
-						<span class="badge badge-secondary"><?php echo count(Order::model()->cache(1000)->findAll(array('condition'=>'MONTH(tanggal_jo)='.date('m'))))?></span>
+						<span class="badge badge-secondary"><?php echo count(Order::model()->cache(1000)->findAll(array('condition'=>'MONTH(tanggal_stuffing)='.date('m'))))?></span>
 					</a>
 					<ul>
 						<li>
@@ -94,52 +71,105 @@
 				<li class="has-sub">
 					<a href="#">
 						<i class="entypo-window"></i>
-						<span class="title">Positions</span>
+						<span class="title">Posisi Kontainer</span>
 					</a>
 					<ul>
 						<li>
                                 <a href="<?php echo Yii::app()->createUrl('detail/index')?>">
-								<span class="title">Positions</span>
+								<span class="title">Posisi Kontainer</span>
 							</a>
 						</li>
 						<li>
                                 <a href="<?php echo Yii::app()->createUrl('detail/create')?>">
-								<span class="title">Tambah Position</span>
+								<span class="title">Tambah Posisi</span>
 							</a>
 						</li>
 						<li>
                                 <a href="<?php echo Yii::app()->createUrl('detail/admin')?>">
-								<span class="title">Edit Position</span>
+								<span class="title">Edit Posisi</span>
+							</a>
+						</li>
+					</ul>
+				</li>	
+				<li class="has-sub">
+					<a href="#">
+						<i class="entypo-window"></i>
+						<span class="title">BL</span>
+					</a>
+					<ul>
+						<li>
+                                <a href="<?php echo Yii::app()->createUrl('bl/index')?>">
+								<span class="title">BL</span>
+							</a>
+						</li>
+						<li>
+                                <a href="<?php echo Yii::app()->createUrl('bl/create')?>">
+								<span class="title">Tambah BL</span>
+							</a>
+						</li>
+						<li>
+                                <a href="<?php echo Yii::app()->createUrl('bl/admin')?>">
+								<span class="title">Edit BL</span>
 							</a>
 						</li>
 					</ul>
 				</li>
 				<li class="has-sub">
 					<a href="#">
-						<i class="entypo-doc-text"></i>
-						<span class="title">Container JO</span>
+						<i class="entypo-window"></i>
+						<span class="title">DR</span>
 					</a>
 					<ul>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('kontainerjo/index')?>">
-							<i class="entypo-doc-text"></i>
-								<span class="title">Container JO</span>
+                                <a href="<?php echo Yii::app()->createUrl('deliveryreceipt/index')?>">
+								<span class="title">DR</span>
 							</a>
 						</li>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('kontainerjo/create')?>">
-							<i class="entypo-pencil"></i>
-								<span class="title">Tambah Container JO</span>
+                                <a href="<?php echo Yii::app()->createUrl('deliveryreceipt/create')?>">
+								<span class="title">Tambah DR</span>
 							</a>
 						</li>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('kontainerjo/admin')?>">
-							<i class="entypo-pencil"></i>
-								<span class="title">Edit Container JO</span>
+                                <a href="<?php echo Yii::app()->createUrl('deliveryreceipt/admin')?>">
+								<span class="title">Edit DR</span>
 							</a>
 						</li>
 					</ul>
-				</li>				
+				</li>		
+				<li class="has-sub">
+					<a href="<?php echo Yii::app()->createUrl('member/index')?>">
+						<i class="entypo-window"></i>
+						<span class="title">Customer</span>
+					</a>
+					<ul>
+						<li>
+                                <a href="<?php echo Yii::app()->createUrl('member/create')?>">
+								<span class="title">Tambah Customer</span>
+							</a>
+						</li>
+						
+					</ul>
+				</li>	
+				<li class="has-sub">
+					<a href="#">
+						<i class="entypo-window"></i>
+						<span class="title">Kapal</span>
+					</a>
+					<ul>
+						<li>
+                                <a href="<?php echo Yii::app()->createUrl('kapal/index')?>">
+								<span class="title">Kapal</span>
+							</a>
+						</li>
+						<li>
+                                <a href="<?php echo Yii::app()->createUrl('kapal/create')?>">
+								<span class="title">Tambah Kapal</span>
+							</a>
+						</li>
+						
+					</ul>
+				</li>		
 				
 			</ul>
 			

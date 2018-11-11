@@ -27,18 +27,22 @@
 </head>
 <body class="page-body" data-url="http://neon.dev">
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
-<?php switch (Controller::getrole()) {
-     case 'cs':include ('sidebar-cs.php');
-         break;
-     case 'customer':include ('sidebar-customer.php');
-         break;
-     case 'operasional':include ('sidebar-operasional.php');
-         break;
-     case 'agen':include ('sidebar-agen.php');
-         break;
-     default:include ('sidebar-menu.php');
-         break;
- }
+<?php 
+include ('sidebar-menu.php');
+//switch (Controller::getrole()) {
+//      case 'cs':include ('sidebar-cs.php');
+//          break;
+//      case 'marketing':include ('sidebar-cs.php');
+//          break;
+//      case 'customer':include ('sidebar-customer.php');
+//          break;
+//      case 'operasional':include ('sidebar-operasional.php');
+//          break;
+//      case 'agen':include ('sidebar-agen.php');
+//          break;
+//      default:include ('sidebar-menu.php');
+//          break;
+//  }
 	?>
 	<div class="main-content">
 		<?php include('top-bar.php');?>

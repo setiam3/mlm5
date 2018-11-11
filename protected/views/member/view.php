@@ -1,26 +1,31 @@
 <?php
-/* @var $this MemberController */
-
 $this->breadcrumbs=array(
-	'Member'=>array('/member'),
-	'View',
+	'Members'=>array('index'),
+	$model->id,
 );
+
 ?>
-<h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
-<div class="panel panel-primary">
-    <div class="panel-heading">
-            <div class="panel-title">My Profile</div>
-    </div>
+
+<h1>View Member #<?php echo $model->id; ?></h1>
+
 <?php $attributes=array(
-		'username',
+				'id',
+		'kode_member',
+		'userid',
 		'password',
+		'nama',
+		'alamat',
+		'kota',
+		'hp',
+		'bank',
+		'nomor_rekening',
+		'ktp',
 		'email',
-		'firstname',
-		'lastname',
-		'birthday'
-		
+		'kode_upline',
+		'tanggal_daftar',
+		'level',
+		'poin',
+		'sponsor',
 	);
-    $this->genListView($model,$attributes);
-    ?>
-    
-</div>
+$this->genListView($model,$attributes,$model->id);
+?>

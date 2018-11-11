@@ -117,7 +117,7 @@ class CCaptcha extends CWidget
 		if($this->showRefreshButton)
 		{
 			$cs->registerScript('Yii.CCaptcha#'.$id,'dummy');
-			$label=$this->buttonLabel===null?Yii::t('yii','Get a new code'):$this->buttonLabel;
+			$label=$this->buttonLabel===null?Yii::t('yii','Reload'):$this->buttonLabel;
 			$options=$this->buttonOptions;
 			if(isset($options['id']))
 				$buttonID=$options['id'];
@@ -138,7 +138,7 @@ class CCaptcha extends CWidget
 			return;
 
 		$js.="
-jQuery('$selector').live('click',function(){
+jQuery('$selector').on('click',function(){
 	jQuery.ajax({
 		url: ".CJSON::encode($url).",
 		dataType: 'json',

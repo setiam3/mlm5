@@ -503,17 +503,17 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
         }
     }
     public static function get_sponsor($kodemember){
-        $mem=User::model()->cache(1000)->findByAttributes(array('kode_member'=>$kodemember));
+        $mem=User::model()->findByAttributes(array('kode_member'=>$kodemember));
         return $mem->sponsor;
     }
     public static function get_level($kodemember){
         if($kodemember!=='#'){
-            $mem=User::model()->cache(1000)->findByAttributes(array('kode_member'=>$kodemember));
+            $mem=User::model()->findByAttributes(array('kode_member'=>$kodemember));
         return $mem->level;
         }
     }
     public static function get_upline($kodemember){
-        $mem=User::model()->cache(1000)->findByAttributes(array('kode_member'=>$kodemember));
+        $mem=User::model()->findByAttributes(array('kode_member'=>$kodemember));
         return $mem->kode_upline;
     }
     public static function bonussponsor($kodesponsor,$kodemember){
@@ -523,7 +523,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
             $upline_level=Controller::get_level(Controller::get_upline($kodemember));
             if($jmlsponsor>0 && is_numeric($value->param)){
                 if($jmlsponsor%$value->param==0){
-                    //echo 'bonus 50k';
+                    //echo '<script>console.log("bonus 50k")</script>';
                     $model=new Bonus;
                     $model->kode_member=$kodesponsor;
                     $model->bonus=$value->bonus;
@@ -540,14 +540,15 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
                 }
                 if(is_array($inarray)){
                     if(!in_array($value->id, $inarray)){//19 id bonus sponsorship
-                        //echo 'insert bonus 10k <br>';
-                        $model=new Bonus;
-                        $model->kode_member=Controller::get_sponsor(Controller::get_upline($kodemember));
-                        $model->bonus=$value->bonus;
-                        $model->keterangan=$value->keterangan;
-                        $model->dari_member=Controller::get_upline($kodemember);
-                        $model->idbonus=$value->id;
-                        $model->save();
+                        //echo '<script>console.log("bonus 10k")</script>';
+                        $models=new Bonus;
+                        $models->kode_member=Controller::get_sponsor(Controller::get_upline($kodemember));
+                        $models->bonus=$value->bonus;
+                        $models->keterangan=$value->keterangan;
+                        $models->dari_member=Controller::get_upline($kodemember);
+                        $models->idbonus=$value->id;
+                         //echo '<script>console.log('.json_encode($models->bonus.'-'.$models->keterangan.'-'.$models->dari_member.'-'.$models->idbonus.'-'.$models->kode_member).')</script>';
+                        $models->save();
                     }
                 }
             }

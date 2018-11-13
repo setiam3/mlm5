@@ -141,6 +141,18 @@ class BonusController extends Controller
         		'type'=>'html',
         		'name'=>'poin',
         		'value'=>'CHtml::link($data->poin,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),array(
+        		'type'=>'html',
+        		'name'=>'keterangan',
+        		'value'=>'CHtml::link($data->keterangan,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),array(
+        		'type'=>'html',
+        		'name'=>'dari_member',
+        		'value'=>'CHtml::link($data->dari_member,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),array(
+        		'type'=>'html',
+        		'name'=>'idbonus',
+        		'value'=>'CHtml::link($data->idbonus,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
         		),
 		);
 

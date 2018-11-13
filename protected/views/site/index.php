@@ -1,61 +1,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
 <?php echo Yii::app()->user->getFlash('registration'); 
-echo '<a href="'.Yii::app()->baseUrl.'/site/index">back</a>';
+
+//echo Controller::get_sponsor(Controller::get_upline('BY0000110'))
+//echo $this->get_sponsor('BY0000012');
 ?>
-<?php 
-//inject database
-function inject($kodeupline=null,$sponsor=null,$i=0){
-    $model=new Member;
-    $model->kode_member=Controller::autoformat();
-    $model->userid=$model->kode_member;
-    $model->password=$model->userid;
-    $model->nama=$model->userid;
-    $model->alamat='alamat-'.$i;
-    $model->kota='kota-'.$i;
-    $model->hp='031-0'.$i;
-    $model->bank='BCA-'.$i;
-    $model->nomor_rekening='000000-'.$i;
-    $model->ktp='3525'.$i;
-    $model->email=$model->userid.'@bestharmony.co.id';
-    if(is_null($kodeupline)){
-      $model->kode_upline='#';
-    }else{
-      $model->kode_upline=$kodeupline;
-    }
-
-    if(!is_null($sponsor)){
-      $model->sponsor=$sponsor;
-    }
-  //$model->save();
-}
-function bukandistributor(){
-  foreach (Member::model()->cache(1000)->findAll('level !="distributor"') as $ro) {
-        for ($i = 0; $i < 10; $i++) {
-        inject($ro->kode_member,$ro->kode_member,$i);
-      }
-    }
-}
-// inject();
-// foreach (Member::model()->cache(1000)->findAll() as $row) {
-//     for ($i = 0; $i < 10; $i++) {
-//       inject($row->kode_member,$row->kode_member,$i);
-//     }
-    
-//  }
-// bukandistributor();
-//    bukandistributor();
-//     bukandistributor();
-
-echo Yii::app()->user->kode_member;
-
-$prod=Product::model()->findAll();
-    foreach ($prod as $value) {
-      ProductController::Addtocart($value->id);
-      CartController::Finishshop();
-    }
-    
-?>
-
 <div id="jstree_demo_div"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 <script type="text/javascript">
@@ -64,7 +12,7 @@ var url='<?php echo $this->createUrl('member/create');?>';
 $('#jstree_demo_div').jstree({
     'core' : {
       'data' : {
-        "url" : '<?php //echo $this->createUrl('site/getTree');?>',
+        "url" : '<?php echo $this->createUrl('site/getTree');?>',
         "dataType" : "json" // needed only if you do not supply JSON headers
       }
     }

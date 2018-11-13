@@ -63,7 +63,7 @@ class SiteController extends YiishopController
 	public function actionIndex()
 
 	{
-		//print_r(Controller::comboSponsor('8982387'));
+		//print_r(User::model()->cache(1000)->findAll('level !="distributor"'));
 		//echo CVarDumper::dumpAsString(Controller::comboSponsor('8982387'),10,true);
 		$this->render('index');
 	}
@@ -109,6 +109,45 @@ class SiteController extends YiishopController
 	}
 
 
+//inject database
+public function inject($kodeupline=null,$sponsor=null,$i=0){
+    $model=new User;
+    $model->kode_member=Controller::autoformat();
+	$model->createtime=time();
+    $model->username=$model->kode_member;
+    $model->password=md5($model->username);
+    $model->activkey=UserModule::encrypting(microtime().$model->password);
+    $model->email=$model->username.'@bestharmony.co.id';
+    if(is_null($kodeupline)){
+      $model->kode_upline='#';
+    }else{
+      $model->kode_upline=$kodeupline;
+    }
+    if(!is_null($sponsor)){
+      $model->sponsor=$sponsor;
+    }
+  	$model->save();
+  	
+}
+public function bukandistributor(){
+  foreach (User::model()->findAll('level !="distributor"') as $ro) {
+        for ($i = 0; $i < 10; $i++) {
+        $this->inject($ro->kode_member,$ro->kode_member,$i);
+      }
+    }
+}
+public function actionIsi(){
+	$this->inject();
+foreach (User::model()->cache(1000)->findAll() as $row) {
+    for ($i = 0; $i < 10; $i++) {
+      $this->inject($row->kode_member,$row->kode_member,$i);
+    }
+    
+ }
+$this->bukandistributor();
+$this->bukandistributor();
+$this->bukandistributor();
+}
 	/**
 	 * Displays the login page
 	 */

@@ -32,7 +32,7 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		
 		return ((Yii::app()->getModule('user')->isAdmin())?array(
-			#array('username, password, email', 'required'),
+			array('username, password, email', 'required'),
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
 			array('password', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			array('email', 'email'),
@@ -43,7 +43,7 @@ class User extends CActiveRecord
 			array('superuser', 'in', 'range'=>array(0,1)),
 			array('username, email, createtime, lastvisit, superuser, status,level,kode_member,kode_upline', 'required'),
 			array('createtime, lastvisit, superuser, status', 'numerical', 'integerOnly'=>true),
-			array('level', 'safe'),
+			array('level,kode_member,kode_upline,sponsor', 'safe'),
 		):((Yii::app()->user->id==$this->id)?array(
 			array('username, email,level,kode_member,kode_upline', 'required'),
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
@@ -51,7 +51,7 @@ class User extends CActiveRecord
 			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
 			array('username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
 			array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
-			array('level,kode_member,kode_upline', 'safe'),
+			array('level,kode_member,kode_upline,sponsor', 'safe'),
 		):array()));
 	}
 
@@ -107,7 +107,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, email, activkey, createtime, lastvisit, superuser, status,level,kode_member',
+            	'select' => 'id, username, password, email, activkey, createtime, lastvisit, superuser, status,level,kode_member,kode_upline,sponsor',
             ),
         );
     }
@@ -115,7 +115,7 @@ class User extends CActiveRecord
 	public function defaultScope()
     {
         return array(
-            'select' => 'id, username, email, createtime, lastvisit, superuser, status,level,kode_member',
+            'select' => 'id, username, email, createtime, lastvisit, superuser, status,level,kode_member,kode_upline,sponsor',
         );
     }
     public static function itemLevel() {
@@ -133,14 +133,23 @@ class User extends CActiveRecord
     	//print_r($val);
     	return $val;
     }
- //    public function afterSave(){
-	// 	// parent::afterSave();
-	// 	// if($this->isNewRecord){
-	// 	// 	Controller::hitungbonusgetmember($this->kode_upline,$this->kode_member);
-	// 	// 	Controller::upgradelevel($this->kode_upline);
-	// 	// 	Controller::bonussponsor($this->sponsor,$this->kode_member);
-	// 	// }
-	// }
+    public function afterSave(){
+		parent::afterSave();
+		if($this->isNewRecord){
+			
+			// $p=new Profil;
+			// $p->user_id=$this->id;
+			// $p->nik='123';
+			// $p->nama=$this->username;
+			// $p->alamat=$this->username;
+			// $p->save();
+			Controller::hitungbonusgetmember($this->kode_upline,$this->kode_member);
+			Controller::upgradelevel($this->kode_upline);
+			//if(!empty($this->sponsor) && $this->sponsor!==NULL){
+				Controller::bonussponsor($this->sponsor,$this->kode_member);
+			//}
+		}
+	}
 	// public function beforeSave(){
 		
 	// 	// if($this->isNewRecord){

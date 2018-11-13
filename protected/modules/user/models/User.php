@@ -7,19 +7,6 @@ class User extends CActiveRecord
 	const STATUS_BANED=-1;
 	
 	/**
-	 * The followings are the available columns in table 'users':
-	 * @var integer $id
-	 * @var string $username
-	 * @var string $password
-	 * @var string $email
-	 * @var string $activkey
-	 * @var integer $createtime
-	 * @var integer $lastvisit
-	 * @var integer $superuser
-	 * @var integer $status
-	 */
-
-	/**
 	 * Returns the static model of the specified AR class.
 	 * @return CActiveRecord the static model class
 	 */
@@ -54,17 +41,17 @@ class User extends CActiveRecord
 			array('username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
 			array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANED)),
 			array('superuser', 'in', 'range'=>array(0,1)),
-			array('username, email, createtime, lastvisit, superuser, status', 'required'),
+			array('username, email, createtime, lastvisit, superuser, status,level,kode_member,kode_upline', 'required'),
 			array('createtime, lastvisit, superuser, status', 'numerical', 'integerOnly'=>true),
 			array('level', 'safe'),
 		):((Yii::app()->user->id==$this->id)?array(
-			array('username, email', 'required'),
+			array('username, email,level,kode_member,kode_upline', 'required'),
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
 			array('email', 'email'),
 			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
 			array('username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
 			array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
-			array('level', 'safe'),
+			array('level,kode_member,kode_upline', 'safe'),
 		):array()));
 	}
 
@@ -98,6 +85,9 @@ class User extends CActiveRecord
 			'superuser' => UserModule::t("Superuser"),
 			'status' => UserModule::t("Status"),
 			'level' => UserModule::t("Level"),
+			'kode_member' => UserModule::t("Kode Member"),
+			'kode_upline' => UserModule::t("Kode Upline"),
+			'sponsor' => UserModule::t("Sponsor"),
 		);
 	}
 	
@@ -117,7 +107,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, email, activkey, createtime, lastvisit, superuser, status,level',
+            	'select' => 'id, username, password, email, activkey, createtime, lastvisit, superuser, status,level,kode_member',
             ),
         );
     }
@@ -125,7 +115,7 @@ class User extends CActiveRecord
 	public function defaultScope()
     {
         return array(
-            'select' => 'id, username, email, createtime, lastvisit, superuser, status,level',
+            'select' => 'id, username, email, createtime, lastvisit, superuser, status,level,kode_member',
         );
     }
     public static function itemLevel() {
@@ -143,6 +133,26 @@ class User extends CActiveRecord
     	//print_r($val);
     	return $val;
     }
+ //    public function afterSave(){
+	// 	// parent::afterSave();
+	// 	// if($this->isNewRecord){
+	// 	// 	Controller::hitungbonusgetmember($this->kode_upline,$this->kode_member);
+	// 	// 	Controller::upgradelevel($this->kode_upline);
+	// 	// 	Controller::bonussponsor($this->sponsor,$this->kode_member);
+	// 	// }
+	// }
+	// public function beforeSave(){
+		
+	// 	// if($this->isNewRecord){
+	// 	// 	if(Controller::is_maxMember($this->kode_upline)){ //selain root
+	// 	// 		$this->kode_member=Controller::autoformat();
+	// 	// 	}
+			
+	// 	// 	echo $this->kode_upline;
+	// 	// 	$this->kode_member=Controller::autoformat();
+	// 	// 	echo $this->kode_member;
+	// 	// }
+	// }
 	
 	public static function itemAlias($type,$code=NULL) {
 		$_items = array(

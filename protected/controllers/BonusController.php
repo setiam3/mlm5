@@ -59,7 +59,7 @@ class BonusController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	/*public function actionCreate()
 	{
 		$model=new Bonus;
 
@@ -76,14 +76,14 @@ class BonusController extends Controller
 		$this->render('create',array(
 			'model'=>$model,
 		));
-	}
+	}*/
 
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdate($id)
+	/*public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
 
@@ -100,14 +100,14 @@ class BonusController extends Controller
 		$this->render('update',array(
 			'model'=>$model,
 		));
-	}
+	}*/
 
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	/*public function actionDelete($id)
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
@@ -120,17 +120,57 @@ class BonusController extends Controller
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-	}
+	}*/
+	public $columns=array(
+		array(
+        		'type'=>'html',
+        		'name'=>'kode_member',
+        		'value'=>'CHtml::link($data->kode_member,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),
+		array(
+        		'type'=>'html',
+        		'name'=>'tanggal',
+        		'value'=>'CHtml::link($data->tanggal,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),
+		array(
+        		'type'=>'html',
+        		'name'=>'bonus',
+        		'value'=>'CHtml::link($data->bonus,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),
+		array(
+        		'type'=>'html',
+        		'name'=>'poin',
+        		'value'=>'CHtml::link($data->poin,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+        		),
+		);
 
 	/**
 	 * Lists all models.
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Bonus');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+		$model=new Bonus('search');
+		$model->unsetAttributes();
+
+		$widget=$this->createWidget('ext.EDataTables.EDataTables', array(
+		 'id'            => 'bonus-grid',
+		 'dataProvider'  => $model->search($this->columns),
+		 'ajaxUrl'       => $this->createUrl($this->getAction()->getId()),
+		 'columns'       => $this->columns,
+         'bootstrap'=>true,
 		));
+		if (!Yii::app()->getRequest()->getIsAjaxRequest()) {
+		  $this->render('index', array('widget' => $widget,));
+		  return;
+		} else {
+		  echo json_encode($widget->getFormattedData(intval($_REQUEST['sEcho'])));
+		  Yii::app()->end();
+		}
+
+		// $dataProvider=new CActiveDataProvider('Bonus');
+		// $this->render('index',array(
+		// 	'dataProvider'=>$dataProvider,
+		// ));
 	}
 
 	/**
@@ -138,6 +178,36 @@ class BonusController extends Controller
 	 */
 	public function actionAdmin()
 	{
+		$ar1=array('class'=> 'EButtonColumn',
+                'template'=>'{update}{delete}',
+			    'buttons'=>array(
+			    	'update'=>array(
+			    		'url'=>'Yii::app()->createUrl("member/update/$data->id")',
+			    		),
+			        'delete' => array(
+			        	'url'=>'Yii::app()->createUrl("member/delete/$data->id")',
+			            'visible'=>'Yii::app()->user->getIsSuperuser()==1',           
+			        ),
+			    ));
+        array_push($this->columns,$ar1);
+        $model=new Bonus('search');
+		$model->unsetAttributes();
+
+		$widget=$this->createWidget('ext.EDataTables.EDataTables', array(
+		 'id'            => 'bonus-grid',
+		 'dataProvider'  => $model->search($this->columns),
+		 'ajaxUrl'       => $this->createUrl($this->getAction()->getId()),
+		 'columns'       => $this->columns,
+         'bootstrap'=>true,
+		));
+		if (!Yii::app()->getRequest()->getIsAjaxRequest()) {
+		  $this->render('admin', array('widget' => $widget,));
+		  return;
+		} else {
+		  echo json_encode($widget->getFormattedData(intval($_REQUEST['sEcho'])));
+		  Yii::app()->end();
+		}
+		/*
 		$model=new Bonus('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Bonus']))
@@ -145,7 +215,7 @@ class BonusController extends Controller
 
 		$this->render('admin',array(
 			'model'=>$model,
-		));
+		));*/
 	}
 
 	/**

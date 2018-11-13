@@ -85,12 +85,18 @@ class Bonus extends CActiveRecord
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
 	 */
-	public function search()
+	public function search(array $columns)
 	{
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
+		if (isset($_GET['sSearch'])) {
+			$criteria->compare('kode_member',$_GET['sSearch'],true,'OR');
+			$criteria->compare('tanggal',$_GET['sSearch'],true,'OR');
+            $criteria->compare('bonus',$_GET['sSearch'],true,'OR');
+			$criteria->compare('poin',$_GET['sSearch'],true,'OR');
+		}
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('kode_member',$this->kode_member,true);
@@ -105,6 +111,8 @@ class Bonus extends CActiveRecord
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>new EDTSort(__CLASS__, $columns,array('id'=>'desc')),
+			'pagination'=>new EDTPagination,
 		));
 	}
 }

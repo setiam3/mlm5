@@ -12,6 +12,7 @@ class UserIdentity extends CUserIdentity
 	const ERROR_STATUS_NOTACTIV=4;
 	const ERROR_STATUS_BAN=5;
 	private $level;
+	private $kode_member;
 	/**
 	 * Authenticates a user.
 	 * The example implementation makes sure if the username and password
@@ -41,8 +42,10 @@ class UserIdentity extends CUserIdentity
 			$this->errorCode=self::ERROR_STATUS_BAN;
 		else {
 			$this->_id=$user->id;
-			Yii::app()->user->setState('level',$user->level);
-			$this->setState('level',$user->level);
+			// Yii::app()->user->setState('level',$user->level);
+			 Yii::app()->user->setState('kode_member',$user->kode_member);
+			// $this->setState('level',$user->level);
+			// $this->setState('kode_member',$user->level);
 			$this->username=$user->username;
 			$this->errorCode=self::ERROR_NONE;
 		}
@@ -59,5 +62,6 @@ class UserIdentity extends CUserIdentity
 	protected function afterLogin()
 {
     Yii::app()->user->setState('level', $this->level);
+    // Yii::app()->user->setState('kode_member', $this->kode_member);
 }
 }

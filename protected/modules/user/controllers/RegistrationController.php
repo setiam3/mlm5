@@ -35,9 +35,15 @@ class RegistrationController extends Controller
 		    	$this->redirect(Yii::app()->controller->module->profileUrl);
 		    } else {
 		    	if(isset($_POST['RegistrationForm'])) {
+		    		//print_r($_POST);
 					$model->attributes=$_POST['RegistrationForm'];
 					$profile->attributes=((isset($_POST['Profile'])?$_POST['Profile']:array()));
 					$model->username=$_POST['RegistrationForm']['email'];
+					$model->kode_member=Controller::autoformat();
+				if(empty(User::model()->findAll('level!="admin"'))){
+					$model->kode_upline='#';
+				}
+
 					if($model->validate()&&$profile->validate())
 					{
 						//print_r($model);die;
@@ -74,6 +80,7 @@ class RegistrationController extends Controller
 									Yii::app()->user->setFlash('registration',UserModule::t("Thank you for your registration. Please check your email."));
 								}
 								$this->refresh();
+
 							}
 						}
 					} else $profile->validate();

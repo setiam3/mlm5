@@ -5,8 +5,6 @@
  */
 class Controller extends CController
 {
-   
-
 	/**
 	 * @var string the default layout for the controller view. Defaults to '//layouts/column1',
 	 * meaning using a single column layout. See 'protected/views/layouts/column1.php'.
@@ -243,6 +241,23 @@ class Controller extends CController
             }
         }
     }
+
+    public static function get_produk(){
+        $ar=array();
+        $prod=Product::model()->findAll();
+        foreach ($prod as $value) {
+            $ar[$value->id]=$value->nama_produk;
+        }
+        return $ar;
+    }
+    public static function get_member(){
+        $ar=array();
+        $user=User::model()->findAll('level!="admin" and superuser="0"');
+        foreach ($user as $value) {
+            $ar[$value->kode_member]=$value->kode_member;
+        }
+        return $ar;
+    }
     public static function getControllers(){
         foreach (glob(Yii::getPathOfAlias('application.controllers') . "/*Controller.php") as $controller){
             $class[]= basename($controller, "Controller.php");
@@ -324,7 +339,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
     }
     
     public static function autoformat(){
-        $getlastjo=Yii::app()->db->createCommand('select kode_member from m_member order by id desc limit 1')->queryScalar();//BY0000001
+        $getlastjo=Yii::app()->db->createCommand('select kode_member from users order by id desc limit 1')->queryScalar();//BY0000001
         $format='BY';
         if(!empty($getlastjo)){
             $t=trim($getlastjo,$format);
@@ -357,10 +372,10 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
         return Yii::app()->user->name;
     }
     public static function hitungbonusgetmember($kodeupline=NULL,$kodemember){
-        $upline=Member::model()->countByAttributes(array('kode_member'=>$kodeupline));
+        $upline=User::model()->countByAttributes(array('kode_member'=>$kodeupline));
         if($upline>0){
             $q1=SettingBonus::model()->findAllByAttributes(array('jenis_bonus'=>'getmember'));
-            $jmldownline=Member::model()->countByAttributes(array('kode_upline'=>$kodeupline));
+            $jmldownline=User::model()->countByAttributes(array('kode_upline'=>$kodeupline));
             //$jmldownline=5;
             foreach ($q1 as $value) {
                 if($jmldownline>0 && is_numeric($value->param)){
@@ -415,7 +430,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
     
     public function getUpline($cnd){
         $row = array();
-        foreach(Member::model()->findAllByAttributes(array('kode_member'=>$cnd)) as $haha){
+        foreach(User::model()->cache(1000)->findAllByAttributes(array('kode_member'=>$cnd)) as $haha){
             if($haha->kode_upline!=='#' or $haha->level!=='distributor'){
                 $row[] = $cnd;
                 $row['upline'] = $haha->kode_upline;
@@ -428,7 +443,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
     }
     public function getUpline2($cnd){
         $row = array();
-        foreach(Member::model()->findAllByAttributes(array('kode_member'=>$cnd)) as $haha){
+        foreach(User::model()->cache(1000)->findAllByAttributes(array('kode_member'=>$cnd)) as $haha){
              if($haha->kode_upline!=='#'){
                 $row['upline'] = $haha->kode_upline;
                 if(count($this->getUpline2($haha->kode_upline))>0 && $haha->kode_upline!=='#'){
@@ -440,13 +455,14 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
     }
     public static function parentCount($id){
         $q="call parentCount('".$id."')";
-        return Yii::app()->db->createCommand($q)->queryScalar();
+        return Yii::app()->db->cache(100,100)->createCommand($q)->queryScalar();
     }
     public static function comboUpline(){
         $ar=array();
-        $member=Member::model()->findAll(array('condition'=>'level!="distributor"'));
+        $member=User::model()->cache(1000)->findAll(array('condition'=>'level!="distributor" and level!="admin"'));
         foreach ($member as $value) {
-            $ar[$value['kode_member']]=$value->kode_member.' - '.$value->nama.' - '.$value->alamat;
+            //print_r($value);
+            $ar[$value['kode_member']]=$value->kode_member.' - '.$value->username.' - '.$value->email;
         }
         if(empty($member)){
             $ar['#']='#';
@@ -458,10 +474,9 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
         $ar1=array(); $ar2=array(); $ar3=array();
         Yii::app()->db->createCommand('SET FOREIGN_KEY_CHECKS=0;')->execute();
         $sql="select * from parent_child order by id asc";
-        $cmd=Yii::app()->db->createCommand($sql)->queryAll();
+        $cmd=Yii::app()->db->cache(1000,1000)->createCommand($sql)->queryAll();
         foreach ($cmd as $k =>$value) {
             $ar1[$k]=$value;
-            
            if($value['level']!=='distributor'){
             //add id where parents = valueid;
             $cp=Controller::parentCount($value['id']);
@@ -469,7 +484,6 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
                 $ar2[]=array('id'=>$value['id'].'Add'.$i,'parent'=>$value['id'],'text'=>'Add');
             }
             $ar3=array_merge_recursive($ar1, $ar2);
-            //$ar3=Cmap::mergeArray($ar1, $ar2);
            }
         }
     echo CJSON::encode($ar3); 
@@ -478,7 +492,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
     public static function is_maxMember($kodemember){
         //cek jml downline by kode_upline
         if($kodemember!='#'){
-            $model=Member::model()->countByAttributes(array('kode_upline'=>$kodemember));
+            $model=User::model()->countByAttributes(array('kode_upline'=>$kodemember));
             if($model<Yii::app()->params['maxMember'] && $model>=0){
                 return true;
             }else{
@@ -489,22 +503,22 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
         }
     }
     public static function get_sponsor($kodemember){
-        $mem=Member::model()->findByAttributes(array('kode_member'=>$kodemember));
+        $mem=User::model()->cache(1000)->findByAttributes(array('kode_member'=>$kodemember));
         return $mem->sponsor;
     }
     public static function get_level($kodemember){
         if($kodemember!=='#'){
-            $mem=Member::model()->findByAttributes(array('kode_member'=>$kodemember));
+            $mem=User::model()->cache(1000)->findByAttributes(array('kode_member'=>$kodemember));
         return $mem->level;
         }
     }
     public static function get_upline($kodemember){
-        $mem=Member::model()->findByAttributes(array('kode_member'=>$kodemember));
+        $mem=User::model()->cache(1000)->findByAttributes(array('kode_member'=>$kodemember));
         return $mem->kode_upline;
     }
     public static function bonussponsor($kodesponsor,$kodemember){
         $q1=SettingBonus::model()->findAllByAttributes(array('jenis_bonus'=>'sponsor'));
-        $jmlsponsor=Member::model()->countByAttributes(array('sponsor'=>$kodesponsor));
+        $jmlsponsor=User::model()->countByAttributes(array('sponsor'=>$kodesponsor));
         foreach ($q1 as $value) {
             $upline_level=Controller::get_level(Controller::get_upline($kodemember));
             if($jmlsponsor>0 && is_numeric($value->param)){
@@ -540,9 +554,9 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
         }
     }
     public static function upgradelevel($kodeupline){
-        $upline=Member::model()->countByAttributes(array('kode_member'=>$kodeupline));
+        $upline=User::model()->countByAttributes(array('kode_member'=>$kodeupline));
         if($upline>0){
-            $jmldownline=Member::model()->countByAttributes(array('kode_upline'=>$kodeupline));
+            $jmldownline=User::model()->countByAttributes(array('kode_upline'=>$kodeupline));
             //$jmldownline=6;
             if($jmldownline==1){
                 $jmldownline=0;
@@ -552,13 +566,13 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
             $max=$cmd->queryRow();
             $q2=SettingLevel::model()->findByAttributes(array('member'=>$jmldownline));
             if(!empty($q2) && count($q2)<=$max['max']){//max di setting level
-                $member=Member::model()->findByAttributes(array('kode_member'=>$kodeupline));
+                $member=User::model()->findByAttributes(array('kode_member'=>$kodeupline));
                 $member->level=$q2->level;
                 $member->save();
             }
         }
     }
     public static function company(){
-        return SettingPerusahaan::model()->findByPk(1)->nama_perusahaan;
+        return SettingPerusahaan::model()->cache(2000)->findByPk(1)->nama_perusahaan;
     }
 }

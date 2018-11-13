@@ -105,19 +105,19 @@
 					</a>
 					<ul>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('barang/index')?>">
+							<a href="<?php echo Yii::app()->createUrl('product/index')?>">
 							<i class="entypo-progress-3"></i>
 								<span class="title">Barang</span>
 							</a>
 						</li>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('barang/admin')?>">
+							<a href="<?php echo Yii::app()->createUrl('product/admin')?>">
 							<i class="entypo-pencil"></i>
 								<span class="title">Edit Barang</span>
 							</a>
 						</li>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('barang/create')?>">
+							<a href="<?php echo Yii::app()->createUrl('product/create')?>">
 							<i class="entypo-pencil"></i>
 								<span class="title">Add Barang</span>
 							</a>
@@ -153,13 +153,13 @@
 				<li class="has-sub">
 					<a href="#">
 						<i class="entypo-doc-text"></i>
-						<span class="title">Penjualan</span>
+						<span class="title">Cart</span>
 					</a>
 					<ul>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('penjualan/index')?>">
+							<a href="<?php echo Yii::app()->createUrl('cart/index')?>">
 							<i class="entypo-doc-text"></i>
-								<span class="title">Penjualan</span>
+								<span class="title">Cart</span>
 							</a>
 						</li>
 						
@@ -172,9 +172,14 @@
 					</a>
 					<ul>
 						<li>
-							<a href="<?php echo Yii::app()->createUrl('pemesanan/index')?>">
+							<a href="<?php echo Yii::app()->createUrl('order/index')?>">
 							<i class="entypo-docs"></i>
 								<span class="title">Pemesanan</span>
+							</a>
+						</li><li>
+							<a href="<?php echo Yii::app()->createUrl('order/create')?>">
+							<i class="entypo-docs"></i>
+								<span class="title">Add Pemesanan</span>
 							</a>
 						</li>
 						

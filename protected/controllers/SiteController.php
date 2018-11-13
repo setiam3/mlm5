@@ -1,6 +1,6 @@
 <?php
 
-class SiteController extends Controller
+class SiteController extends YiishopController
 {
  //   public function filters()
 	// {
@@ -54,7 +54,6 @@ class SiteController extends Controller
 	}
 
 	public function actiongetTree(){
-		
 		$this->tree();
 	}
 	public function actionSI(){

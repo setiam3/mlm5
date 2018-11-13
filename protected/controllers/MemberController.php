@@ -54,19 +54,7 @@ class MemberController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-	/*
-	public function actiongetSponsor($kode_member){
-		echo 'asd';die;
-        $values=array();
-        foreach($this->getUpline($kode_member) as $level) {
-            if (is_array($level)) {
-                $this->deepValues($level, $values);
-            } else {
-                $values[] = $level;
-            }
-        }
-        return ($values);
-    }*/
+	
 public function actioncomboSponsor($kode_member=null){
 	if($_POST) $kode_member=$_POST['kode_member'];
 	foreach ($this->combosponsor($kode_member) as $value) {
@@ -94,7 +82,6 @@ public function actioncomboSponsor($kode_member=null){
 				}
 				if($model->save()){
 					//hitung maks 10 downline
-
 					$messageType = 'success';
 		            $message = "<strong>Well done!</strong> You successfully submit data ";
 		            Yii::app()->user->setFlash($messageType, $message);

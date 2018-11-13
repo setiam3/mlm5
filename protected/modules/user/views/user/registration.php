@@ -7,7 +7,7 @@
 <?php if(Yii::app()->user->hasFlash('registration')): ?>
 <div class="success">
 <?php echo Yii::app()->user->getFlash('registration'); 
-echo Yii::app()->createUrl('site/index','back');
+echo '<a href="'.Yii::app()->baseUrl.'/site/index"> BACK</a>';
 ?>
 
 </div>
@@ -46,6 +46,31 @@ echo Yii::app()->createUrl('site/index','back');
 	<?php echo $form->passwordField($model,'verifyPassword',array('class'=>'form-control')); ?>
 	</div>
 	</div>
+	</div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'kode_upline',array('class'=>'col-md-2')); ?>
+		<div class="col-sm-6">
+        <?php echo $form->dropDownList($model,'kode_upline',Controller::comboUpline(),array('data-allow-clear'=>'true','prompt'=>'','data-placeholder'=>'pilih Upline','class'=>'select2 visible',
+        	'ajax'=>array(
+                        'type'=>'post',
+                        'url'=>$this->createUrl('combosponsor'),
+                        'update'=>'#Member_sponsor',
+                        'data'=>array('kode_member'=>'js:this.value'),
+                        'success'=>'function(datae){
+                            $("#Member_sponsor").html(datae);
+                        }'
+                        ),
+                    )
+        ); ?>
+        </div>
+		<?php echo $form->error($model,'kode_upline'); ?>
+	</div>
+<div class="row">
+		<?php echo $form->labelEx($model,'sponsor',array('class'=>'col-md-2')); ?>
+		<div class="col-sm-6">
+        <?php echo $form->dropDownList($model,'sponsor',Controller::comboSponsor(isset($upline)?$upline:''),array('data-allow-clear'=>'true','prompt'=>'','data-placeholder'=>'pilih sponsor','class'=>'select2 visible')); ?>
+        </div>
+		<?php echo $form->error($model,'sponsor'); ?>
 	</div>
 <?php 
 		$profileFields=$profile->getFields();

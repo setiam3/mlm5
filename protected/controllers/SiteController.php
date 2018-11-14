@@ -55,9 +55,9 @@ class SiteController extends YiishopController
 
 	public function actiongetTree(){
 		if(empty(Yii::app()->user->kode_member)){
-			$this->tree();
+			//$this->tree();
 		}else{
-			$this->tree(Yii::app()->user->kode_member);
+			//$this->tree(Yii::app()->user->kode_member);
 		}
 		
 	}

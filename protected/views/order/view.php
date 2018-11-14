@@ -15,7 +15,7 @@ $this->breadcrumbs=array(
 		'payment_status',
 	);
 $this->genListView($model,$attributes,$model->id);
-$detail=Orderdetail::model()->findAll('order_id='.$model->id);
+$detail=Orderdetail::model()->findAll('order_code="'.$model->order_code.'"');
 ?>
 Detail Pemesanan:
 <table class="table table-bordered table-responsive table-hover">

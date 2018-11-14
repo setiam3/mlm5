@@ -155,8 +155,8 @@ Class CartController extends YiishopController {
 	private function addOrderCleanCart() {
 		$modelOrder = new Order;
 	if(isset($_POST)){
-			$transaction = Yii::app()->db->beginTransaction();
-		try{
+		// 	$transaction = Yii::app()->db->beginTransaction();
+		// try{
 			$modelOrder -> order_code = $order_code = Yii::app() -> user -> kode_member . '' . $this -> orderCode();
 			$modelOrder -> order_date = $this->date_sql_now();
 			$modelOrder -> kode_member = Yii::app() -> user -> kode_member;
@@ -189,20 +189,22 @@ Class CartController extends YiishopController {
 				$deor->save();
 				$grandtotal +=(int)$deor->subtotal;
 			endforeach;
-			$order=Order::model()->findByPk($deor->order_id);
+			//print_r($modelOrder -> order_code);
+			$order=Order::model()->findByAttributes(array('order_code'=>$modelOrder -> order_code));
+			//print_r($order);die;
 			$order->grandtotal=$grandtotal;
 			$order->save();
 
 			$del = "DELETE FROM cart WHERE cart_code='" . Yii::app() -> session['cart_code'] . "'";
 			$del = Yii::app()->db -> createCommand($del)->execute();
-			$transaction->commit();
-			$this -> redirect(array('site/index'));
+			//$transaction->commit();
+			//$this -> redirect(array('index'));
 		}
 
-		}catch(Exception $e){
-				$transaction->rollBack();
-				Yii::app()->user->setFlash('error', "{$e->getMessage()}");
-			}
+		// }catch(Exception $e){
+		// 		$transaction->rollBack();
+		// 		Yii::app()->user->setFlash('error', "{$e->getMessage()}");
+		// 	}
 		
 	}
 	}

@@ -103,11 +103,12 @@ class Order extends CActiveRecord
 	}
 	public function afterSave(){
 		parent::afterSave();
-		if($this->isNewRecord){
+		//if($this->isNewRecord){
 			//hitung potensi cashback
 			$hargaakhir=Controller::diskonbelanja($this->grandtotal,$this->kode_member);//totalbelanja, kodemember
 			//hitung pembagian cashback ke upline
+			//print_r($hargaakhir);
 			Controller::bonusrepeatorder($this->kode_member,$hargaakhir);//kodemember, harga setelah diskon
-		}
+		//}
 	}
 }

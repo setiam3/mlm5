@@ -276,7 +276,7 @@ class Controller extends CController
         }
         return $roles;
     }
-    /*public function GetTelp($q){
+    /*public function elp($q){
         $criteria=new CDbCriteria(array('select'=>'telp','condition'=>'nama=:namae','params'=>array(':namae'=>"$q")));
         $cust=Customer::model()->findByAttributes(array('nama'=>$q))->telp;
         echo $cust;
@@ -634,16 +634,18 @@ private static function goodParenting($parent, $childPool){
                 //echo $upline_level;
                 $mb=SettingBonus::model()->findByAttributes(array('jenis_bonus'=>'repeatorderdistributor','param'=>$upline_level));
             if(!empty($mb)){
-                $hasil=$mb->bonus*$hargasetelahdiskon;
-                //insert bonus 
-            $bonus=New Bonus;
-            $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
-            $bonus->bonus=$hasil;//nilai bonus;
-            $bonus->tanggal=Controller::date_sql_now();
-            $bonus->keterangan=$mb->keterangan;
-            $bonus->idbonus=$mb->id;
-            //$bonus->save();
-            print_r($hasil);
+                if($hargasetelahdiskon>0){
+                    $hasil=$mb->bonus*$hargasetelahdiskon;
+                    //insert bonus 
+                    $bonus=New Bonus;
+                    $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
+                    $bonus->bonus=$hasil;//nilai bonus;
+                    $bonus->tanggal=Controller::date_sql_now();
+                    $bonus->keterangan=$mb->keterangan;
+                    $bonus->dari_member=$kodemember;
+                    $bonus->idbonus=$mb->id;
+                    $bonus->save();
+                }
             }
             
             }
@@ -653,21 +655,22 @@ private static function goodParenting($parent, $childPool){
             if($upline_level!='#'){
                 $hasil=0;
                 //echo $upline_level;
-                $mb=SettingBonus::model()->findByAttributes(array('jenis_bonus'=>'repeatorderreseller'));
+                $mb=SettingBonus::model()->findAllByAttributes(array('jenis_bonus'=>'repeatorderreseller'));
             if(!empty($mb)){
                 foreach ($mb as $value) {
-                    
+                    if($value->param==$upline_level){
+                        if($hargasetelahdiskon>0){
+                        $bonus=New Bonus;
+                        $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
+                        $bonus->bonus=$hasil=($value->bonus*$hargasetelahdiskon);
+                        $bonus->tanggal=Controller::date_sql_now();
+                        $bonus->dari_member=$kodemember;
+                        $bonus->keterangan=$value->keterangan;
+                        $bonus->idbonus=$value->id;
+                        $bonus->save();
+                        }
+                    }
                 }
-                //$hasil=$mb->bonus*$hargasetelahdiskon;
-                //insert bonus 
-            $bonus=New Bonus;
-            $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
-            $bonus->bonus=$hasil;//nilai bonus;
-            $bonus->tanggal=Controller::date_sql_now();
-            $bonus->keterangan=$mb->keterangan;
-            $bonus->idbonus=$mb->id;
-            //$bonus->save();
-            print_r($hasil);
             }
             
             }
@@ -679,44 +682,45 @@ private static function goodParenting($parent, $childPool){
                 //echo $upline_level;
                 $mb=SettingBonus::model()->findByAttributes(array('jenis_bonus'=>'repeatorderagen','param'=>$upline_level));
             if(!empty($mb)){
-                $hasil=$mb->bonus*$hargasetelahdiskon;
-                //insert bonus 
-            $bonus=New Bonus;
-            $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
-            $bonus->bonus=$hasil;//nilai bonus;
-            $bonus->tanggal=Controller::date_sql_now();
-            $bonus->keterangan=$mb->keterangan;
-            $bonus->idbonus=$mb->id;
-            //$bonus->save();
-            print_r($hasil);
+                if($hargasetelahdiskon>0){
+                    $hasil=$mb->bonus*$hargasetelahdiskon;
+                    //insert bonus 
+                    $bonus=New Bonus;
+                    $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
+                    $bonus->bonus=$hasil;//nilai bonus;
+                    $bonus->tanggal=Controller::date_sql_now();
+                    $bonus->keterangan=$mb->keterangan;
+                    $bonus->dari_member=$kodemember;
+                    $bonus->idbonus=$mb->id;
+                    $bonus->save();
+                }
+                
             }
             
             }
                 break;
             case 'user':
                 //rumus = hargajual*diskon
-          if($upline_level!='#'){
+            if($upline_level!='#'){
                 $hasil=0;
                 //echo $upline_level;
                 $mb=SettingBonus::model()->findAllByAttributes(array('jenis_bonus'=>'repeatorderuser'));
             if(!empty($mb)){
                 foreach ($mb as $value) {
                     if($value->param==$upline_level){
-                        echo $value->bonus;
+                        if($hargasetelahdiskon>0){
+                        $bonus=New Bonus;
+                        $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
+                        $bonus->bonus=$hasil=($value->bonus*$hargasetelahdiskon);
+                        $bonus->tanggal=Controller::date_sql_now();
+                        $bonus->dari_member=$kodemember;
+                        $bonus->keterangan=$value->keterangan;
+                        $bonus->idbonus=$value->id;
+                        $bonus->save();
+                        }
                     }
                 }
-                //$hasil=$mb->bonus*$hargasetelahdiskon;
-                //insert bonus 
-            $bonus=New Bonus;
-            $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
-            $bonus->bonus=$hasil;//nilai bonus;
-            $bonus->tanggal=Controller::date_sql_now();
-            $bonus->keterangan=$mb->keterangan;
-            $bonus->idbonus=$mb->id;
-            //$bonus->save();
-            print_r($hasil);
             }
-            
             }
                 break;
             default:

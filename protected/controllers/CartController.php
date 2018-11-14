@@ -147,7 +147,9 @@ Class CartController extends YiishopController {
 		// /*render ke halaman finishop*/
 		// $this -> render('finishshop', array('addressBooks' => $getAddressBooks, ));
 		//print_r($_POST);die;
-		$this -> addOrderCleanCart();
+		if($this -> addOrderCleanCart()){
+			$this->redirect(array('order/index'));
+		}
 	}
 
 	/*untuk add to order_detail dan
@@ -199,6 +201,7 @@ Class CartController extends YiishopController {
 			$del = Yii::app()->db -> createCommand($del)->execute();
 			//$transaction->commit();
 			//$this -> redirect(array('index'));
+			return true;
 		}
 
 		// }catch(Exception $e){

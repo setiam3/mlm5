@@ -382,7 +382,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
                         $model=new Bonus;
                         $model->kode_member=$kodeupline;
                         $model->bonus=$value->bonus;
-                        $model->tanggal=$this->date_sql_now();
+                        $model->tanggal=Controller::date_sql_now();
                         $model->keterangan=$value->keterangan;
                         $model->dari_member=$kodemember;
                         $model->idbonus=$value->id;
@@ -394,7 +394,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
                     $model=new Bonus;
                     $model->kode_member=$kodeupline;
                     $model->poin=$value->bonus;
-                    $model->tanggal=$this->date_sql_now();
+                    $model->tanggal=Controller::date_sql_now();
                     $model->keterangan=$value->keterangan;
                     $model->dari_member=$kodemember;
                     $model->idbonus=$value->id;
@@ -527,7 +527,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
                     $model=new Bonus;
                     $model->kode_member=$kodesponsor;
                     $model->bonus=$value->bonus;
-                    $model->tanggal=$this->date_sql_now();
+                    $model->tanggal=Controller::date_sql_now();
                     $model->keterangan=$value->keterangan;
                     $model->dari_member=$kodemember;
                     $model->idbonus=$value->id;
@@ -545,7 +545,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
                         $models=new Bonus;
                         $models->kode_member=Controller::get_sponsor(Controller::get_upline($kodemember));
                         $models->bonus=$value->bonus;
-                        $model->tanggal=$this->date_sql_now();
+                        $models->tanggal=Controller::date_sql_now();
                         $models->keterangan=$value->keterangan;
                         $models->dari_member=Controller::get_upline($kodemember);
                         $models->idbonus=$value->id;

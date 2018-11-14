@@ -12,5 +12,10 @@ return array(
 	'username' => 'root',
 	'password' => 'root',
 	'charset' => 'utf8',
-	
+	/* online
+	'connectionString' => 'mysql:host=localhost;dbname=u5547429_by',
+	'emulatePrepare' => true,
+	'username' => 'u5547429_by',
+	'password' => 'doremi',
+	'charset' => 'utf8',*/
 );

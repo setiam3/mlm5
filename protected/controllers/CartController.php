@@ -5,7 +5,7 @@
  */
 Class CartController extends YiishopController {
 	/*tentukan layout controller*/
-	public $layout = '//layouts/store';
+	//public $layout = '//layouts/store';
 	/*static var INDEX*/
 	const INDEX = "cart/";
 	/*private var untuk menampung bank transfer*/

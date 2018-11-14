@@ -28,7 +28,7 @@ class Order extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Orders';
+		return 'orders';
 	}
 
 	/**

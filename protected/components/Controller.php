@@ -362,7 +362,6 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
             }elseif(strlen($lastno)==7){
                 $lastno=$lastno;
             }
-        
         return $format.$lastno;
     }
     public static function userid(){
@@ -383,6 +382,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
                         $model=new Bonus;
                         $model->kode_member=$kodeupline;
                         $model->bonus=$value->bonus;
+                        $model->tanggal=$this->date_sql_now();
                         $model->keterangan=$value->keterangan;
                         $model->dari_member=$kodemember;
                         $model->idbonus=$value->id;
@@ -394,6 +394,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
                     $model=new Bonus;
                     $model->kode_member=$kodeupline;
                     $model->poin=$value->bonus;
+                    $model->tanggal=$this->date_sql_now();
                     $model->keterangan=$value->keterangan;
                     $model->dari_member=$kodemember;
                     $model->idbonus=$value->id;
@@ -461,7 +462,6 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
         $ar=array();
         $member=User::model()->cache(1000)->findAll(array('condition'=>'level!="distributor" and level!="admin"'));
         foreach ($member as $value) {
-            //print_r($value);
             $ar[$value['kode_member']]=$value->kode_member.' - '.$value->username.' - '.$value->email;
         }
         if(empty($member)){
@@ -527,6 +527,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
                     $model=new Bonus;
                     $model->kode_member=$kodesponsor;
                     $model->bonus=$value->bonus;
+                    $model->tanggal=$this->date_sql_now();
                     $model->keterangan=$value->keterangan;
                     $model->dari_member=$kodemember;
                     $model->idbonus=$value->id;
@@ -544,10 +545,10 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
                         $models=new Bonus;
                         $models->kode_member=Controller::get_sponsor(Controller::get_upline($kodemember));
                         $models->bonus=$value->bonus;
+                        $model->tanggal=$this->date_sql_now();
                         $models->keterangan=$value->keterangan;
                         $models->dari_member=Controller::get_upline($kodemember);
                         $models->idbonus=$value->id;
-                         //echo '<script>console.log('.json_encode($models->bonus.'-'.$models->keterangan.'-'.$models->dari_member.'-'.$models->idbonus.'-'.$models->kode_member).')</script>';
                         $models->save();
                     }
                 }

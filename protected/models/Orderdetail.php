@@ -27,7 +27,7 @@ class Orderdetail extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'Orderdetail';
+		return 'orderdetail';
 	}
 
 	/**

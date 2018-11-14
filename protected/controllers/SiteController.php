@@ -54,7 +54,10 @@ class SiteController extends YiishopController
 	}
 
 	public function actiongetTree(){
-		$this->tree();
+		foreach(User::model()->findAll('level!="distributor"') as $r){
+			echo $r->kode_member;
+		}
+		//$this->tree();
 	}
 	public function actionSI(){
 		$this->render('form_si');
@@ -118,6 +121,7 @@ public function inject($kodeupline=null,$sponsor=null,$i=0){
     $model->password=md5($model->username);
     $model->activkey=UserModule::encrypting(microtime().$model->password);
     $model->email=$model->username.'@bestharmony.co.id';
+    $model->status=1;
     if(is_null($kodeupline)){
       $model->kode_upline='#';
     }else{
@@ -130,23 +134,23 @@ public function inject($kodeupline=null,$sponsor=null,$i=0){
   	
 }
 public function bukandistributor(){
-  foreach (User::model()->findAll('level !="distributor"') as $ro) {
+	$cmd=Yii::app()->db->createCommand('select kode_member from users where level !="distributor"')->queryAll();
+  foreach ($cmd as $ro) {
         for ($i = 0; $i < 10; $i++) {
-        $this->inject($ro->kode_member,$ro->kode_member,$i);
+        $this->inject($ro['kode_member'],$ro['kode_member'],$i);
       }
     }
 }
 public function actionIsi(){
 	$this->inject();
-foreach (User::model()->cache(1000)->findAll() as $row) {
-    for ($i = 0; $i < 10; $i++) {
-      $this->inject($row->kode_member,$row->kode_member,$i);
-    }
-    
- }
+// foreach (User::model()->findAll() as $row) {
+//     for ($i = 0; $i < 10; $i++) {
+//       $this->inject($row->kode_member,$row->kode_member,$i);
+//     }
+//  }
 $this->bukandistributor();
 $this->bukandistributor();
-$this->bukandistributor();
+//$this->bukandistributor();
 }
 	/**
 	 * Displays the login page

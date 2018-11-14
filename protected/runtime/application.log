@@ -47,3 +47,187 @@ Stack trace:
 #8 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/base/CApplication.php(158): CWebApplication->processRequest()
 #9 /Applications/MAMP/htdocs/mlm5/index.php(20): CApplication->run()
 #10 {main} REQUEST_URI=/mlm5/site/isi
+2018/11/13 22:29:20 [error] [php] Trying to get property of non-object (/Applications/MAMP/htdocs/mlm5/protected/components/Controller.php:517)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(7013): User->afterSave()
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(6893): User->insert()
+#2 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(129): User->save()
+#3 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(143): SiteController->inject()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3720): SiteController->actionIsi()
+#5 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3223): CInlineAction->runWithParams()
+#6 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3208): SiteController->runAction()
+#7 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3198): SiteController->runActionWithFilters()
+#8 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): SiteController->run()
+#9 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController()
+#10 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#11 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/site/isi
+2018/11/13 23:09:38 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[08S01]: Communication link failure: 1053 Server shutdown in progress. The SQL statement executed was: select * from parent_child order by id asc.
+2018/11/13 23:09:38 [error] [exception.CDbException] CDbException: CDbCommand failed to execute the SQL statement: SQLSTATE[08S01]: Communication link failure: 1053 Server shutdown in progress in /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:8626
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(8550): CDbCommand->queryInternal('fetchAll', Array, Array)
+#1 /Applications/MAMP/htdocs/mlm5/protected/components/Controller.php(477): CDbCommand->queryAll()
+#2 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(57): Controller::tree()
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3720): SiteController->actiongetTree()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3223): CInlineAction->runWithParams(Array)
+#5 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3208): CController->runAction(Object(CInlineAction))
+#6 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3198): CController->runActionWithFilters(Object(CInlineAction), Array)
+#7 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): CController->run('getTree')
+#8 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController('site/getTree')
+#9 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#10 /Applications/MAMP/htdocs/mlm5/index.php(20): CApplication->run()
+#11 {main} REQUEST_URI=/mlm5/site/getTree
+2018/11/13 23:09:38 [error] [system.db.CDbCommand] CDbCommand::fetchColumn() failed: SQLSTATE[70100]: <<Unknown error>>: 1317 Query execution was interrupted. The SQL statement executed was: SELECT COUNT(*) FROM `users` `t` WHERE `t`.`kode_upline`=:yp0.
+2018/11/13 23:09:39 [error] [exception.CDbException] CDbException: CDbCommand failed to execute the SQL statement: SQLSTATE[70100]: <<Unknown error>>: 1317 Query execution was interrupted in /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:8626
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(8558): CDbCommand->queryInternal('fetchColumn', 0, Array)
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(7304): CDbCommand->queryScalar()
+#2 /Applications/MAMP/htdocs/mlm5/protected/components/Controller.php(560): CActiveRecord->countByAttributes(Array)
+#3 /Applications/MAMP/htdocs/mlm5/protected/modules/user/models/User.php(147): Controller::upgradelevel('BY0000656')
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(7013): User->afterSave()
+#5 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(6893): CActiveRecord->insert(NULL)
+#6 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(129): CActiveRecord->save()
+#7 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(144): SiteController->inject('BY0000656', 'BY0000656', 1)
+#8 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3720): SiteController->actionIsi()
+#9 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3223): CInlineAction->runWithParams(Array)
+#10 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3208): CController->runAction(Object(CInlineAction))
+#11 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3198): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): CController->run('isi')
+#13 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController('site/isi')
+#14 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#15 /Applications/MAMP/htdocs/mlm5/index.php(20): CApplication->run()
+#16 {main} REQUEST_URI=/mlm5/site/isi
+2018/11/13 23:09:39 [error] [exception.CDbException] SQLSTATE[HY000] [2002] No such file or directory
+2018/11/13 23:09:39 [error] [exception.CDbException] CDbException: CDbConnection failed to open the DB connection. in /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:7755
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(7721): CDbConnection->open()
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(7710): CDbConnection->setActive(true)
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1037): CDbConnection->init()
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(892): CModule->getComponent('db')
+#4 /Applications/MAMP/htdocs/mlm5/protected/components/Controller.php(475): CModule->__get('db')
+#5 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(57): Controller::tree()
+#6 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3720): SiteController->actiongetTree()
+#7 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3223): CInlineAction->runWithParams(Array)
+#8 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3208): CController->runAction(Object(CInlineAction))
+#9 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3198): CController->runActionWithFilters(Object(CInlineAction), Array)
+#10 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): CController->run('getTree')
+#11 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController('site/getTree')
+#12 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#13 /Applications/MAMP/htdocs/mlm5/index.php(20): CApplication->run()
+#14 {main} REQUEST_URI=/mlm5/site/getTree
+2018/11/13 23:10:53 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "combosponsor". in /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:3321
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3203): CController->missingAction('combosponsor')
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): CController->run('combosponsor')
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController('user/registrati...')
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/mlm5/index.php(20): CApplication->run()
+#5 {main} REQUEST_URI=/mlm5/user/registration/combosponsor
+2018/11/13 23:11:08 [error] [php] Cannot modify header information - headers already sent by (output started at /Applications/MAMP/htdocs/mlm5/protected/modules/user/controllers/RegistrationController.php:81) (/Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:2454)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3556): RegistrationController->redirect()
+#1 /Applications/MAMP/htdocs/mlm5/protected/modules/user/controllers/RegistrationController.php(100): RegistrationController->refresh()
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3720): RegistrationController->actionRegistration()
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3223): CInlineAction->runWithParams()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3208): RegistrationController->runAction()
+#5 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3198): RegistrationController->runActionWithFilters()
+#6 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): RegistrationController->run()
+#7 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController()
+#8 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#9 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/user/registration
+2018/11/13 23:12:59 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "combosponsor". in /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:3321
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3203): CController->missingAction('combosponsor')
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): CController->run('combosponsor')
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController('user/registrati...')
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/mlm5/index.php(20): CApplication->run()
+#5 {main} REQUEST_URI=/mlm5/user/registration/combosponsor
+2018/11/13 23:13:23 [error] [php] Cannot modify header information - headers already sent by (output started at /Applications/MAMP/htdocs/mlm5/protected/modules/user/controllers/RegistrationController.php:81) (/Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:2454)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3556): RegistrationController->redirect()
+#1 /Applications/MAMP/htdocs/mlm5/protected/modules/user/controllers/RegistrationController.php(100): RegistrationController->refresh()
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3720): RegistrationController->actionRegistration()
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3223): CInlineAction->runWithParams()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3208): RegistrationController->runAction()
+#5 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3198): RegistrationController->runActionWithFilters()
+#6 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): RegistrationController->run()
+#7 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController()
+#8 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#9 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/user/registration
+2018/11/14 01:46:17 [error] [php] Trying to get property of non-object (/Applications/MAMP/htdocs/mlm5/protected/components/Controller.php:507)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(7013): User->afterSave()
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(6893): User->insert()
+#2 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(129): User->save()
+#3 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(136): SiteController->inject()
+#4 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(148): SiteController->bukandistributor()
+#5 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3720): SiteController->actionIsi()
+#6 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3223): CInlineAction->runWithParams()
+#7 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3208): SiteController->runAction()
+#8 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3198): SiteController->runActionWithFilters()
+#9 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): SiteController->run()
+#10 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController()
+#11 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#12 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/site/isi
+2018/11/14 02:02:37 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "combosponsor". in /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:3321
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3203): CController->missingAction('combosponsor')
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): CController->run('combosponsor')
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController('user/registrati...')
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/mlm5/index.php(20): CApplication->run()
+#5 {main} REQUEST_URI=/mlm5/user/registration/combosponsor
+2018/11/14 02:02:45 [error] [php] Cannot modify header information - headers already sent by (output started at /Applications/MAMP/htdocs/mlm5/protected/modules/user/controllers/RegistrationController.php:81) (/Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:2454)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3556): RegistrationController->redirect()
+#1 /Applications/MAMP/htdocs/mlm5/protected/modules/user/controllers/RegistrationController.php(100): RegistrationController->refresh()
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3720): RegistrationController->actionRegistration()
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3223): CInlineAction->runWithParams()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3208): RegistrationController->runAction()
+#5 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3198): RegistrationController->runActionWithFilters()
+#6 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): RegistrationController->run()
+#7 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController()
+#8 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#9 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/user/registration
+2018/11/14 02:04:25 [error] [exception.CHttpException.404] CHttpException: The system is unable to find the requested action "combosponsor". in /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:3321
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3203): CController->missingAction('combosponsor')
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): CController->run('combosponsor')
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController('user/registrati...')
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#4 /Applications/MAMP/htdocs/mlm5/index.php(20): CApplication->run()
+#5 {main} REQUEST_URI=/mlm5/user/registration/combosponsor
+2018/11/14 02:04:34 [error] [php] Trying to get property of non-object (/Applications/MAMP/htdocs/mlm5/protected/components/Controller.php:512)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(7013): RegistrationForm->afterSave()
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(6893): RegistrationForm->insert()
+#2 /Applications/MAMP/htdocs/mlm5/protected/modules/user/controllers/RegistrationController.php(70): RegistrationForm->save()
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3720): RegistrationController->actionRegistration()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3223): CInlineAction->runWithParams()
+#5 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3208): RegistrationController->runAction()
+#6 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3198): RegistrationController->runActionWithFilters()
+#7 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): RegistrationController->run()
+#8 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController()
+#9 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#10 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/user/registration
+2018/11/14 02:33:05 [error] [php] Trying to get property of non-object (/Applications/MAMP/htdocs/mlm5/protected/components/Controller.php:512)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(7013): User->afterSave()
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(6893): User->insert()
+#2 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(130): User->save()
+#3 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(145): SiteController->inject()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3720): SiteController->actionIsi()
+#5 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3223): CInlineAction->runWithParams()
+#6 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3208): SiteController->runAction()
+#7 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(3198): SiteController->runActionWithFilters()
+#8 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1686): SiteController->run()
+#9 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController()
+#10 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#11 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/site/isi

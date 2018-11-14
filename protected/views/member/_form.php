@@ -12,11 +12,11 @@
 <div class="row">
 	<div class="form-group">
 		<div class="col-sm-2">
-			<?php echo $form->labelEx($model,'userid'); ?>
+			<?php echo $form->labelEx($model,'username'); ?>
 		</div>
         <div class="col-sm-6">
-				<?php echo $form->textField($model,'userid',array('class'=>'form-control','size'=>45,'maxlength'=>45)); ?>
-			<?php echo $form->error($model,'userid'); ?>
+				<?php echo $form->textField($model,'username',array('class'=>'form-control','size'=>45,'maxlength'=>45)); ?>
+			<?php echo $form->error($model,'username'); ?>
 		</div>
 	</div>
 </div>
@@ -64,19 +64,6 @@
 <div class="row">
 	<div class="form-group">
 		<div class="col-sm-2">
-			<?php echo $form->labelEx($model,'kota'); ?>
-		</div>
-        <div class="col-sm-6">
-				<?php echo $form->textField($model,'kota',array('class'=>'form-control','size'=>45,'maxlength'=>45)); ?>
-			<?php echo $form->error($model,'kota'); ?>
-		</div>
-	</div>
-</div>
-
-
-<div class="row">
-	<div class="form-group">
-		<div class="col-sm-2">
 			<?php echo $form->labelEx($model,'hp'); ?>
 		</div>
         <div class="col-sm-6">
@@ -103,11 +90,11 @@
 <div class="row">
 	<div class="form-group">
 		<div class="col-sm-2">
-			<?php echo $form->labelEx($model,'nomor_rekening'); ?>
+			<?php echo $form->labelEx($model,'rekening'); ?>
 		</div>
         <div class="col-sm-6">
-				<?php echo $form->textField($model,'nomor_rekening',array('class'=>'form-control','size'=>45,'maxlength'=>45)); ?>
-			<?php echo $form->error($model,'nomor_rekening'); ?>
+				<?php echo $form->textField($model,'rekening',array('class'=>'form-control','size'=>45,'maxlength'=>45)); ?>
+			<?php echo $form->error($model,'rekening'); ?>
 		</div>
 	</div>
 </div>
@@ -116,11 +103,11 @@
 <div class="row">
 	<div class="form-group">
 		<div class="col-sm-2">
-			<?php echo $form->labelEx($model,'ktp'); ?>
+			<?php echo $form->labelEx($model,'nik'); ?>
 		</div>
         <div class="col-sm-6">
-				<?php echo $form->textField($model,'ktp',array('class'=>'form-control','size'=>45,'maxlength'=>45)); ?>
-			<?php echo $form->error($model,'ktp'); ?>
+				<?php echo $form->textField($model,'nik',array('class'=>'form-control','size'=>45,'maxlength'=>45)); ?>
+			<?php echo $form->error($model,'nik'); ?>
 		</div>
 	</div>
 </div>

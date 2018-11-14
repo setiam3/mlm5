@@ -54,10 +54,12 @@ class SiteController extends YiishopController
 	}
 
 	public function actiongetTree(){
-		foreach(User::model()->findAll('level!="distributor"') as $r){
-			echo $r->kode_member;
+		if(empty(Yii::app()->user->kode_member)){
+			$this->tree();
+		}else{
+			$this->tree(Yii::app()->user->kode_member);
 		}
-		//$this->tree();
+		
 	}
 	public function actionSI(){
 		$this->render('form_si');
@@ -66,6 +68,8 @@ class SiteController extends YiishopController
 	public function actionIndex()
 
 	{
+		echo Controller::bonusrepeatorder('BY0000011',2000);
+		//echo Controller::diskonbelanja(99999,Yii::app()->user->kode_member);
 		//print_r(User::model()->cache(1000)->findAll('level !="distributor"'));
 		//echo CVarDumper::dumpAsString(Controller::comboSponsor('8982387'),10,true);
 		$this->render('index');

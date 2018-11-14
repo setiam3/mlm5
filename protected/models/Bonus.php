@@ -95,6 +95,7 @@ class Bonus extends CActiveRecord
 			$criteria->compare('kode_member',$_GET['sSearch'],true,'OR');
 			$criteria->compare('tanggal',$_GET['sSearch'],true,'OR');
             $criteria->compare('bonus',$_GET['sSearch'],true,'OR');
+			$criteria->compare('keterangan',$_GET['sSearch'],true,'OR');
 			$criteria->compare('poin',$_GET['sSearch'],true,'OR');
 		}
 

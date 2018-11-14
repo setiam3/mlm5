@@ -12,7 +12,7 @@ var url='<?php echo $this->createUrl('member/create');?>';
 $('#jstree_demo_div').jstree({
     'core' : {
       'data' : {
-        "url" : '<?php //echo $this->createUrl('site/getTree');?>',
+        "url" : '<?php echo $this->createUrl('site/getTree');?>',
         "dataType" : "json" // needed only if you do not supply JSON headers
       }
     }

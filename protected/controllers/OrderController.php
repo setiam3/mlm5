@@ -109,6 +109,7 @@ class OrderController extends YiishopController
 				//$this->redirect(array('view','id'=>$model->id));
 
 		}
+		Yii::app()->session['org_url']= $_SERVER['REQUEST_URI'];
 
 		$this->render('create',array(
 			'model'=>$model,

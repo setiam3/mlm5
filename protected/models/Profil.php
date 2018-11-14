@@ -9,6 +9,9 @@
  * @property string $nama
  * @property string $alamat
  * @property string $birthday
+ * @property string $hp
+ * @property string $bank
+ * @property string $rekening
  */
 class Profil extends CActiveRecord
 {
@@ -40,10 +43,13 @@ class Profil extends CActiveRecord
 			array('user_id, nik, nama, alamat', 'required'),
 			array('user_id', 'numerical', 'integerOnly'=>true),
 			array('nik, nama, alamat', 'length', 'max'=>45),
+			array('hp', 'length', 'max'=>15),
+			array('bank', 'length', 'max'=>50),
+			array('rekening', 'length', 'max'=>30),
 			array('birthday', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('user_id, nik, nama, alamat, birthday', 'safe', 'on'=>'search'),
+			array('user_id, nik, nama, alamat, birthday, hp, bank, rekening', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +75,9 @@ class Profil extends CActiveRecord
 			'nama' => 'Nama',
 			'alamat' => 'Alamat',
 			'birthday' => 'Birthday',
+			'hp' => 'Hp',
+			'bank' => 'Bank',
+			'rekening' => 'Rekening',
 		);
 	}
 
@@ -88,6 +97,9 @@ class Profil extends CActiveRecord
 		$criteria->compare('nama',$this->nama,true);
 		$criteria->compare('alamat',$this->alamat,true);
 		$criteria->compare('birthday',$this->birthday,true);
+		$criteria->compare('hp',$this->hp,true);
+		$criteria->compare('bank',$this->bank,true);
+		$criteria->compare('rekening',$this->rekening,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

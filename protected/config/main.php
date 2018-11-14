@@ -16,6 +16,7 @@ return array(
     'application.helpers.*',
     'application.models.*',
     'application.components.*',
+    'application.modules.user.*',
     'application.modules.user.models.*',
     'application.modules.user.components.*',
     'application.modules.rights.*',
@@ -126,7 +127,7 @@ return array(
 					'levels'=>'error, warning',
 				),
 				// uncomment the following to show log messages on web pages
-				//array('class'=>'CWebLogRoute',),	
+				array('class'=>'CWebLogRoute',),	
 			),
 		),
 	),

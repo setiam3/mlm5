@@ -5,11 +5,9 @@ $this->breadcrumbs=array(
 );
 
 ?>
-
-<h1>View Order #<?php echo $model->id; ?></h1>
-
+<br>
 <?php $attributes=array(
-				'id',
+				//'id',
 		'order_code',
 		'order_date',
 		'kode_member',
@@ -17,29 +15,30 @@ $this->breadcrumbs=array(
 		'payment_status',
 	);
 $this->genListView($model,$attributes,$model->id);
-
 $detail=Orderdetail::model()->findAll('order_id='.$model->id);
-
-
 ?>
-<table>
+Detail Pemesanan:
+<table class="table table-bordered table-responsive table-hover">
 	<tr>
-		<td>order code</td>
-		<td>produk</td>
-		<td>qty</td>
-		<td>subtotal</td>
-	</tr><?php $total=0;
+		<td>No</td>
+		<td>Produk</td>
+		<td>Qty</td>
+		<td>Subtotal</td>
+	</tr><?php $total=0; $i=1;
 foreach ($detail as $value) {
-	echo '<tr><td>';
-	echo $value->order_code."</td><td>";
-	echo $value->product_id."</td><td>";
+	echo "<tr><td>";
+	echo $i."</td><td>";
+	echo Product::model()->findByPk($value->product_id)->nama_produk."</td><td>";
 	echo $value->qty."</td><td>";
-	echo $value->subtotal."</td><td>";
+	echo $value->subtotal."</td>";
 	echo "</tr>";
+	$total+=$value->subtotal;
+	$i++;
 }
-$total+=$value->subtotal;
+
 	?>
-<tr>
-	<td colspan="3"><?php echo $total;?></td>
+<tr style="font-weight: bold;">
+	<td colspan="3" style="text-align: right;">TOTAL</td>
+	<td ><?php echo $total;?></td>
 </tr>
 </table>

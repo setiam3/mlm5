@@ -62,7 +62,7 @@ class ProductController extends Controller
 	/*untuk menambahkan product ke keranjang belanja*/
 	public function actionAddtocart($id) {
 		/*gunakan layout store*/
-		$this -> layout = 'store';
+		//$this -> layout = 'store';
 		/*panggil model Cart*/
 		$model = new Cart;
 		/*set data ke masing masing field*/

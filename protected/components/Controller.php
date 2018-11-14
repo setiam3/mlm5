@@ -250,7 +250,7 @@ class Controller extends CController
         }
         return $ar;
     }
-    public static function get_member(){
+    public static function get_member($kodemember=null){
         $ar=array();
         $user=User::model()->findAll('level!="admin" and superuser="0"');
         foreach ($user as $value) {
@@ -470,11 +470,16 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
     return $ar;
     }
 
-    public static function tree(){
+    public static function tree($root=null){
         $ar1=array(); $ar2=array(); $ar3=array();
         Yii::app()->db->createCommand('SET FOREIGN_KEY_CHECKS=0;')->execute();
-        $sql="select * from parent_child order by id asc";
+        if(!empty($root) && $root!=null && !is_null($root)){
+            $sql="SELECT id,case when id='$root' then '#' else parent end as parent,text,level FROM mlm5.parent_child where parent='$root' or id='$root'";
+        }else{
+            $sql="select * from parent_child order by id asc";
+        }
         $cmd=Yii::app()->db->cache(1000,1000)->createCommand($sql)->queryAll();
+
         foreach ($cmd as $k =>$value) {
             $ar1[$k]=$value;
            if($value['level']!=='distributor'){
@@ -576,5 +581,108 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
     }
     public static function company(){
         return SettingPerusahaan::model()->cache(2000)->findByPk(1)->nama_perusahaan;
+    }
+    public static function diskonbelanja($total,$kodemember=NULL){
+        $level=Controller::get_level($kodemember);
+        $mb=SettingBonus::model()->findByAttributes(array('jenis_bonus'=>"diskonbelanja",'param'=>$level));
+        return round($total-($total*$mb->bonus),2);
+    }
+    public static function bonusrepeatorder($kodemember,$hargasetelahdiskon=NULL){//repeatorderby level, and param is buyer;
+        //downline belanja, upline dapat cashback
+        $level=Controller::get_level($kodemember);
+        $upline_level=Controller::get_level(Controller::get_upline($kodemember));
+        switch ($level) {
+            case 'distributor':
+                //rumus = hargajual*diskon
+            if($upline_level!='#'){
+                $hasil=0;
+                //echo $upline_level;
+                $mb=SettingBonus::model()->findByAttributes(array('jenis_bonus'=>'repeatorderdistributor','param'=>$upline_level));
+            if(!empty($mb)){
+                $hasil=$mb->bonus*$hargasetelahdiskon;
+                //insert bonus 
+            $bonus=New Bonus;
+            $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
+            $bonus->bonus=$hasil;//nilai bonus;
+            $bonus->tanggal=Controller::date_sql_now();
+            $bonus->keterangan=$mb->keterangan;
+            $bonus->idbonus=$mb->id;
+            //$bonus->save();
+            }
+            
+            }
+                break;
+            case 'reseller':
+                //rumus = hargajual*diskon
+            if($upline_level!='#'){
+                $hasil=0;
+                //echo $upline_level;
+                $mb=SettingBonus::model()->findByAttributes(array('jenis_bonus'=>'repeatorderreseller'));
+            if(!empty($mb)){
+                foreach ($mb as $value) {
+                    
+                }
+                //$hasil=$mb->bonus*$hargasetelahdiskon;
+                //insert bonus 
+            $bonus=New Bonus;
+            $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
+            $bonus->bonus=$hasil;//nilai bonus;
+            $bonus->tanggal=Controller::date_sql_now();
+            $bonus->keterangan=$mb->keterangan;
+            $bonus->idbonus=$mb->id;
+            //$bonus->save();
+            }
+            
+            }
+                break;
+            case 'agen':
+                //rumus = hargajual*diskon
+            if($upline_level!='#'){
+                $hasil=0;
+                //echo $upline_level;
+                $mb=SettingBonus::model()->findByAttributes(array('jenis_bonus'=>'repeatorderagen','param'=>$upline_level));
+            if(!empty($mb)){
+                $hasil=$mb->bonus*$hargasetelahdiskon;
+                //insert bonus 
+            $bonus=New Bonus;
+            $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
+            $bonus->bonus=$hasil;//nilai bonus;
+            $bonus->tanggal=Controller::date_sql_now();
+            $bonus->keterangan=$mb->keterangan;
+            $bonus->idbonus=$mb->id;
+            //$bonus->save();
+            }
+            
+            }
+                break;
+            case 'user':
+                //rumus = hargajual*diskon
+          if($upline_level!='#'){
+                $hasil=0;
+                //echo $upline_level;
+                $mb=SettingBonus::model()->findAllByAttributes(array('jenis_bonus'=>'repeatorderuser'));
+            if(!empty($mb)){
+                foreach ($mb as $value) {
+                    if($value->param==$upline_level){
+                        echo $value->bonus;
+                    }
+                }
+                //$hasil=$mb->bonus*$hargasetelahdiskon;
+                //insert bonus 
+            $bonus=New Bonus;
+            $bonus->kode_member=Controller::get_upline($kodemember);//yg nerima bonus;
+            $bonus->bonus=$hasil;//nilai bonus;
+            $bonus->tanggal=Controller::date_sql_now();
+            $bonus->keterangan=$mb->keterangan;
+            $bonus->idbonus=$mb->id;
+            //$bonus->save();
+            }
+            
+            }
+                break;
+            default:
+                // code...
+                break;
+        }
     }
 }

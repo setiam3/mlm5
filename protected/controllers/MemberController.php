@@ -69,23 +69,40 @@ public function actioncomboSponsor($kode_member=null){
 	public function actionCreate($upline=NULL)
 	{
 		$model=new Member('search');
+		$user=New User;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Member']))
 		{
-			$model->attributes=$_POST['Member'];
-			$model->kode_member=Controller::autoformat();
-			if(Controller::is_maxMember($model->kode_upline)){ //selain root
-				if(!empty(Member::model()->findByAttributes(array('kode_member'=>$model->kode_member)))){//jika kode_member sudah ada
-					$model->kode_member=Controller::autoformat();
+			$user->attributes=$_POST['Member'];
+			$user->kode_member=Controller::autoformat();
+			$user->username=$_POST['Member']['username'];
+			$user->kode_upline=$_POST['Member']['kode_upline'];
+			$user->sponsor=$_POST['Member']['sponsor'];
+			$user->createtime=time();
+			$user->password=md5($_POST['Member']['password']);
+			$user->activkey=UserModule::encrypting(microtime().$user->password);
+			$user->email=$_POST['Member']['email'];
+    		$user->status=1;
+			if(Controller::is_maxMember($user->kode_upline)){ //selain root
+				if(!empty(Member::model()->findByAttributes(array('kode_member'=>$user->kode_member)))){//jika kode_member sudah ada generate format baru
+					$user->kode_member=Controller::autoformat();
 				}
-				if($model->save()){
-					//hitung maks 10 downline
+				if($user->save()){
+					//update profil
+					$profil=Profil::model()->findByPk($user->id);
+					$profil->nama=$_POST['Member']['nama'];
+					$profil->nik=$_POST['Member']['nik'];
+					$profil->alamat=$_POST['Member']['alamat'];
+					$profil->hp=$_POST['Member']['hp'];
+					$profil->bank=$_POST['Member']['bank'];
+					$profil->rekening=$_POST['Member']['rekening'];
+					$profil->save();
 					$messageType = 'success';
 		            $message = "<strong>Well done!</strong> You successfully submit data ";
 		            Yii::app()->user->setFlash($messageType, $message);
-					$this->redirect(array('view','id'=>$model->id));
+					$this->redirect(array('view','id'=>$user->id));
 				}
 			}else{
 				$messageType = 'warning';
@@ -141,44 +158,28 @@ public function actioncomboSponsor($kode_member=null){
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 	public $columns=array(
-				array(
-        		'type'=>'html',
-        		'name'=>'kode_member',
-        		'value'=>'CHtml::link($data->kode_member,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
-        		),array(
-        		'type'=>'html',
-        		'name'=>'nama',
-        		'value'=>'CHtml::link($data->nama,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
-        		),array(
-        		'type'=>'html',
-        		'name'=>'alamat',
-        		'value'=>'CHtml::link($data->alamat,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
-        		),array(
-        		'type'=>'html',
-        		'name'=>'email',
-        		'value'=>'CHtml::link($data->email,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
-        		),array(
-        		'type'=>'html',
-        		'name'=>'level',
-        		'value'=>'CHtml::link($data->level,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
-        		),
-		/*'userid',
-		'password',
-		'nama',
-		'alamat',
-		'kota',
-		'hp',
-		'bank',
-		'nomor_rekening',
-		'ktp',
-		'email',
-		'kode_upline',
-		'tanggal_daftar',
-		'level',
-		'poin',
-		'sponsor',
-		*/
-);
+		array(
+		'type'=>'html',
+		'name'=>'kode_member',
+		'value'=>'CHtml::link($data->kode_member,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+		),array(
+		'type'=>'html',
+		'name'=>'nama',
+		'value'=>'CHtml::link($data->nama,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+		),array(
+		'type'=>'html',
+		'name'=>'alamat',
+		'value'=>'CHtml::link($data->alamat,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+		),array(
+		'type'=>'html',
+		'name'=>'email',
+		'value'=>'CHtml::link($data->email,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+		),array(
+		'type'=>'html',
+		'name'=>'level',
+		'value'=>'CHtml::link($data->level,Yii::app()->controller->createUrl("view",array("id"=>$data->id)))',
+		),
+	);
 
 	/**
 	 * Lists all models.
@@ -238,15 +239,6 @@ public function actioncomboSponsor($kode_member=null){
 		  echo json_encode($widget->getFormattedData(intval($_REQUEST['sEcho'])));
 		  Yii::app()->end();
 		}
-
-		// $model=new Member('search');
-		// $model->unsetAttributes();  // clear any default values
-		// if(isset($_GET['Member']))
-		// 	$model->attributes=$_GET['Member'];
-
-		// $this->render('admin',array(
-		// 	'model'=>$model,
-		// ));
 	}
 
 	/**
@@ -256,7 +248,7 @@ public function actioncomboSponsor($kode_member=null){
 	 */
 	public function loadModel($id)
 	{
-		$model=Member::model()->findByPk($id);
+		$model=Member::model()->findByAttributes(array('id'=>$id));
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;

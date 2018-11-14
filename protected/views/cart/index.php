@@ -1,5 +1,7 @@
 <?php
 $this -> breadcrumbs = array('Cart', );
+
+
 ?>
 <style>
 	table {
@@ -78,10 +80,14 @@ $this -> breadcrumbs = array('Cart', );
 	</tr>
 	<tr id="clean">
 		<td></td>
-		<td><?php echo CHtml::button('Belanja lagi', array('submit' => array('product/'))); ?></td>
+		<td><?php 
+		echo CHtml::link('Belanja Lagi',array('product/index'),array('class'=>'btn'));
+
+
+		//echo CHtml::button('Belanja lagi', array('submit' => array('product/index'))); ?></td>
 		<td>&nbsp;</td>
 		<td align="right"><?php echo CHtml::submitButton('Ubah'); ?></td>
-		<td><?php echo CHtml::button('Selesai Belanja', array('submit' => array('cart/finishshop'))); ?></td>
+		<td><?php echo CHtml::link('Selesai Belanja', array('cart/finishshop')); ?></td>
 		<td>&nbsp;</td>
 	</tr>
 			

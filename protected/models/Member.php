@@ -1,25 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "m_member".
+ * This is the model class for table "member".
  *
- * The followings are the available columns in table 'm_member':
+ * The followings are the available columns in table 'member':
  * @property integer $id
- * @property string $kode_member
- * @property string $userid
+ * @property string $username
  * @property string $password
+ * @property string $email
+ * @property integer $createtime
+ * @property integer $lastvisit
+ * @property integer $status
+ * @property string $level
+ * @property string $kode_member
+ * @property string $kode_upline
+ * @property string $sponsor
+ * @property string $nik
  * @property string $nama
  * @property string $alamat
- * @property string $kota
+ * @property string $birthday
  * @property string $hp
  * @property string $bank
- * @property string $nomor_rekening
- * @property string $ktp
- * @property string $email
- * @property string $kode_upline
- * @property string $tanggal_daftar
- * @property string $level
- * @property integer $poin
+ * @property string $rekening
  */
 class Member extends CActiveRecord
 {
@@ -37,7 +39,7 @@ class Member extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'm_member';
+		return 'member';
 	}
 
 	/**
@@ -48,13 +50,18 @@ class Member extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('kode_member, userid, password, nama, alamat, kota, hp, bank, nomor_rekening, ktp, email, kode_upline, ', 'required'),
-			array('poin', 'numerical', 'integerOnly'=>true),
-			array('kode_member, userid, password, nama, alamat, kota, bank, nomor_rekening, ktp, email, kode_upline, level,sponsor', 'length', 'max'=>45),
+			array('username, password, email, kode_member, kode_upline, nik, nama, alamat', 'required'),
+			array('id, createtime, lastvisit, status', 'numerical', 'integerOnly'=>true),
+			array('username', 'length', 'max'=>20),
+			array('password, email', 'length', 'max'=>128),
+			array('level, bank', 'length', 'max'=>50),
+			array('kode_member, kode_upline, sponsor, nik, nama, alamat', 'length', 'max'=>45),
 			array('hp', 'length', 'max'=>15),
+			array('rekening', 'length', 'max'=>30),
+			array('birthday', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, kode_member, userid, password, nama, alamat, kota, hp, bank, nomor_rekening, ktp, email, kode_upline, tanggal_daftar, level, poin,sponsor', 'safe', 'on'=>'search'),
+			array('id, username, password, email, createtime, lastvisit, status, level, kode_member, kode_upline, sponsor, nik, nama, alamat, birthday, hp, bank, rekening', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,22 +83,23 @@ class Member extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'kode_member' => 'Kode Member',
-			'userid' => 'Userid',
+			'username' => 'Username',
 			'password' => 'Password',
+			'email' => 'Email',
+			'createtime' => 'Createtime',
+			'lastvisit' => 'Lastvisit',
+			'status' => 'Status',
+			'level' => 'Level',
+			'kode_member' => 'Kode Member',
+			'kode_upline' => 'Kode Upline',
+			'sponsor' => 'Sponsor',
+			'nik' => 'Nik',
 			'nama' => 'Nama',
 			'alamat' => 'Alamat',
-			'kota' => 'Kota',
+			'birthday' => 'Birthday',
 			'hp' => 'Hp',
 			'bank' => 'Bank',
-			'nomor_rekening' => 'Nomor Rekening',
-			'ktp' => 'Ktp',
-			'email' => 'Email',
-			'kode_upline' => 'Kode Upline',
-			'tanggal_daftar' => 'Tanggal Daftar',
-			'level' => 'Level',
-			'poin' => 'Poin',
-			'sponsor' => 'Sponsor',
+			'rekening' => 'Rekening',
 		);
 	}
 
@@ -107,43 +115,40 @@ class Member extends CActiveRecord
 		$criteria=new CDbCriteria;
 		if (isset($_GET['sSearch'])) {
 			$criteria->compare('kode_member',$_GET['sSearch'],true,'OR');
+			$criteria->compare('username',$_GET['sSearch'],true,'OR');
+            $criteria->compare('kode_upline',$_GET['sSearch'],true,'OR');
 			$criteria->compare('nama',$_GET['sSearch'],true,'OR');
-            $criteria->compare('alamat',$_GET['sSearch'],true,'OR');
-			$criteria->compare('ktp',$_GET['sSearch'],true,'OR');
-			$criteria->compare('email',$_GET['sSearch'],true,'OR');
+			$criteria->compare('alamat',$_GET['sSearch'],true,'OR');
+			$criteria->compare('bank',$_GET['sSearch'],true,'OR');
+			$criteria->compare('rekening',$_GET['sSearch'],true,'OR');
+			$criteria->compare('sponsor',$_GET['sSearch'],true,'OR');
+			$criteria->compare('nik',$_GET['sSearch'],true,'OR');
 			$criteria->compare('level',$_GET['sSearch'],true,'OR');
 		}
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('kode_member',$this->kode_member,true);
-		$criteria->compare('userid',$this->userid,true);
+		$criteria->compare('username',$this->username,true);
 		$criteria->compare('password',$this->password,true);
+		$criteria->compare('email',$this->email,true);
+		$criteria->compare('createtime',$this->createtime);
+		$criteria->compare('lastvisit',$this->lastvisit);
+		$criteria->compare('status',$this->status);
+		$criteria->compare('level',$this->level,true);
+		$criteria->compare('kode_member',$this->kode_member,true);
+		$criteria->compare('kode_upline',$this->kode_upline,true);
+		$criteria->compare('sponsor',$this->sponsor,true);
+		$criteria->compare('nik',$this->nik,true);
 		$criteria->compare('nama',$this->nama,true);
 		$criteria->compare('alamat',$this->alamat,true);
-		$criteria->compare('kota',$this->kota,true);
+		$criteria->compare('birthday',$this->birthday,true);
 		$criteria->compare('hp',$this->hp,true);
 		$criteria->compare('bank',$this->bank,true);
-		$criteria->compare('nomor_rekening',$this->nomor_rekening,true);
-		$criteria->compare('ktp',$this->ktp,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('kode_upline',$this->kode_upline,true);
-		$criteria->compare('tanggal_daftar',$this->tanggal_daftar,true);
-		$criteria->compare('level',$this->level,true);
-		$criteria->compare('poin',$this->poin);
-		$criteria->compare('sponsor',$this->sponsor);
+		$criteria->compare('rekening',$this->rekening,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'sort'=>new EDTSort(__CLASS__, $columns,array('id'=>'desc')),
 			'pagination'=>new EDTPagination,
 		));
-	}
-	public function afterSave(){
-		parent::afterSave();
-		if($this->isNewRecord){
-			Controller::hitungbonusgetmember($this->kode_upline,$this->kode_member);
-			Controller::upgradelevel($this->kode_upline);
-			Controller::bonussponsor($this->sponsor,$this->kode_member);
-		}
 	}
 }

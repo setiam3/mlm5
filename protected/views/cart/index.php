@@ -1,8 +1,42 @@
 <?php
 $this -> breadcrumbs = array('Cart', );
-
-
 ?>
+<div class="row">
+			<div class="form-group">
+				<div class="col-sm-2">Nama Barang</div>
+				<div class="col-sm-4">
+        <?php echo CHtml::dropDownList('produk','id',Controller::get_produk(),array('data-allow-clear'=>'true','prompt'=>'','data-placeholder'=>'pilih produk','class'=>'select2 visible',
+        	'ajax'=>array(
+                        'type'=>'get',
+                        'url'=>$this->createUrl('listproduct'),
+                        'update'=>'#link1',
+                        'data'=>array('id'=>'js:this.value'),
+                        'success'=>'function(datae){
+                            $("#link1").attr("value",datae);
+                        }'
+                        ),
+        	
+                    )
+        ); ?>
+			
+		</div>
+				<div class="col-sm-2">
+					<?php echo CHtml::htmlButton(
+					'Add',array('id'=>'link1',
+						'ajax'=>array(
+	                        'type'=>'get',
+	                        'url'=>$this->createUrl('product/addtocart/'),
+	                        'data'=>array('id'=>'js:this.value'),
+	                        'success'=>'function(datae){
+	                        	location.reload();
+	                        	//$(".page-container").html(datae);
+	                        }'
+	                        ),
+
+					));?>
+				</div>
+			</div>
+		</div>
 <style>
 	table {
 		clear: both;
@@ -22,7 +56,7 @@ $this -> breadcrumbs = array('Cart', );
 		border: none;
 	}
 </style>
-<div style="padding:0 10px 5px 0;margin:5px 5px 15px 5px; border:1px solid #CCC;text-align: justify;">
+<div id='cart' style="padding:0 10px 5px 0;margin:5px 5px 15px 5px; border:1px solid #CCC;text-align: justify;">
 
 <?php
 	if(empty($data)){
@@ -64,7 +98,7 @@ $this -> breadcrumbs = array('Cart', );
 		<td align="right"><b>IDR <b><?php echo number_format($model['harga'], 0, '.', '.'); ?></b></td>
 		<td align="right"><?php echo CHtml::textField('qty' . $i, $model['qty'], array('maxlength' => 3, 'style' => "width:20px;text-align:center")); ?></td>
 		<td align="right"><b>IDR <?php echo number_format($model['harga'] * $model['qty'], 0, '.', '.'); ?></b></td>	
-		<td align="right"><?php echo CHtml::link(CHtml::encode("Hapus"), array('remove', 'id' => $model['id'])); ?></td>
+		<td align="right"><?php echo CHtml::link(CHtml::encode("Hapus"), array('cart/remove', 'id' => $model['id'])); ?></td>
 	</tr>
 	
 <?php $i++;

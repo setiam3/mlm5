@@ -242,12 +242,17 @@ class Controller extends CController
         }
     }
 
-    public static function get_produk(){
-        $ar=array();
+    public static function get_produk($id=null){
+        if(!empty($id)){
+            $ar=Product::model()->findByPk($id)->id;
+        }else{
+            $ar=array();
         $prod=Product::model()->findAll();
-        foreach ($prod as $value) {
-            $ar[$value->id]=$value->nama_produk;
+            foreach ($prod as $value) {
+                $ar[$value->id]=$value->nama_produk;
+            }
         }
+        
         return $ar;
     }
     public static function get_member($kodemember=null){
@@ -470,28 +475,58 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
     return $ar;
     }
 
+    public static function orderChildren($data,$root){
+    $tree = array();
+    foreach($data as $k=> $value){
+        
+        if($value['parent'] == '#'){  // Values without parents
+            $tree[$k]=$value;
+            $tree[$k] = Controller::goodParenting($value, $data);
+        }else{
+            //$tree[$k]=$value;
+            //$tree[$value['id']] = Controller::goodParenting($root, $data);
+        }
+    }
+    echo CJSON::encode($tree);
+}
+
+private static function goodParenting($parent, $childPool){
+    foreach($childPool as $i=>$child){
+        //$parent[$i]=$child;
+        if($parent['id'] == $child['parent']){
+            $parent[] = Controller::goodParenting($child, $childPool);
+        }
+    }
+    return $parent;
+}
+
     public static function tree($root=null){
+        
         $ar1=array(); $ar2=array(); $ar3=array();
         Yii::app()->db->createCommand('SET FOREIGN_KEY_CHECKS=0;')->execute();
         if(!empty($root) && $root!=null && !is_null($root)){
-            $sql="SELECT id,case when id='$root' then '#' else parent end as parent,text,level FROM mlm5.parent_child where parent='$root' or id='$root'";
+            $sql="SELECT id,case when id='$root' then '#' else parent end as parent,text,level FROM parent_child where parent='$root' or id='$root'";
         }else{
             $sql="select * from parent_child order by id asc";
         }
         $cmd=Yii::app()->db->cache(1000,1000)->createCommand($sql)->queryAll();
-
         foreach ($cmd as $k =>$value) {
             $ar1[$k]=$value;
-           if($value['level']!=='distributor'){
-            //add id where parents = valueid;
-            $cp=Controller::parentCount($value['id']);
-            for ($i = 0; $i < Yii::app()->params['maxMember']-$cp; $i++) {
-                $ar2[]=array('id'=>$value['id'].'Add'.$i,'parent'=>$value['id'],'text'=>'Add');
-            }
+            if($value['level']!=='distributor'){
+                //add id where parents = valueid;
+                $cp=Controller::parentCount($value['id']);
+                for ($i = 0; $i < Yii::app()->params['maxMember']-$cp; $i++) {
+                    $ar2[]=array('id'=>$value['id'].'Add'.$i,'parent'=>$value['id'],'text'=>'Add');
+                }
+                $ar3=array_merge_recursive($ar1, $ar2);
+           }else{//cari childnya lagi
+            $ar2[]=Controller::tree($value['parent']);
             $ar3=array_merge_recursive($ar1, $ar2);
+
            }
         }
     echo CJSON::encode($ar3); 
+    
     }
 
     public static function is_maxMember($kodemember){
@@ -608,6 +643,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
             $bonus->keterangan=$mb->keterangan;
             $bonus->idbonus=$mb->id;
             //$bonus->save();
+            print_r($hasil);
             }
             
             }
@@ -631,6 +667,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
             $bonus->keterangan=$mb->keterangan;
             $bonus->idbonus=$mb->id;
             //$bonus->save();
+            print_r($hasil);
             }
             
             }
@@ -651,6 +688,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
             $bonus->keterangan=$mb->keterangan;
             $bonus->idbonus=$mb->id;
             //$bonus->save();
+            print_r($hasil);
             }
             
             }
@@ -676,6 +714,7 @@ $qs = new CDbCriteria(array('select'=>'name','condition' => "name LIKE :match",'
             $bonus->keterangan=$mb->keterangan;
             $bonus->idbonus=$mb->id;
             //$bonus->save();
+            print_r($hasil);
             }
             
             }

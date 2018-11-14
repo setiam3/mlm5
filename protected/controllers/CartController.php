@@ -52,6 +52,12 @@ Class CartController extends YiishopController {
 			)
 		);
 	}
+	public function actionListproduct(){
+		if(isset($_GET['id'])){
+			echo $_GET['id'];
+		}
+		
+	}
 
 	/*untuk ubah keranjang belanja*/
 	function actionChange() {

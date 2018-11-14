@@ -41,7 +41,8 @@
 					<?php echo CHtml::ajaxLink(
 					'Add',
 					array('product/addtocart/'),
-					array('type'=>'post','data'=>array('id'=>'js:$(this).val()')),
+					array('type'=>'get','data'=>array('id'=>2),
+						'success'=>''),
 					array('id'=>'link1')
 					);?>
 				</div>

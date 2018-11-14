@@ -136,18 +136,9 @@ class User extends CActiveRecord
     public function afterSave(){
 		parent::afterSave();
 		if($this->isNewRecord){
-			
-			// $p=new Profil;
-			// $p->user_id=$this->id;
-			// $p->nik='123';
-			// $p->nama=$this->username;
-			// $p->alamat=$this->username;
-			// $p->save();
 			Controller::hitungbonusgetmember($this->kode_upline,$this->kode_member);
 			Controller::upgradelevel($this->kode_upline);
-			//if(!empty($this->sponsor) && $this->sponsor!==NULL){
-				Controller::bonussponsor($this->sponsor,$this->kode_member);
-			//}
+			Controller::bonussponsor($this->sponsor,$this->kode_member);
 		}
 	}
 	// public function beforeSave(){

@@ -68,7 +68,7 @@ class SiteController extends YiishopController
 	public function actionIndex()
 
 	{
-		echo Controller::bonusrepeatorder('BY0000011',2000);
+		//echo Controller::bonusrepeatorder('BY0000011',2000);
 		//echo Controller::diskonbelanja(99999,Yii::app()->user->kode_member);
 		//print_r(User::model()->cache(1000)->findAll('level !="distributor"'));
 		//echo CVarDumper::dumpAsString(Controller::comboSponsor('8982387'),10,true);
@@ -154,7 +154,7 @@ public function actionIsi(){
 //  }
 $this->bukandistributor();
 $this->bukandistributor();
-//$this->bukandistributor();
+$this->bukandistributor();
 }
 	/**
 	 * Displays the login page

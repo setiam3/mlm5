@@ -3,6 +3,9 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'setting-perusahaan-form',
 	'enableAjaxValidation'=>false,
+	'htmlOptions'=>array('multiple'=>'multiple',
+        'enctype' => 'multipart/form-data',
+    ),
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
@@ -35,7 +38,6 @@
 	</div>
 </div>
 
-
 <div class="row">
 	<div class="form-group">
 		<div class="col-sm-2">
@@ -47,7 +49,6 @@
 		</div>
 	</div>
 </div>
-
 
 <div class="row">
 	<div class="form-group">
@@ -61,19 +62,14 @@
 	</div>
 </div>
 
-
 <div class="row">
 	<div class="form-group">
-		<div class="col-sm-2">
-			<?php echo $form->labelEx($model,'logo'); ?>
-		</div>
-        <div class="col-sm-6">
-				<?php echo $form->textField($model,'logo',array('class'=>'form-control','size'=>60,'maxlength'=>255)); ?>
-			<?php echo $form->error($model,'logo'); ?>
-		</div>
+		<?php echo $form->labelEx($model,'logo',array('class'=>'col-sm-2')); ?>
+            <div class="col-sm-6">
+	<input name="foto" accept="image/*" type="file" class="form-control file2 inline btn btn-primary" multiple="multiple" data-label="<i class='glyphicon glyphicon-circle-arrow-up'></i> &nbsp;Browse Files" />
+	</div>
 	</div>
 </div>
-
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

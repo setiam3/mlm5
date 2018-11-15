@@ -4,9 +4,9 @@ $this->breadcrumbs=array(
 	'Manage',
 );
 ?>
-<h1>Manage Setting Perusahaans</h1>
+<h1>Setting Perusahaan</h1>
 <?php $colom=array(
-				'nama_perusahaan',
+		'nama_perusahaan',
 		'alamat',
 		'telp',
 		'email',

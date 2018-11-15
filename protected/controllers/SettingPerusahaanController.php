@@ -69,9 +69,25 @@ class SettingPerusahaanController extends Controller
 		if(isset($_POST['SettingPerusahaan']))
 		{
 			$model->attributes=$_POST['SettingPerusahaan'];
+			$images=CUploadedFile::getInstancesByName('foto');
+                if (isset($images) && count($images) > 0){
+                    $i=1;
+                    foreach ($images as $image=>$pic) {
+                        $ext=substr($pic, strrpos($pic, '.')+1);
+                        if(in_array($ext, $this->arrayImages)){
+                            $pic->saveAs($this->imagesPath().'Logo'.$i.'.'.$ext);
+                        }else{
+                            $messageType = 'warning';
+                            $message = "<strong>Only images file type allowed";
+                            Yii::app()->user->setFlash($messageType, $message);
+                            $this->redirect(array('create'));
+                        }
+                    $i++;
+                    }
+                $model->logo='Logo'.$i.'.'.$ext
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
-		}
+		}}
 
 		$this->render('create',array(
 			'model'=>$model,
@@ -93,9 +109,27 @@ class SettingPerusahaanController extends Controller
 		if(isset($_POST['SettingPerusahaan']))
 		{
 			$model->attributes=$_POST['SettingPerusahaan'];
+			$images=CUploadedFile::getInstancesByName('foto');
+                if (isset($images) && count($images) > 0){
+                    foreach ($images as $image=>$pic) {
+                        $ext=substr($pic, strrpos($pic, '.')+1);
+                        if(in_array($ext, $this->arrayImages)){
+                        	//cek exis
+                        	if(file_exists($this->imagesPath().$model->logo) && !empty($model->logo)){
+                            	unlink($this->imagesPath().$model->logo);
+                            }
+                            $pic->saveAs($this->imagesPath().'Logo'.$model->id.'.'.$ext);
+                        }else{
+                            $messageType = 'warning';
+                            $message = "<strong>Only images file type allowed";
+                            Yii::app()->user->setFlash($messageType, $message);
+                            $this->redirect(array('create'));
+                        }
+                    }
+                $model->logo='Logo'.$model->id.'.'.$ext;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
-		}
+		}}
 
 		$this->render('update',array(
 			'model'=>$model,

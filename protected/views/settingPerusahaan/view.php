@@ -6,10 +6,9 @@ $this->breadcrumbs=array(
 
 ?>
 
-<h1>View SettingPerusahaan #<?php echo $model->id; ?></h1>
+<h1>View SettingPerusahaan</h1>
 
 <?php $attributes=array(
-				'id',
 		'nama_perusahaan',
 		'alamat',
 		'telp',
@@ -18,3 +17,4 @@ $this->breadcrumbs=array(
 	);
 $this->genListView($model,$attributes,$model->id);
 ?>
+<?php echo CHtml::image($this->imagesUrl().$model->logo);?>

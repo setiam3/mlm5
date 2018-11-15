@@ -110,37 +110,31 @@ class ProductController extends Controller
 	public function actionCreate()
 	{
 		$model=new Product;
-
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Product']))
 		{
 			$model->attributes=$_POST['Product'];
 			$images=CUploadedFile::getInstancesByName('foto');
-                $foto2=CUploadedFile::getInstance($model,'foto2');
-                print_r($images);die;
                 if (isset($images) && count($images) > 0){
-                    $foto=array();
                     $i=1;
                     foreach ($images as $image=>$pic) {
                         $ext=substr($pic, strrpos($pic, '.')+1);
                         if(in_array($ext, $this->arrayImages)){
-                            $pic->saveAs($this->imagesPath().$model->id.'_'.$i.'_'.'.'.$ext);
+                            $pic->saveAs($this->imagesPath().$model->kode_kategori.'_'.$model->id.'_'.$i.'_'.'.'.$ext);
                         }else{
                             $messageType = 'warning';
                             $message = "<strong>Only images file type allowed";
                             Yii::app()->user->setFlash($messageType, $message);
                             $this->redirect(array('create'));
                         }
-                        $foto[]=$model->id.'_'.$i.'_'.'.'.$ext;
-                        //image resize
-                    $image= Yii::app()->image->load($this->imagesPath().$model->id.'_'.$i.'_'.'.'.$ext);
+                    //image resize
+$image= Yii::app()->image->load($this->imagesPath().$model->kode_kategori.'_'.$model->id.'_'.$i.'_'.'.'.$ext);
                     $image->resize(640,640);
                     $image->save();
                     $i++;
                     }
-                $model2->foto= CJSON::encode($foto);
+                $model->image= $model->kode_kategori.'_'.$model->id.'_'.$i.'_'.'.'.$ext;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}}
@@ -166,30 +160,24 @@ class ProductController extends Controller
 		{
 			$model->attributes=$_POST['Product'];
 			$images=CUploadedFile::getInstancesByName('foto');
-                //$foto2=CUploadedFile::getInstance($model,'foto2');
-                //print_r($images);die;
                 if (isset($images) && count($images) > 0){
-                    $foto=array();
                     $i=1;
                     foreach ($images as $image=>$pic) {
                         $ext=substr($pic, strrpos($pic, '.')+1);
                         if(in_array($ext, $this->arrayImages)){
-                        	//print_r($this->imagesPath().$model->id.'_'.$i.'_'.'.'.$ext);die;
-                            $pic->saveAs($this->imagesPath().$model->id.'_'.$i.'_'.'.'.$ext);
+                            $pic->saveAs($this->imagesPath().$model->kode_kategori.'_'.$model->id.'_'.$i.'_'.'.'.$ext);
                         }else{
                             $messageType = 'warning';
                             $message = "<strong>Only images file type allowed";
                             Yii::app()->user->setFlash($messageType, $message);
                             $this->redirect(array('create'));
                         }
-                        $foto[]=$model->id.'_'.$i.'_'.'.'.$ext;
-                        //image resize
-                    $image= Yii::app()->image->load($this->imagesPath().$model->id.'_'.$i.'_'.'.'.$ext);
-                    $image->resize(640,640);
-                    $image->save();
+                        $foto=$model->kode_kategori.'_'.$model->id.'_'.$i.'_'.'.'.$ext;
+                        
                     $i++;
                     }
-                $model->image= CJSON::encode($foto);}
+	                $model->image= $foto;
+	            }
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

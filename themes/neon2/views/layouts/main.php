@@ -30,15 +30,13 @@
 <?php 
 include ('sidebar-menu.php');
 //switch (Controller::getrole()) {
-//      case 'cs':include ('sidebar-cs.php');
+//      case 'user':include ('sidebar-cs.php');
 //          break;
-//      case 'marketing':include ('sidebar-cs.php');
+//      case 'reseller':include ('sidebar-cs.php');
 //          break;
-//      case 'customer':include ('sidebar-customer.php');
+//      case 'agen':include ('sidebar-customer.php');
 //          break;
-//      case 'operasional':include ('sidebar-operasional.php');
-//          break;
-//      case 'agen':include ('sidebar-agen.php');
+//      case 'distributor':include ('sidebar-operasional.php');
 //          break;
 //      default:include ('sidebar-menu.php');
 //          break;

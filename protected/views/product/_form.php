@@ -69,7 +69,7 @@
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'image',array('class'=>'col-sm-2')); ?>
             <div class="col-sm-6">
-<input name="foto[]" accept="image/*" type="file" class="form-control file2 inline btn btn-primary" multiple="multiple" data-label="<i class='glyphicon glyphicon-circle-arrow-up'></i> &nbsp;Browse Files" />
+<input name="foto" accept="image/*" type="file" class="form-control file2 inline btn btn-primary" multiple="multiple" data-label="<i class='glyphicon glyphicon-circle-arrow-up'></i> &nbsp;Browse Files" />
 	</div>
 	</div>
 	</div>

@@ -5,11 +5,11 @@
 			<header class="logo-env">
 
 				<!-- logo -->
-				<div class="logo">
-					<a href="<?php echo Yii::app()->createUrl('/');?>">
-						<img src="<?php echo Yii::app()->theme->baseUrl;?>/assets/images/logo_tosi.png" width="150" alt="" />
-					</a>
-				</div>
+<div class="logo">
+	<a href="<?php echo Yii::app()->createUrl('/');?>">
+		<?php echo (isset(SettingPerusahaan::model()->findByPk(1)->logo))?CHtml::image($this->imagesUrl().SettingPerusahaan::model()->findByPk(1)->logo,'LOGO',array('width'=>150)):'';?>
+	</a>
+</div>
 
 				<!-- logo collapse icon -->
 				<div class="sidebar-collapse">
@@ -28,8 +28,6 @@
 
 			</header>
 			<ul id="main-menu" class="main-menu">
-				<!-- add class "multiple-expanded" to allow multiple submenus to open -->
-				<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
 				<li class="has-sub">
 					<a href="<?php echo Yii::app()->createUrl('site/index')?>">
 						<i class="entypo-gauge"></i>

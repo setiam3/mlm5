@@ -27,7 +27,7 @@ class Controller extends CController
         return $split[2].'-'.$split[1].'-'.$split[0];}
     }
     
-	public $breadcrumbs=array();
+    public $breadcrumbs=array();
     public function isActive($d){
             if(isset($this->module)){
                 $controller=$this->module->id.'/'.$this->id;
@@ -320,8 +320,6 @@ class Controller extends CController
     }
     public static function username(){
         return Yii::app()->user->name;
-    }public static function username(){
-        return Yii::app()->user->name;
     }
     public static function kode_member(){
         return Yii::app()->user->kode_member;
@@ -506,6 +504,8 @@ private static function goodParenting($parent, $childPool){
         $mem=User::model()->findByAttributes(array('kode_member'=>$kodemember));
         return $mem->kode_upline;
     }
+
+    
     public static function bonussponsor($kodesponsor,$kodemember){
         $q1=SettingBonus::model()->findAllByAttributes(array('jenis_bonus'=>'sponsor'));
         $jmlsponsor=User::model()->countByAttributes(array('sponsor'=>$kodesponsor));
@@ -553,10 +553,10 @@ private static function goodParenting($parent, $childPool){
             if($jmldownline==1){
                 $jmldownline=0;
             }
-            $sql    ='select max(member) AS max from setting_level limit 1';
-            $cmd    =Yii::app()->db->createCommand($sql);
-            $max    =$cmd->queryRow();
-            $q2     =SettingLevel::model()->findByAttributes(array('member'=>$jmldownline));
+            $sql='select max(member) AS max from setting_level limit 1';
+            $cmd=Yii::app()->db->createCommand($sql);
+            $max=$cmd->queryRow();
+            $q2=SettingLevel::model()->findByAttributes(array('member'=>$jmldownline));
             if(!empty($q2) && count($q2)<=$max['max']){//max di setting level
                 $member=User::model()->findByAttributes(array('kode_member'=>$kodeupline));
                 $member->level=$q2->level;
@@ -568,8 +568,8 @@ private static function goodParenting($parent, $childPool){
         return SettingPerusahaan::model()->cache(2000)->findByPk(1)->nama_perusahaan;
     }
     public static function diskonbelanja($total,$kodemember=NULL){
-        $level  =Controller::get_level($kodemember);
-        $mb     =SettingBonus::model()->findByAttributes(array('jenis_bonus'=>"diskonbelanja",'param'=>$level));
+        $level=Controller::get_level($kodemember);
+        $mb=SettingBonus::model()->findByAttributes(array('jenis_bonus'=>"diskonbelanja",'param'=>$level));
         return round($total-($total*$mb->bonus),2);
     }
     public static function bonusrepeatorder($kodemember,$hargasetelahdiskon=NULL){//repeatorderby level, and param is buyer;

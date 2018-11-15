@@ -1,4 +1,5 @@
 <?php
+
 class YiishopController extends Controller {
 	/*function untuk init atau sejenis constructor
 	 *yang berguna untuk membuat session yang berisi kode unit
@@ -97,21 +98,16 @@ class YiishopController extends Controller {
 		} else if ($separator == 'underscore') {
 			$separator = '_';
 		}
-
 		$q_separator = preg_quote($separator);
-
 		$trans = array('&.+?;' => '', '[^a-z0-9 _-]' => '', '\s+' => $separator, '(' . $q_separator . ')+' => $separator);
 
 		$str = strip_tags($str);
-
 		foreach ($trans as $key => $val) {
 			$str = preg_replace("#" . $key . "#i", $val, $str);
 		}
-
 		if ($lowercase === TRUE) {
 			$str = strtolower($str);
 		}
-
 		return trim($str, $separator);
 	}
 }

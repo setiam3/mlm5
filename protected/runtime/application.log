@@ -2758,3 +2758,76 @@ REQUEST_URI=/mlm5/settingPerusahaan/1
 in /Applications/MAMP/htdocs/mlm5/themes/neon2/views/layouts/sidebar-menu.php (10)
 in /Applications/MAMP/htdocs/mlm5/themes/neon2/views/layouts/main.php (31)
 in /Applications/MAMP/htdocs/mlm5/protected/views/layouts/column2.php (22)
+2018/11/15 08:19:06 [error] [php] include(YiishopController.php): failed to open stream: No such file or directory (/Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/YiiBase.php:421)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(3): spl_autoload_call()
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(345): require()
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(271): CWebApplication->createController()
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(136): CWebApplication->runController()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/base/CApplication.php(158): CWebApplication->processRequest()
+#5 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/
+in /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php (3)
+in /Applications/MAMP/htdocs/mlm5/index.php (20)
+2018/11/15 08:23:03 [error] [php] include(Controller.php): failed to open stream: No such file or directory (/Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/YiiBase.php:421)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(3): spl_autoload_call()
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(345): require()
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(271): CWebApplication->createController()
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(136): CWebApplication->runController()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/base/CApplication.php(158): CWebApplication->processRequest()
+#5 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/
+in /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php (3)
+in /Applications/MAMP/htdocs/mlm5/index.php (20)
+2018/11/15 08:29:04 [error] [php] include(Controller.php): failed to open stream: No such file or directory (/Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/YiiBase.php:421)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(3): spl_autoload_call()
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(345): require()
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(271): CWebApplication->createController()
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(136): CWebApplication->runController()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/base/CApplication.php(158): CWebApplication->processRequest()
+#5 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/
+in /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php (3)
+in /Applications/MAMP/htdocs/mlm5/index.php (20)
+2018/11/15 08:29:05 [error] [php] include(Controller.php): failed to open stream: No such file or directory (/Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/YiiBase.php:421)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(3): spl_autoload_call()
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(345): require()
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(271): CWebApplication->createController()
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(136): CWebApplication->runController()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/base/CApplication.php(158): CWebApplication->processRequest()
+#5 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/
+in /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php (3)
+in /Applications/MAMP/htdocs/mlm5/index.php (20)
+2018/11/15 08:29:06 [error] [php] include(Controller.php): failed to open stream: No such file or directory (/Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/YiiBase.php:421)
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php(3): spl_autoload_call()
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(345): require()
+#2 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(271): CWebApplication->createController()
+#3 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/web/CWebApplication.php(136): CWebApplication->runController()
+#4 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/base/CApplication.php(158): CWebApplication->processRequest()
+#5 /Applications/MAMP/htdocs/mlm5/index.php(20): CWebApplication->run()
+REQUEST_URI=/mlm5/
+in /Applications/MAMP/htdocs/mlm5/protected/controllers/SiteController.php (3)
+in /Applications/MAMP/htdocs/mlm5/index.php (20)
+2018/11/15 09:08:39 [error] [exception.CHttpException.404] CHttpException: Unable to resolve the request "asd". in /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:1690
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController('asd')
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /Applications/MAMP/htdocs/mlm5/index.php(20): CApplication->run()
+#3 {main} REQUEST_URI=/mlm5/asd
+2018/11/15 09:08:53 [error] [exception.CHttpException.404] CHttpException: Unable to resolve the request "user/site/index". in /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:1690
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController('user/site/index')
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /Applications/MAMP/htdocs/mlm5/index.php(20): CApplication->run()
+#3 {main} REQUEST_URI=/mlm5/user/site/index
+2018/11/15 09:08:58 [error] [exception.CHttpException.404] CHttpException: Unable to resolve the request "user/site/index". in /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php:1690
+Stack trace:
+#0 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1606): CWebApplication->runController('user/site/index')
+#1 /Applications/MAMP/htdocs/mlm5/protected/yii-1.1.8/framework/yiilite.php(1135): CWebApplication->processRequest()
+#2 /Applications/MAMP/htdocs/mlm5/index.php(20): CApplication->run()
+#3 {main} REQUEST_URI=/mlm5/user/site/index

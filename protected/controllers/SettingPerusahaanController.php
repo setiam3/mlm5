@@ -84,7 +84,7 @@ class SettingPerusahaanController extends Controller
                         }
                     $i++;
                     }
-                $model->logo='Logo'.$i.'.'.$ext
+                $model->logo='Logo'.$i.'.'.$ext;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}}

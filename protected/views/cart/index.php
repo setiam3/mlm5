@@ -89,11 +89,9 @@ $this -> breadcrumbs = array('Cart', );
 		<td><?php echo $i; ?></td>
 		<td><b><?php echo $model['nama_produk']; ?></b><br>
 			<?php if(!empty($model['image'])):?>
-    <?php foreach (CJSON::decode($model['image']) as $foto):?>
-    <a href="<?php echo Yii::app()->baseUrl.'/images/'.$foto?>">
-    <img class="col-xs-4" src="<?php echo Yii::app()->baseUrl.'/images/'.$foto?>" style='width:82px;'>
+    <a href="<?php echo Yii::app()->baseUrl.'/images/'.$model['image']?>"><?php echo CHtml::image($this->imagesUrl().$model['image'],'',array('class'=>"col-xs-4","style" => "width:82px;"));?>
     </a>
-    <?php endforeach; endif;?>
+    <?php endif;?>
 			</td>
 		<td align="right"><b>IDR <b><?php echo number_format($model['harga'], 0, '.', '.'); ?></b></td>
 		<td align="right"><?php echo CHtml::textField('qty' . $i, $model['qty'], array('maxlength' => 3, 'style' => "width:20px;text-align:center")); ?></td>

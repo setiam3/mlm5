@@ -68,8 +68,8 @@ public function actioncomboSponsor($kode_member=null){
 	 */
 	public function actionCreate($upline=NULL)
 	{
-		$model=new Member('search');
-		$user=New User;
+		$model=new Member;
+		$user=new User;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 

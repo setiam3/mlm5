@@ -32,26 +32,6 @@ class SiteController extends YiishopController
 			),
 		);
 	}
-	public function useri(){
-		if(Yii::app()->user->getIsSuperuser()==1){
-		}else{
-			switch ($this->getrole()) {
-				case 'agen':
-					return ' and t_order.agen='.$this->userid();
-					break;
-				case 'operasional':
-					return ' and t_order.operasional_staff='.$this->userid();
-					break;
-				case 'customer':
-					return ' and t_order.customer='.$this->userid();
-					break;
-				default:
-					// code...
-					break;
-			}
-			
-		}
-	}
 
 	public function actiongetTree(){
 		if(empty(Yii::app()->user->kode_member)){
@@ -61,16 +41,11 @@ class SiteController extends YiishopController
 		}
 		
 	}
-	public function actionSI(){
-		$this->render('form_si');
-	}
 	
 	public function actionIndex()
 
 	{
-		//echo Controller::bonusrepeatorder('BY0000011',2000);
-		//echo Controller::diskonbelanja(99999,Yii::app()->user->kode_member);
-		//print_r(User::model()->cache(1000)->findAll('level !="distributor"'));
+		
 		//echo CVarDumper::dumpAsString(Controller::comboSponsor('8982387'),10,true);
 		$this->render('index');
 	}
@@ -154,7 +129,7 @@ public function actionIsi(){
 //  }
 $this->bukandistributor();
 $this->bukandistributor();
-$this->bukandistributor();
+//$this->bukandistributor();
 }
 	/**
 	 * Displays the login page

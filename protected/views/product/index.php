@@ -16,12 +16,10 @@ foreach($models as $data):
 		<h3 class="col-sm-12" style="float: left;">
 			<?php echo $data -> nama_produk; ?>
 		</h3><!--width:93px;clear:left;-->
-		<?php if(!empty($data->image)):?>
-    <?php foreach (CJSON::decode($data->image) as $foto):?>
-    <a href="<?php echo Yii::app()->baseUrl.'/images/'.$foto?>">
-    <img class="col-xs-4" src="<?php echo Yii::app()->baseUrl.'/images/'.$foto?>" style='width:82px;'>
+	<?php if(!empty($data->image)):?>
+    <a href="<?php echo Yii::app()->baseUrl.'/images/'.$data->image?>"><?php echo CHtml::image($this->imagesUrl().$data->image,'',array('class'=>"col-xs-4"));?>
     </a>
-    <?php endforeach; endif;?>
+    <?php endif;?>
 		<br><br>
 		<p>
 			<b>Price:</b> 

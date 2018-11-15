@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 <h1>View Product #<?php echo $model->id; ?></h1>
 
 <?php $attributes=array(
-				'id',
+				//'id',
 		'nama_produk',
 		'kode_kategori',
 		'harga',
@@ -17,4 +17,5 @@ $this->breadcrumbs=array(
 		'image',
 	);
 $this->genListView($model,$attributes,$model->id);
+echo CHtml::image($this->imagesUrl().$model->image);
 ?>

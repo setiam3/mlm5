@@ -7,7 +7,7 @@
 	<meta name="description" content="Neon Admin Panel" />
 	<meta name="author" content="" />
 	<link rel="icon" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/images/favicon.ico">
-	<title><?php //echo $this->pageTitle?></title>
+	<title><?php echo $this->pageTitle?></title>
 	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/js/jquery-ui/css/no-theme/jquery-ui-1.10.3.custom.min.css">
 	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/assets/css/font-icons/entypo/css/entypo.css">
 	<!--<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Sans:400,700,400italic">-->

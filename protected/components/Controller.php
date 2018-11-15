@@ -321,7 +321,7 @@ class Controller extends CController
     public static function username(){
         return Yii::app()->user->name;
     }
-    public static function kode_member(){
+    public function kode_member(){
         return Yii::app()->user->kode_member;
     }
     public static function hitungbonusgetmember($kodeupline=NULL,$kodemember){

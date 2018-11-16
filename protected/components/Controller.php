@@ -664,4 +664,79 @@ private static function goodParenting($parent, $childPool){
                 break;
         }
     }
+
+    public static function bonuspoinbelanja($totalbelanja){
+        $sb=SettingBonus::model()->findAll('jenis_bonus="poin" order by param asc');
+        foreach ($sb as $k=>$value) {
+            $range[$k]=$value;
+            //$range[$k]=array('bonus'=>$value->bonus,'param'=>$value->param,'keterangan'=>$value->keterangan);
+        }
+        Controller::bonuspoinbelanja1($totalbelanja,$range);
+    }
+    public static function bonuspoinbelanja1($totalbelanja,$range){
+
+        switch ($totalbelanja) {
+
+            case ($totalbelanja>=$range[0]['param'] && $totalbelanja<$range[1]['param'])://r150
+                $poin=$range[0]['bonus'];
+                if(isset($poin) && $poin>0 ){
+                    //insert to bonus
+                    $bonus=new Bonus;
+                    $bonus->kode_member=Yii::app()->user->kode_member;
+                    $bonus->bonus=$poin;
+                    $bonus->tanggal=Controller::date_sql_now();
+                    $bonus->dari_member=Yii::app()->user->kode_member;
+                    $bonus->keterangan=$range[0]['keterangan'];
+                    $bonus->idbonus=$range[0]['id'];
+                    $bonus->save();
+                }
+                if($totalbelanja-$range[0]['param']>0){
+                    Controller::bonuspoinbelanja($totalbelanja-$range[0]['param']);
+                }
+                break;
+            case ($totalbelanja>=$range[1]['param'] && $totalbelanja<$range[2]['param']):
+                $poin=$range[1]['bonus'];
+                if(isset($poin) && $poin>0 ){
+                    //insert to bonus
+                    $bonus=new Bonus;
+                    $bonus->kode_member=Yii::app()->user->kode_member;
+                    $bonus->bonus=$poin;
+                    $bonus->tanggal=Controller::date_sql_now();
+                    $bonus->dari_member=Yii::app()->user->kode_member;
+                    $bonus->keterangan=$range[1]['keterangan'];
+                    $bonus->idbonus=$range[1]['id'];
+                    $bonus->save();
+                }
+                if($totalbelanja-$range[1]['param']>0){
+                    Controller::bonuspoinbelanja($totalbelanja-$range[1]['param']);
+                }
+                break;
+            case ($totalbelanja>=$range[2]['param']):
+                $poin=$range[2]['bonus'];
+                if(isset($poin) && $poin>0 ){
+                    //insert to bonus
+                    $bonus=new Bonus;
+                    $bonus->kode_member=Yii::app()->user->kode_member;
+                    $bonus->bonus=$poin;
+                    $bonus->tanggal=Controller::date_sql_now();
+                    $bonus->dari_member=Yii::app()->user->kode_member;
+                    $bonus->keterangan=$range[2]['keterangan'];
+                    $bonus->idbonus=$range[2]['id'];
+                    $bonus->save();
+                }
+                if($totalbelanja-$range[2]['param']>0){
+                    Controller::bonuspoinbelanja($totalbelanja-$range[2]['param']);
+                }
+                break;
+            
+            default:
+                // code...
+                break;
+        }
+    }
+
+
+
+
+
 }

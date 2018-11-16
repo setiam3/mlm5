@@ -10,7 +10,7 @@ $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Login");
 <div class="login-header login-caret">
 		<div class="login-content">
 			<a href="#" class="logo">
-				<img src="<?=Yii::app()->theme->baseUrl?>/assets/images/logo_tosi.png" width="300" alt="" />
+				<img src="<?=Yii::app()->baseUrl?>/images/Logo1.png" width="300" alt="" />
 			</a>
                         <p class="description"><?php echo UserModule::t("Dear user, log in to access the member area!"); ?></p>
 			<!-- progress bar indicator 

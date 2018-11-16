@@ -41,11 +41,22 @@ class SiteController extends YiishopController
 		}
 		
 	}
+	public function actionTruncate(){
+		Yii::app()->session->destroy();
+		$sql="TRUNCATE bonus;
+TRUNCATE orders; TRUNCATE orderdetail;
+TRUNCATE profiles;  TRUNCATE users; 
+TRUNCATE cart;";
+if(Yii::app()->db->createCommand($sql)->execute()==0){
+	echo 'sukses kosongkan data';
+$this->render('index');
+}
+
+	}
 	
 	public function actionIndex()
-
 	{
-		
+		//$this->bonuspoinbelanja(2550000,'BY098098');
 		//echo CVarDumper::dumpAsString(Controller::comboSponsor('8982387'),10,true);
 		$this->render('index');
 	}
@@ -90,12 +101,32 @@ class SiteController extends YiishopController
 		$this->render('contact',array('model'=>$model));
 	}
 
-
-//inject database
+public function admin(){
+    $model=new User;
+    $model->kode_member='-';
+    $model->createtime=time();
+    $model->username='admin';
+    $model->password=md5($model->username);
+    $model->activkey=UserModule::encrypting(microtime().$model->password);
+    $model->email=$model->username.'@bestharmony.co.id';
+    $model->status=1;
+    $model->superuser=1;
+    $model->level="Admin";
+    //print_r($model);die;
+   // if(is_null($kodeupline)){
+      $model->kode_upline='admin';
+    //}else{
+      //$model->kode_upline=$kodeupline;
+    //}
+    //if(!is_null($sponsor)){
+      //$model->sponsor=$sponsor;
+    //}
+  	$model->save();
+}
 public function inject($kodeupline=null,$sponsor=null,$i=0){
     $model=new User;
     $model->kode_member=Controller::autoformat();
-	$model->createtime=time();
+    $model->createtime=time();
     $model->username=$model->kode_member;
     $model->password=md5($model->username);
     $model->activkey=UserModule::encrypting(microtime().$model->password);
@@ -110,10 +141,9 @@ public function inject($kodeupline=null,$sponsor=null,$i=0){
       $model->sponsor=$sponsor;
     }
   	$model->save();
-  	
 }
 public function bukandistributor(){
-	$cmd=Yii::app()->db->createCommand('select kode_member from users where level !="distributor"')->queryAll();
+	$cmd=Yii::app()->db->createCommand('select kode_member from users where level!="distributor"')->queryAll();
   foreach ($cmd as $ro) {
         for ($i = 0; $i < 10; $i++) {
         $this->inject($ro['kode_member'],$ro['kode_member'],$i);
@@ -122,14 +152,11 @@ public function bukandistributor(){
 }
 public function actionIsi(){
 	$this->inject();
-// foreach (User::model()->findAll() as $row) {
-//     for ($i = 0; $i < 10; $i++) {
-//       $this->inject($row->kode_member,$row->kode_member,$i);
-//     }
-//  }
-$this->bukandistributor();
-$this->bukandistributor();
-//$this->bukandistributor();
+	$this->bukandistributor();
+	$this->bukandistributor();
+	$this->bukandistributor();
+	$this->admin();
+	$this->redirect('../member/');
 }
 	/**
 	 * Displays the login page

@@ -29,14 +29,14 @@
 <div class="page-container"><!-- add class "sidebar-collapsed" to close sidebar by default, "chat-visible" to make chat appear always -->
 <?php 
 include ('sidebar-menu.php');
-//switch (Controller::getrole()) {
-//      case 'user':include ('sidebar-cs.php');
+// switch (Controller::getrole()) {
+//      case 'user':include ('sidebar-user.php');
 //          break;
-//      case 'reseller':include ('sidebar-cs.php');
+//      case 'reseller':include ('sidebar-reseller.php');
 //          break;
-//      case 'agen':include ('sidebar-customer.php');
+//      case 'agen':include ('sidebar-agen.php');
 //          break;
-//      case 'distributor':include ('sidebar-operasional.php');
+//      case 'distributor':include ('sidebar-menu.php');
 //          break;
 //      default:include ('sidebar-menu.php');
 //          break;

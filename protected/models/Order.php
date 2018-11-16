@@ -107,8 +107,8 @@ class Order extends CActiveRecord
 			//hitung potensi cashback
 			$hargaakhir=Controller::diskonbelanja($this->grandtotal,$this->kode_member);//totalbelanja, kodemember
 			//hitung pembagian cashback ke upline
-			//print_r($hargaakhir);
 			Controller::bonusrepeatorder($this->kode_member,$hargaakhir);//kodemember, harga setelah diskon
+			Controller::bonuspoinbelanja($this->grandtotal);
 		//}
 	}
 }

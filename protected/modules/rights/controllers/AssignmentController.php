@@ -105,9 +105,9 @@ class AssignmentController extends RController
 					$item = $this->_authorizer->authManager->getAuthItem($formModel->itemname);
                                         //print_r($item);die;
 					$item = $this->_authorizer->attachAuthItemBehavior($item);
-                                        $q="CALL sp_user_roles(".$model->getId().",'".$formModel->itemname."')";
-                                        $setstatus= Yii::app()->db->createCommand($q);
-                                        $setstatus->execute();
+                        $q="CALL sp_user_roles(".$model->getId().",'".$formModel->itemname."')";
+                        $setstatus= Yii::app()->db->createCommand($q);
+                        $setstatus->execute();
 
 					Yii::app()->user->setFlash($this->module->flashSuccessKey,
 						Rights::t('core', 'Permission :name assigned.', array(':name'=>$item->getNameText()))

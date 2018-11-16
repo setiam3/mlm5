@@ -2,7 +2,7 @@
 return array (
   'template' => 'default',
   'tablePrefix' => '',
-  'modelPath' => 'application.models',
+  'modelPath' => 'application.modules.user.models',
   'baseClass' => 'CActiveRecord',
   'buildRelations' => '1',
 );

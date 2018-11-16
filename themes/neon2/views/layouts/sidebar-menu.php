@@ -175,7 +175,7 @@
 								<span class="title">Pemesanan</span>
 							</a>
 						</li><li>
-							<a href="<?php echo Yii::app()->createUrl('order/create')?>">
+							<a href="<?php echo Yii::app()->createUrl('cart/')?>">
 							<i class="entypo-docs"></i>
 								<span class="title">Add Pemesanan</span>
 							</a>

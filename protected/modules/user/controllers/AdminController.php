@@ -80,19 +80,13 @@ class AdminController extends Controller
 				if($model->save()) {
 					$profile->user_id=$model->id;
 					$profile->save();
-					//insert to m_customer
-					if($model->level=='customer'){
-						$customer=new Customer;
-						$customer->nama=$profile->firstname;
-						$customer->userid=$model->id;
-						$customer->save();
-					}
+					
 					//insert auth
 					$sql="select child from authitemchild where parent='".$model->level."'";
 					$res=Yii::app()->db->createCommand($sql)->queryAll();
 					array_push($res, array('child'=>$model->level));
 					foreach ($res as $value) {
-						$authitem=new Authassignment;
+						$authitem=new AuthAssignment;
 						$authitem->itemname=$value['child'];
 						$authitem->userid=$model->id;
 						$authitem->bizrule=NULL;
@@ -123,26 +117,19 @@ class AdminController extends Controller
 		{
 			$model->attributes=$_POST['User'];
 			$profile->attributes=$_POST['Profile'];
-			
+			$profile->birthday=date('Y-m-d',strtotime($_POST['Profile']['birthday']));
 			if($model->validate()&&$profile->validate()) {
 				$old_password = User::model()->notsafe()->findByPk($model->id);
 				if ($old_password->password!=$model->password) {
 					$model->password=Yii::app()->controller->module->encrypting($model->password);
 					$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
 				}
+				
 				$model->save();
 				$profile->save();
-				//insert to m_customer
-					if($model->level=='customer'){
-						if(count(Customer::model()->findAllByAttributes(array('userid'=>$model->id)))>0){}else{
-							$customer=new Customer;
-							$customer->nama=$profile->firstname;
-							$customer->userid=$model->id;
-							$customer->save();
-						}
-					}
+				
 				//deleteAll auth first
-					foreach (Authassignment::model()->findAllByAttributes(array('userid'=>$model->id)) as $value) {
+					foreach (AuthAssignment::model()->findAllByAttributes(array('userid'=>$model->id)) as $value) {
 						$item=$value->itemname;
 						$id=$value->userid;
 						$sql="delete from authassignment where itemname='$item' and userid=$id";
@@ -153,7 +140,7 @@ class AdminController extends Controller
 					$res=Yii::app()->db->createCommand($sql)->queryAll();
 					array_push($res, array('child'=>$model->level));
 					foreach ($res as $value) {
-						$authitem=new Authassignment;
+						$authitem=new AuthAssignment;
 						$authitem->itemname=$value['child'];
 						$authitem->userid=$model->id;
 						$authitem->bizrule=NULL;
@@ -183,7 +170,7 @@ class AdminController extends Controller
 			// we only allow deletion via POST request
 			$model = $this->loadModel();
 			$profile = Profile::model()->findByPk($model->id);
-			foreach (Authassignment::model()->findAllByAttributes(array('userid'=>$model->id)) as $value) {
+			foreach (AuthAssignment::model()->findAllByAttributes(array('userid'=>$model->id)) as $value) {
 				$item=$value->itemname;
 				$id=$value->userid;
 				$sql="delete from authassignment where itemname='$item' and userid=$id";
